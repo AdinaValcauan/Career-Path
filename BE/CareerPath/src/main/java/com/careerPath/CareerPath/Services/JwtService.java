@@ -1,7 +1,7 @@
-package com.careerPath.CareerPath.Service;
+package com.careerPath.CareerPath.Services;
 
-import com.careerPath.CareerPath.Service.Interfaces.IJwtService;
-import com.careerPath.CareerPath.Service.Interfaces.IUserService;
+import com.careerPath.CareerPath.Services.Interfaces.IJwtService;
+import com.careerPath.CareerPath.Services.Interfaces.IUserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

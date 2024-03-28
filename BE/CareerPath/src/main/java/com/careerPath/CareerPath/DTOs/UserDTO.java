@@ -1,4 +1,4 @@
-package com.careerPath.CareerPath.DTO;
+package com.careerPath.CareerPath.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

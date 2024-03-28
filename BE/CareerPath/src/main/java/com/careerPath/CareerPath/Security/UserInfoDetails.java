@@ -1,6 +1,6 @@
 package com.careerPath.CareerPath.Security;
 
-import com.careerPath.CareerPath.Entity.User;
+import com.careerPath.CareerPath.Entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

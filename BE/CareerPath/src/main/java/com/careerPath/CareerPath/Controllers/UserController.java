@@ -1,10 +1,9 @@
-package com.careerPath.CareerPath.Controller;
+package com.careerPath.CareerPath.Controllers;
 
-import com.careerPath.CareerPath.DTO.AuthRequest;
-import com.careerPath.CareerPath.Entity.User;
-import com.careerPath.CareerPath.Exceptions.UserAlreadyExistsException;
-import com.careerPath.CareerPath.Service.Interfaces.IJwtService;
-import com.careerPath.CareerPath.Service.Interfaces.IUserService;
+import com.careerPath.CareerPath.DTOs.AuthRequest;
+import com.careerPath.CareerPath.Entities.User;
+import com.careerPath.CareerPath.Services.Interfaces.IJwtService;
+import com.careerPath.CareerPath.Services.Interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;

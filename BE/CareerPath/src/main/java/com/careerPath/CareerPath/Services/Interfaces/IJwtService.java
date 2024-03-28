@@ -1,4 +1,4 @@
-package com.careerPath.CareerPath.Service.Interfaces;
+package com.careerPath.CareerPath.Services.Interfaces;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

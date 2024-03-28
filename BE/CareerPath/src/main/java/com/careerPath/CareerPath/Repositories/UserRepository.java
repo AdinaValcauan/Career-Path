@@ -1,6 +1,6 @@
-package com.careerPath.CareerPath.Repository;
+package com.careerPath.CareerPath.Repositories;
 
-import com.careerPath.CareerPath.Entity.User;
+import com.careerPath.CareerPath.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

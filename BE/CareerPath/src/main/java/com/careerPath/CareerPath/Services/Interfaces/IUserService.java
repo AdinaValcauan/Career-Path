@@ -1,6 +1,6 @@
-package com.careerPath.CareerPath.Service.Interfaces;
+package com.careerPath.CareerPath.Services.Interfaces;
 
-import com.careerPath.CareerPath.Entity.User;
+import com.careerPath.CareerPath.Entities.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

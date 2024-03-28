@@ -1,7 +1,7 @@
 package com.careerPath.CareerPath.Security;
 
-import com.careerPath.CareerPath.Service.Interfaces.IJwtService;
-import com.careerPath.CareerPath.Service.Interfaces.IUserService;
+import com.careerPath.CareerPath.Services.Interfaces.IJwtService;
+import com.careerPath.CareerPath.Services.Interfaces.IUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,10 +1,10 @@
-package com.careerPath.CareerPath.Service;
+package com.careerPath.CareerPath.Services;
 
-import com.careerPath.CareerPath.Entity.User;
+import com.careerPath.CareerPath.Entities.User;
 import com.careerPath.CareerPath.Exceptions.UserAlreadyExistsException;
 import com.careerPath.CareerPath.Security.UserInfoDetails;
-import com.careerPath.CareerPath.Repository.UserRepository;
-import com.careerPath.CareerPath.Service.Interfaces.IUserService;
+import com.careerPath.CareerPath.Repositories.UserRepository;
+import com.careerPath.CareerPath.Services.Interfaces.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

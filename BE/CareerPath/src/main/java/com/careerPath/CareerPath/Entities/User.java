@@ -1,4 +1,4 @@
-package com.careerPath.CareerPath.Entity;
+package com.careerPath.CareerPath.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// modificat
 @Getter
 @Setter
 @NoArgsConstructor

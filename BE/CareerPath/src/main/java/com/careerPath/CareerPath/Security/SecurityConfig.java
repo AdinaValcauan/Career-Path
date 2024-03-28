@@ -1,7 +1,6 @@
 package com.careerPath.CareerPath.Security;
 
-import com.careerPath.CareerPath.Security.JwtFilter;
-import com.careerPath.CareerPath.Service.UserService;
+import com.careerPath.CareerPath.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

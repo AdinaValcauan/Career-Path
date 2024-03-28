@@ -1,7 +1,7 @@
-package com.careerPath.CareerPath.Mapper;
+package com.careerPath.CareerPath.Mappers;
 
-import com.careerPath.CareerPath.DTO.UserDTO;
-import com.careerPath.CareerPath.Entity.User;
+import com.careerPath.CareerPath.DTOs.UserDTO;
+import com.careerPath.CareerPath.Entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
