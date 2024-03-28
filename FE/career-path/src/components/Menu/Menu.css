@@ -1,0 +1,156 @@
+/* 
+
+.menu {
+    width: 200px;
+    transition: width 0.3s ease;
+    background-color: #F8F8FF;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.menu.closed {
+    width: 80px;
+}
+
+.menu .icon {
+    /* Styles for the icons go here 
+}
+
+.menu .label {
+    /* Styles for the text labels go here 
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+  }
+
+ul {
+    margin-top: 150px;
+    list-style-type: none;
+  }
+
+ul li {
+    margin-bottom: 40px;
+}
+
+.label {
+    color: black;
+    font-size: 20px;
+    margin-left: 20px;
+  } */
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, .25);
+    background-color: white;
+    width: 95%;
+    height: 80px;
+    border-radius: 13px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+.logoc {
+    width: 100px;
+    height: auto;
+    margin-right: 30px;
+    top: 4px;
+}
+
+.nav-menu {
+    background: white;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    grid-gap: 10px;
+    list-style: none;
+    align-items: center;
+    border-radius: 13px;
+}
+
+.nav-links {
+    text-decoration: none;
+    color: #222;
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 0.7rem 1rem;
+    white-space: nowrap;
+}
+
+.nav-links i {
+    padding: 10px;
+}
+
+.nav-links:hover {
+    background-color: #D2691E;
+    border-radius: 4px;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-icon {
+    display: none;
+}
+
+@media screen and (max-width: 1270px) {
+    .menu {
+        z-index: 99;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background: white;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        opacity: 0;
+        align-items: stretch;
+        padding: 80px 0 30px 0;
+        margin: 0;
+        border-radius: 13px;
+    }
+
+    .nav-menu.active {
+        left: 0;
+        opacity: 1;
+        z-index: -1;
+        transition: 0.3s ease-in-out;
+    }
+
+    .nav-links {
+        padding: 2rem 0;
+        width: 100%;
+        display: block;
+        font-size: 1.2rem;
+    }
+
+    .nav-links:hover {
+        background-color: #2a898d;
+        transition: none;
+    }
+
+    .menu-icon {
+        display: block;
+        cursor: pointer;
+    }
+
+    .menu-icon i {
+        font-size: 1.2rem;
+        color: #222;
+    }
+}
