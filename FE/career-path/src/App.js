@@ -6,7 +6,7 @@ import Register from "./pages/Register/Register";
 import AdminMainPageWithRole from "./components/HigherOrderComponents/AdminMainPageWithRole";
 import UserMainPageWithRole from "./components/HigherOrderComponents/UserMainPageWithRole";
 import UserProfileWithRole from "./components/HigherOrderComponents/UserProfileWithRole";
-import ManageUsersAdminWithRole from "./components/HigherOrderComponents/ManageUsersAdmin";
+import ManageUsersAdminWithRole from "./components/HigherOrderComponents/ManageUsersAdminWithRole";
 
 function App() {
     return (
