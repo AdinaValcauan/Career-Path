@@ -56,12 +56,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/getUsers/{id}")
+    @GetMapping("/getUser/{id}")
     public User getUserById(@PathVariable Integer id){
         return userService.getUserById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateUser/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User user){
         return userService.updateUser(id, user);
     }
