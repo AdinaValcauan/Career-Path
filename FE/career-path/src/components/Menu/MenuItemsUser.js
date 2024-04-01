@@ -19,7 +19,7 @@ export const MenuItemsUser = [
     },
     {
         title: "Deconectare",
-        url: "login",
+        url: "/",
         cName: "nav-links",
         icon: "fa-solid fa-sign-out",
     },

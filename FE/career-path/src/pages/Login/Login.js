@@ -23,6 +23,8 @@ function Login() {
 
         const {userRole, error} = await loginService(userEmail, userPassword);
 
+        sessionStorage.setItem('userRole', userRole);
+
         if (error) {
             setErrMsg(error);
         } else if (userRole === "admin") {

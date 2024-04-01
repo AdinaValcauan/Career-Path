@@ -1,21 +1,25 @@
 import "./App.css";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import UserMainPage from "./pages/UserMainPage/UserMainPage";
-import UserProfile from "./pages/UserProfile/UserProfile";
-import AdminMainPage from "./pages/AdminMainPage/AdminMainPage";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import AdminMainPageWithRole from "./components/HigherOrderComponents/AdminMainPageWithRole";
+import UserMainPageWithRole from "./components/HigherOrderComponents/UserMainPageWithRole";
+import UserProfileWithRole from "./components/HigherOrderComponents/UserProfileWithRole";
+import ManageUsersAdminWithRole from "./components/HigherOrderComponents/ManageUsersAdmin";
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<AdminMainPage/>}/>
-                <Route path="/login" element={<Login/>}/>
+                <Route path="/" element={<Login/>}/>
+                {/*<Route path="/login" element={<Login/>}/>*/}
                 <Route path="/register" element={<Register/>}/>
-                <Route path="/mainpage" element={<UserMainPage/>}/>
-                <Route path="/profile" element={<UserProfile/>}/>
-                <Route path="/mainpageadmin" element={<AdminMainPage/>}/>
+                <Route path="/mainpage" element={<UserMainPageWithRole/>}/>
+                <Route path="/users" element={<ManageUsersAdminWithRole/>}/>
+                <Route path="/profile" element={<UserProfileWithRole/>}/>
+                <Route path="/mainpageadmin" element={<AdminMainPageWithRole/>}/>
+
             </Routes>
         </Router>
     );
