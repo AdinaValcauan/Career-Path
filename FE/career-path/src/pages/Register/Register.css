@@ -22,18 +22,23 @@
     position: relative;
     border-radius: 1em;
     box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
+
+    margin: -20px 0 50px;
+    padding: 0;
+    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
-body {
-    margin: -20px 0 50px;
-	padding: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-    flex-direction: column;
-	background: linear-gradient(to bottom, #394979, #727dc6, #494a79);
-}
+/*body {*/
+/*    margin: -20px 0 50px;*/
+/*	padding: 0;*/
+/*	display: flex;*/
+/*	justify-content: center;*/
+/*	align-items: center;*/
+/*	min-height: 100vh;*/
+/*    flex-direction: column;*/
+/*}*/
 
 h1 {
     font-weight: bold;

@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+header {
+    background: #50b3a2;
+    color: white;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #e8491d 3px solid;
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header li {
+    float: left;
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+header #branding {
+    float: left;
+}
+
+header #branding h1 {
+    margin: 0;
+}
+
+header nav {
+    float: right;
+    margin-top: 10px;
+}
+
+header .highlight, header .current a {
+    color: #e8491d;
+    font-weight: bold;
+}
+
+header a:hover {
+    color: #cccccc;
+    font-weight: bold;
+}
+
+table {
+    width: 40%;
+    border-collapse: collapse;
+    clear: both;
+    margin-top: 140px;
+}
+
+table, th, td {
+    text-align: center;
+    padding: 20px 40px;
+    background-color: #FAF0E6;
+    border-radius: 13px;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+.editButton {
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 13px;
+    background-color: #FFA07A;
+}
+
+.editButton:hover {
+    background-color: #E9967A;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-close:hover {
+    color: #e8491d;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    border-top: 1px solid #e5e5e5;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-action:hover {
+    background-color: #0056b3;
+}
+
+.modal-content {
+    background: #f9f9f9; /* change this to your desired background color */
+    border-radius: 10px; /* change this to your desired border radius */
+    position: relative;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.19), 0px 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.modal-title {
+    font-size: 28px; /* change this to your desired font size */
+    font-weight: 500;
+    color: #333; /* change this to your desired color */
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333; /* change this to your desired color */
+}
+
+.modal-action {
+    background: #007BFF; /* change this to your desired background color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    width: fit-content;
+}
+
+.ReactModal__Overlay {
+    position: fixed;
+    top: 500px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ReactModal__Content {
+    width: fit-content;
+    height: fit-content;
+    overflow: auto;
+}
+
+.button-add{
+    padding-top: 100px;
+}
+
+.ReactModal__Body--open {
+    padding-top: 100px;
+    justify-content: center;
+}

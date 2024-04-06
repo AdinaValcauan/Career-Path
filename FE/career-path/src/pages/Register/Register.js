@@ -1,13 +1,13 @@
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "./Register.css";
 import {registerService} from "../../services/registerService";
 import PasswordChecklist from "react-password-checklist";
+import {useEffectValidation} from "../../components/useEffectValidation";
 
 function Register() {
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const PASSWORD_REGEX =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     const emailRef = useRef();
     const errRef = useRef();
@@ -33,27 +33,8 @@ function Register() {
 
     const navigate = useNavigate();
 
-    // check if email is valid
-    useEffect(() => {
-        if (!email) {
-            setValidEmail(false);
-        } else if (EMAIL_REGEX.test(email)) {
-            setValidEmail(true);
-        } else {
-            setValidEmail(false);
-        }
-    }, [email]);
-
-    // check if password is valid
-    useEffect(() => {
-        if (!password) {
-            setValidPassword(false);
-        } else if (PASSWORD_REGEX.test(password)) {
-            setValidPassword(true);
-        } else {
-            setValidPassword(false);
-        }
-    }, [password]);
+    useEffectValidation(email, EMAIL_REGEX, setValidEmail);
+    useEffectValidation(password, PASSWORD_REGEX, setValidPassword);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

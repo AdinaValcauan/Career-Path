@@ -40,6 +40,8 @@ public class UserService implements IUserService {
 
         if (user.getRoles() == null || user.getRoles().isEmpty() || user.getRoles().equals("")) {
             user.setRoles("user");
+        } else if (user.getRoles().equals("admin")){
+            user.setRoles("admin");
         }
 
         userRepository.save(user);

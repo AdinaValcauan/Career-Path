@@ -35,13 +35,20 @@ public class UserController {
     }
 
     @PostMapping("/register")
+    public String register(@RequestBody User user){
+
+        return userService.addUser(user);
+    }
+
+    @PostMapping("/addUser")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public String addUser(@RequestBody User user){
 
         return userService.addUser(user);
     }
 
     @PostMapping("/login")
-    public String addUser(@RequestBody AuthRequest authRequest){
+    public String loginUser(@RequestBody AuthRequest authRequest){
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUserEmail(), authRequest.getUserPassword()));
         if (authenticate.isAuthenticated()){
             return jwtService.generateToken(authRequest.getUserEmail());
@@ -51,7 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/getUsers")
-    @PreAuthorize("hasAnyAuthority('admin')") //this helps us authorize only specific roles
+    //@PreAuthorize("hasAnyAuthority('admin')") //this helps us authorize only specific roles
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 
 const withRole = (WrappedComponent, allowedRoles) => {
     return class WithRole extends React.Component {
@@ -9,7 +9,7 @@ const withRole = (WrappedComponent, allowedRoles) => {
             if (allowedRoles.includes(userRole)) {
                 return <WrappedComponent {...this.props} />;
             } else {
-                return <Navigate to="/" />;
+                return <Navigate to="/"/>;
             }
         }
     };
