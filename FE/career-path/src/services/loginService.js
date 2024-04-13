@@ -10,7 +10,11 @@ export const loginService = async (userEmail, userPassword) => {
             sessionStorage.setItem("token", token);
 
             const decodedToken = jwtDecode(token);
+
             const userRole = decodedToken.roles;
+            const userId = decodedToken.id;
+
+            sessionStorage.setItem("userId", userId);
 
             return {userRole, error: null};
         }

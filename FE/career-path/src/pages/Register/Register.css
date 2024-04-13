@@ -60,13 +60,14 @@ input {
     width: 300px;
 }
 
-button {
-    background: #ff7f50; 
+.registerButton {
+    background: #ff7f50;
     border: none;
-    border-radius: 4px;
+    border-radius: 13px;
     color: #fff;
     font-weight: bold;
     height: 40px;
+    /* width: 200px; */
     cursor: pointer;
 }
 

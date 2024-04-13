@@ -38,7 +38,7 @@ public class UserService implements IUserService {
             throw new UserAlreadyExistsException("User already exists!");
         }
 
-        if (user.getRoles() == null || user.getRoles().isEmpty() || user.getRoles().equals("")) {
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
             user.setRoles("user");
         } else if (user.getRoles().equals("admin")){
             user.setRoles("admin");
@@ -50,10 +50,23 @@ public class UserService implements IUserService {
 
     public User updateUser(int id, User user) {
         User existingUser = userRepository.findById(id).get();
-        existingUser.setEmail(user.getEmail());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setPassword(user.getPassword());
+
+        if (user.getFirstName()!=null && !user.getFirstName().isEmpty()) {
+            existingUser.setFirstName(user.getFirstName());
+        }
+        if (user.getLastName()!=null && !user.getLastName().isEmpty()) {
+            existingUser.setLastName(user.getLastName());
+        }
+        if (user.getEmail()!=null && !user.getEmail().isEmpty()) {
+            existingUser.setEmail(user.getEmail());
+        }
+        if (user.getPassword()!=null && !user.getEmail().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        if (user.getRoles()!=null && !user.getRoles().isEmpty()) {
+            existingUser.setRoles(user.getRoles());
+        }
+
         return userRepository.save(existingUser);
     }
 
@@ -78,6 +91,17 @@ public class UserService implements IUserService {
         User user = userOptional.get();
 
         return user.getRoles();
+    }
+
+    public Integer getUserByEmail(String userEmail) {
+        Optional<User> userOptional = userRepository.findByEmail(userEmail);
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        User user = userOptional.get();
+
+        return user.getId();
     }
 
 }

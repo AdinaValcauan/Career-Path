@@ -20,4 +20,6 @@ public interface IUserService extends UserDetailsService {
 
     String getUserRoles(String userEmail);
 
+    Integer getUserByEmail(String userEmail);
+
 }

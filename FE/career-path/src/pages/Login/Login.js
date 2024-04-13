@@ -72,7 +72,7 @@ function Login() {
                     </label>
                     <br></br>
                     <br></br>
-                    <button type="submit">Login</button>
+                    <button className="loginButton" type="submit">Login</button>
                 </form>
                 <p className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">
                     {errMsg}

@@ -165,7 +165,7 @@ function Register() {
                         )}
                     </label>
                     <br></br>
-                    <button type="submit">Register</button>
+                    <button className="registerButton" type="submit">Register</button>
                 </form>
                 <p className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">
                     {errMsg}

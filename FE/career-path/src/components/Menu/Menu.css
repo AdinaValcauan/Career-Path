@@ -1,46 +1,3 @@
-/* 
-
-.menu {
-    width: 200px;
-    transition: width 0.3s ease;
-    background-color: #F8F8FF;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    position: fixed;
-}
-
-.menu.closed {
-    width: 80px;
-}
-
-.menu .icon {
-    /* Styles for the icons go here 
-}
-
-.menu .label {
-    /* Styles for the text labels go here 
-}
-
-.icon {
-    width: 24px;
-    height: 24px;
-  }
-
-ul {
-    margin-top: 150px;
-    list-style-type: none;
-  }
-
-ul li {
-    margin-bottom: 40px;
-}
-
-.label {
-    color: black;
-    font-size: 20px;
-    margin-left: 20px;
-  } */
 * {
     font-family: 'Poppins', sans-serif;
 }
@@ -99,6 +56,10 @@ ul li {
     transition: all 0.2s ease-in-out;
 }
 
+.menu.hidden {
+    visibility: hidden;
+}
+
 .menu-icon {
     display: none;
 }
@@ -153,4 +114,28 @@ ul li {
         font-size: 1.2rem;
         color: #222;
     }
+}
+
+.menu.small {
+    height: 80px;
+    width: 140px;
+    right: 0;
+    left: auto;
+    justify-content: center;
+}
+
+.menu.small .nav-menu,
+.menu.small .menu-icon {
+    display: none; /* ascunde elementele de meniu și iconița de meniu */
+}
+
+.menu.open {
+    display: flex;
+    transition: display 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+/*TODO: sa se deschida meniul daca e*/
+.menu.open .nav-menu {
+
 }

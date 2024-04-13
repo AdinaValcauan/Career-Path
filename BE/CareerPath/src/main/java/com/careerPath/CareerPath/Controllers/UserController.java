@@ -58,12 +58,12 @@ public class UserController {
     }
 
     @GetMapping("/getUsers")
-    //@PreAuthorize("hasAnyAuthority('admin')") //this helps us authorize only specific roles
+    @PreAuthorize("hasAnyAuthority('admin')") //this helps us authorize only specific roles
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/getUserById/{id}")
     public User getUserById(@PathVariable Integer id){
         return userService.getUserById(id);
     }
@@ -73,7 +73,8 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/deleteUser/{id}")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public void deleteUser(@PathVariable int id){
         userService.deleteUser(id);
     }

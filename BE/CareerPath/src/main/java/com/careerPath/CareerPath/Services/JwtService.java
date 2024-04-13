@@ -26,7 +26,9 @@ public class JwtService implements IJwtService {
     public String generateToken(String userEmail){
         Map<String, String> claims = new HashMap<>();
         String roles = userService.getUserRoles(userEmail);
+        Integer id = userService.getUserByEmail(userEmail);
         claims.put("roles", roles);
+        claims.put("id", String.valueOf(id));
 
         return Jwts.builder()
                 .setClaims(claims)

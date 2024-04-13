@@ -1,7 +1,7 @@
 import "./ManageUsersAdmin.css";
 import {useEffect, useState} from 'react';
 import Modal from 'react-modal';
-import {addUserService, getUsersService} from "../../services/userService";
+import {addUserService, deleteUserService, getUsersService, updateUserService} from "../../services/userService";
 import Menu from "../../components/Menu/Menu";
 import {MenuItemsAdmin} from "../../components/Menu/MenuItemsAdmin";
 import {useEffectValidation} from "../../components/useEffectValidation";
@@ -14,30 +14,40 @@ const ManageUsersAdmin = ({user}) => {
 
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+
     const [firstName, setFirstName] = useState("");
     const [firstNameFocus, setFirstNameFocus] = useState(false);
+    const [updateFirstName, setUpdateFirstName] = useState("");
 
     const [lastName, setLastName] = useState("");
     const [lastNameFocus, setLastNameFocus] = useState(false);
+    const [updateLastName, setUpdateLastName] = useState("");
 
     const [email, setEmail] = useState("");
     const [validEmail, setValidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
+    const [updateEmail, setUpdateEmail] = useState("");
+    const [validUpdateEmail, setValidUpdateEmail] = useState(false);
 
     const [password, setPassword] = useState("");
     const [validPassword, setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
     const [passwordTouched, setPasswordTouched] = useState(false);
+    const [updatePassword, setUpdatePassword] = useState("");
+    const [validUpdatePassword, setValidUpdatePassword] = useState(false);
 
     const [roles, setRoles] = useState("");
     const [rolesFocus, setRolesFocus] = useState(false);
+    const [updateRoles, setUpdateRoles] = useState("");
 
     const [errMsg, setErrMsg] = useState(""); // error message to display
-    const [succes, setSucces] = useState(false); // true if form is valid
+    const [success, setSuccess] = useState(false); // true if form is valid
 
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalPlacement, setModalPlacement] = useState('center')
+
+    const [editId, setEditId] = useState(-1);
 
     useEffectValidation(email, EMAIL_REGEX, setValidEmail);
     useEffectValidation(password, PASSWORD_REGEX, setValidPassword);
@@ -72,15 +82,76 @@ const ManageUsersAdmin = ({user}) => {
         setUsers(sortedUsers);
     };
 
-    const handleEditClick = (user) => {
-        setSelectedUser(user);
-    };
+    const handleEdit = (id) => {
+        setEditId(id);
 
-    const handleSave = async (updatedUser) => {
-        await updateUserService(updatedUser);
-        await fetchUsers();
-        setSelectedUser(null);
-    };
+
+        const userToEdit = users.find(user => user.id === id);
+        setUpdateFirstName(userToEdit.firstName);
+        setUpdateLastName(userToEdit.lastName);
+        setUpdateEmail(userToEdit.email);
+        setUpdateRoles(userToEdit.roles);
+    }
+
+    useEffectValidation(updateEmail, EMAIL_REGEX, setValidUpdateEmail);
+    useEffectValidation(updatePassword, PASSWORD_REGEX, setValidUpdatePassword);
+
+    const handleUpdate = async (id) => {
+        setIsLoading(true);
+        setErrMsg("");
+
+        if (updateEmail && !validUpdateEmail) {
+            setErrMsg("Not a valid email");
+            setIsLoading(false);
+            return;
+        }
+        if (updatePassword && !validUpdatePassword) {
+            setErrMsg("Not a valid password");
+            setIsLoading(false);
+            return;
+        }
+
+        const updatedUser = {id, updateFirstName, updateLastName, updateEmail, updatePassword, updateRoles};
+
+        const {success, error} = await updateUserService(updatedUser);
+
+        if (error) {
+            setErrMsg(error);
+        } else if (success) {
+            await fetchUsers();
+            setEditId(-1);
+
+            setUpdateFirstName("");
+            setUpdateLastName("");
+            setUpdateEmail("");
+            setUpdatePassword("");
+            setUpdateRoles("");
+        }
+
+        setIsLoading(false);
+    }
+
+    const handleDelete = async (id) => {
+        const {success, error} = await deleteUserService(id);
+
+        if (error) {
+            setErrMsg(error);
+        } else if (success) {
+            await fetchUsers();
+        }
+    }
+
+    const handleExit = () => {
+        setEditId(-1); // Exit edit mode
+
+        fetchUsers();
+        // Reset the update fields
+        setUpdateFirstName("");
+        setUpdateLastName("");
+        setUpdateEmail("");
+        setUpdatePassword("");
+        setUpdateRoles("");
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -125,34 +196,70 @@ const ManageUsersAdmin = ({user}) => {
             <table>
                 <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
                     <th>Email</th>
+                    <th>Password</th>
                     <th>Role</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody style={{}}>
                 {users.map(user => (
-                    <tr key={user.id}>
-                        <td>{user.firstName} {user.lastName}</td>
-                        <td>{user.email}</td>
-                        <td>{user.roles}</td>
-                        <td>
-                            <button className="editButton" onClick={() => handleEditClick(user)}>Edit</button>
-                        </td>
-                    </tr>
+                    user.id === editId ?
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td><input type="text" value={updateFirstName}
+                                       onChange={e => setUpdateFirstName(e.target.value)}/>
+                            </td>
+                            <td><input type="text" value={updateLastName}
+                                       onChange={e => setUpdateLastName(e.target.value)}/>
+                            </td>
+                            <td><input type="text" value={updateEmail} onChange={e => setUpdateEmail(e.target.value)}/>
+                            </td>
+                            <td><input type="text" placeholder="Enter new password" value={updatePassword}
+                                       onChange={e => setUpdatePassword(e.target.value)}/>
+                            </td>
+                            <td><input type="text" value={updateRoles} onChange={e => setUpdateRoles(e.target.value)}/>
+                            </td>
+                            <td>
+                                <button className="editButton" onClick={() => handleUpdate(user.id)}>Update</button>
+                            </td>
+                            <td>
+                                <button className="editButton" onClick={handleExit}>Exit</button>
+                            </td>
+                            <td>
+                                <p className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">
+                                    {errMsg}
+                                </p>
+                            </td>
+                        </tr>
+                        :
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.firstName}</td>
+                            <td> {user.lastName}</td>
+                            <td>{user.email}</td>
+                            <td></td>
+                            <td>{user.roles}</td>
+                            <td>
+                                <button className="editButton" onClick={() => handleEdit(user.id)}>Edit</button>
+                            </td>
+                            <td>
+                                <button className="editButton" onClick={() => handleDelete(user.id)}>Delete</button>
+                            </td>
+                            <td>
+                                <p className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">
+                                    {errMsg}
+                                </p>
+                            </td>
+                        </tr>
                 ))}
                 </tbody>
             </table>
-            {/*{selectedUser && (*/}
-            {/*    <EditUser*/}
-            {/*        user={selectedUser}*/}
-            {/*        onSave={handleSave}*/}
-            {/*        onClose={() => setSelectedUser(null)}*/}
-            {/*    />*/}
-            {/*)}*/}
 
-            <button onClick={handleOpenModal}>Add</button>
+            <button className="editButton" onClick={handleOpenModal}>Add</button>
             <Modal
                 isOpen={showModal}
                 position={modalPlacement}
@@ -180,7 +287,7 @@ const ManageUsersAdmin = ({user}) => {
                             {errMsg}
                         </p>
                         <br></br>
-                        <button className="modal-action" type="submit" onClick={handleSubmit}>Save</button>
+                        <button className="editButton" type="submit" onClick={handleSubmit}>Save</button>
                     </div>
                 </div>
             </Modal>
