@@ -40,22 +40,21 @@ const ManageUsersAdmin = ({user}) => {
     const [rolesFocus, setRolesFocus] = useState(false);
     const [updateRoles, setUpdateRoles] = useState("");
 
-    const [errMsg, setErrMsg] = useState(""); // error message to display
-    const [success, setSuccess] = useState(false); // true if form is valid
+    const [errMsgLine, setErrMsgLine] = useState(""); // error message to display
+    const [errMsgAdd, setErrMsgAdd] = useState(""); // error message to display
+    const [successMsg, setSuccessMsg] = useState(false); // true if form is valid
 
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalPlacement, setModalPlacement] = useState('center')
 
-    const [editId, setEditId] = useState(-1);
+    const [editId, setEditId] = useState(null);
 
     useEffectValidation(email, EMAIL_REGEX, setValidEmail);
     useEffectValidation(password, PASSWORD_REGEX, setValidPassword);
 
     const handleOpenModal = () => {
-        console.log("open modal")
         setShowModal(true);
-        console.log(showModal);
     };
 
     const handleCloseModal = () => {
@@ -63,7 +62,7 @@ const ManageUsersAdmin = ({user}) => {
     };
 
     useEffect(() => {
-        fetchUsers();
+        fetchUsers().then(r => console.log("Users fetched"));
     }, []);
 
     const fetchUsers = async () => {
@@ -85,7 +84,6 @@ const ManageUsersAdmin = ({user}) => {
     const handleEdit = (id) => {
         setEditId(id);
 
-
         const userToEdit = users.find(user => user.id === id);
         setUpdateFirstName(userToEdit.firstName);
         setUpdateLastName(userToEdit.lastName);
@@ -98,15 +96,15 @@ const ManageUsersAdmin = ({user}) => {
 
     const handleUpdate = async (id) => {
         setIsLoading(true);
-        setErrMsg("");
+        setErrMsgLine("");
 
         if (updateEmail && !validUpdateEmail) {
-            setErrMsg("Not a valid email");
+            setErrMsgLine("Not a valid email");
             setIsLoading(false);
             return;
         }
         if (updatePassword && !validUpdatePassword) {
-            setErrMsg("Not a valid password");
+            setErrMsgLine("Not a valid password");
             setIsLoading(false);
             return;
         }
@@ -116,10 +114,10 @@ const ManageUsersAdmin = ({user}) => {
         const {success, error} = await updateUserService(updatedUser);
 
         if (error) {
-            setErrMsg(error);
+            setErrMsgLine(error);
         } else if (success) {
             await fetchUsers();
-            setEditId(-1);
+            setEditId(null);
 
             setUpdateFirstName("");
             setUpdateLastName("");
@@ -135,14 +133,14 @@ const ManageUsersAdmin = ({user}) => {
         const {success, error} = await deleteUserService(id);
 
         if (error) {
-            setErrMsg(error);
+            setErrMsgLine(error);
         } else if (success) {
             await fetchUsers();
         }
     }
 
     const handleExit = () => {
-        setEditId(-1); // Exit edit mode
+        setEditId(null); // Exit edit mode
 
         fetchUsers();
         // Reset the update fields
@@ -156,24 +154,25 @@ const ManageUsersAdmin = ({user}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setErrMsg("");
+        setErrMsgAdd("");
+        setSuccessMsg("")
 
         if (!email || !password || !firstName || !lastName || !roles) {
-            setErrMsg("Please fill in all fields");
+            setErrMsgAdd("Please fill in all fields");
             setIsLoading(false);
             return;
         }
 
         if (!validEmail && !validPassword) {
-            setErrMsg("Please enter a valid email and password");
+            setErrMsgAdd("Please enter a valid email and password");
             setIsLoading(false);
             return;
         } else if (!validEmail) {
-            setErrMsg("Please enter a valid email");
+            setErrMsgAdd("Please enter a valid email");
             setIsLoading(false);
             return;
         } else if (!validPassword) {
-            setErrMsg("Please enter a valid password");
+            setErrMsgAdd("Please enter a valid password");
             setIsLoading(false);
             return;
         }
@@ -181,7 +180,7 @@ const ManageUsersAdmin = ({user}) => {
         const {success, error} = await addUserService(firstName, lastName, email, password, roles);
 
         if (error) {
-            setErrMsg(error);
+            setErrMsgAdd(error);
         } else if (success) {
             await fetchUsers();
             handleCloseModal();
@@ -189,7 +188,7 @@ const ManageUsersAdmin = ({user}) => {
     }
 
     return (
-        <div className="container">
+        <div className="manage-container">
             <Menu menuItems={MenuItemsAdmin}/>
             {/*<Hero/>*/}
 
@@ -210,18 +209,21 @@ const ManageUsersAdmin = ({user}) => {
                     user.id === editId ?
                         <tr key={user.id}>
                             <td>{user.id}</td>
-                            <td><input type="text" value={updateFirstName}
+                            <td><input className="edit-input" type="text" value={updateFirstName}
                                        onChange={e => setUpdateFirstName(e.target.value)}/>
                             </td>
-                            <td><input type="text" value={updateLastName}
+                            <td><input className="edit-input" type="text" value={updateLastName}
                                        onChange={e => setUpdateLastName(e.target.value)}/>
                             </td>
-                            <td><input type="text" value={updateEmail} onChange={e => setUpdateEmail(e.target.value)}/>
+                            <td><input className="edit-input" type="text" value={updateEmail}
+                                       onChange={e => setUpdateEmail(e.target.value)}/>
                             </td>
-                            <td><input type="text" placeholder="Enter new password" value={updatePassword}
+                            <td><input className="edit-input" type="text" placeholder="Enter new password"
+                                       value={updatePassword}
                                        onChange={e => setUpdatePassword(e.target.value)}/>
                             </td>
-                            <td><input type="text" value={updateRoles} onChange={e => setUpdateRoles(e.target.value)}/>
+                            <td><input className="edit-input" type="text" value={updateRoles}
+                                       onChange={e => setUpdateRoles(e.target.value)}/>
                             </td>
                             <td>
                                 <button className="editButton" onClick={() => handleUpdate(user.id)}>Update</button>
@@ -230,8 +232,8 @@ const ManageUsersAdmin = ({user}) => {
                                 <button className="editButton" onClick={handleExit}>Exit</button>
                             </td>
                             <td>
-                                <p className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">
-                                    {errMsg}
+                                <p className={errMsgLine ? "errMsgLine" : "offscreen"} aria-live="assertive">
+                                    {errMsgLine}
                                 </p>
                             </td>
                         </tr>
@@ -249,11 +251,11 @@ const ManageUsersAdmin = ({user}) => {
                             <td>
                                 <button className="editButton" onClick={() => handleDelete(user.id)}>Delete</button>
                             </td>
-                            <td>
-                                <p className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">
-                                    {errMsg}
-                                </p>
-                            </td>
+                            {/*<td>*/}
+                            {/*    <p className={errMsgLine[user.id] ? "errMsgLine" : "offscreen"} aria-live="assertive">*/}
+                            {/*        {errMsgLine[user.id]}*/}
+                            {/*    </p>*/}
+                            {/*</td>*/}
                         </tr>
                 ))}
                 </tbody>
@@ -283,8 +285,8 @@ const ManageUsersAdmin = ({user}) => {
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <p className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive">
-                            {errMsg}
+                        <p className={errMsgAdd ? "errMsgAdd" : "offscreen"} aria-live="assertive">
+                            {errMsgAdd}
                         </p>
                         <br></br>
                         <button className="editButton" type="submit" onClick={handleSubmit}>Save</button>

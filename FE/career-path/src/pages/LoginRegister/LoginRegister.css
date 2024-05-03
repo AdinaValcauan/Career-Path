@@ -1,0 +1,80 @@
+.lr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: row-reverse;
+
+    background-size: cover;
+    background-position: center;
+    background: rgb(195,159,134);
+    background: radial-gradient(circle, rgba(195,159,134,1) 0%, rgba(193,158,133,1) 100%);
+}
+
+.lr-container-reverse{
+    flex-direction: row;
+}
+
+.image {
+    transition: all 0.5s ease;
+    background-image: url('../../assets/princ.png');
+    background-size: cover;
+    background-position: center;
+    width: 30em;
+    height: 35em;
+    border-radius: 1em;
+    box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
+}
+
+
+.inside-form{
+    display: flex;
+    flex-direction: column;
+    background-color: #DCDCDC;
+    align-items: center;
+    width: 30em;
+    height: 35em;
+    position: relative;
+    border-radius: 1em;
+    box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
+
+    margin: auto;
+    padding: 0;
+    justify-content: center;
+
+    /*background: rgba(236,116,11,0.5);*/
+    -webkit-backdrop-filter: blur(19px);
+    backdrop-filter: blur(19px);
+    border: 1px solid rgba(236,116,11,0.25);
+}
+
+.switch-button{
+    background: #D2691E;
+    border: none;
+    border-radius: 13px;
+    color: #fff;
+    font-weight: bold;
+    height: 40px;
+    width: 130px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.switch-button:hover {
+    background: #ff6347;
+}
+
+.login-form, .register-form {
+    transition: all 0.5s ease;
+}
+
+.login-text {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    color: #D2691E;
+}
+
+.footer-register {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    margin-top: 40px;}

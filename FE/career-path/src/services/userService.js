@@ -27,12 +27,13 @@ export const updateUserService = async (updatedUser) => {
 
         const response = await api.put(`/updateUser/${user.id}`, user, {headers: {Authorization: `Bearer ${token}`}});
 
-        return response;
+        if (response.status === 200) {
+            return {success: true, error: null};
+        }
     } catch (error) {
 
         throw error;
     }
-    console.log(user)
 };
 
 export const addUserService = async (firstName, lastName, email, password, roles) => {

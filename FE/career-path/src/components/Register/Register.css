@@ -1,0 +1,76 @@
+.register-all{
+    margin-top: 20px;
+}
+
+.h1-register {
+    font-weight: bold;
+    color:#D2691E;
+    text-align: center;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-register {
+    border:none;
+    border-bottom: 1px solid #D9A768;
+    height: 50px;
+    text-align: center;
+    width: 300px;
+    position: relative;
+    background-color: #DCDCDC;
+}
+
+.input-register:focus {
+    border-bottom: 2px solid #D9A768;
+    outline: none;
+}
+
+.input-register::placeholder {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    color:#D9A768;
+}
+
+.input-register:focus::placeholder {
+    font-weight: bolder;
+}
+
+.input-register:-webkit-autofill,
+.input-register:-webkit-autofill:hover,
+.input-register:-webkit-autofill:focus,
+.input-register:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #DCDCDC inset !important;
+    box-shadow: 0 0 0 30px #DCDCDC inset !important;
+    color: #000 !important;
+}
+
+.register-button {
+    background: #D2691E;
+    border: none;
+    border-radius: 13px;
+    color: #fff;
+    font-weight: bold;
+    height: 40px;
+     width: 200px;
+    cursor: pointer;
+
+    display: block;
+    margin: 20px auto auto;
+}
+
+.register-button:hover {
+    background: #ff6347;
+}
+
+.errMsg {
+    color: #ff6347;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+}

@@ -1,7 +1,10 @@
 package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.AuthRequest;
+import com.careerPath.CareerPath.DTOs.UserDTO;
 import com.careerPath.CareerPath.Entities.User;
+import com.careerPath.CareerPath.Mappers.UserDTOMapper;
+import com.careerPath.CareerPath.Mappers.UserMapper;
 import com.careerPath.CareerPath.Services.Interfaces.IJwtService;
 import com.careerPath.CareerPath.Services.Interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -27,12 +31,11 @@ public class UserController {
     @Autowired
     private IJwtService jwtService;
 
+    @Autowired
+    private UserDTOMapper userDTOMapper;
 
-    @GetMapping("/login/{id}")
-    @PreAuthorize("hasAnyAuthority('admin','user')")
-    public User getUserById(@PathVariable int id){
-        return userService.getUserById(id);
-    }
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping("/register")
     public String register(@RequestBody User user){
@@ -42,8 +45,8 @@ public class UserController {
 
     @PostMapping("/addUser")
     @PreAuthorize("hasAnyAuthority('admin')")
-    public String addUser(@RequestBody User user){
-
+    public String addUser(@RequestBody UserDTO userDTO){
+        User user = userMapper.apply(userDTO);
         return userService.addUser(user);
     }
 
@@ -59,18 +62,26 @@ public class UserController {
 
     @GetMapping("/getUsers")
     @PreAuthorize("hasAnyAuthority('admin')") //this helps us authorize only specific roles
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public List<UserDTO> getAllUsers(){
+
+        List<User> users = userService.getAllUsers();
+        return users.stream()
+                .map(userDTOMapper)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/getUserById/{id}")
-    public User getUserById(@PathVariable Integer id){
-        return userService.getUserById(id);
+    @PreAuthorize("hasAnyAuthority('admin', 'user')")
+    public UserDTO getUserById(@PathVariable Integer id){
+        User user = userService.getUserById(id);
+        return userDTOMapper.apply(user);
     }
 
     @PutMapping("/updateUser/{id}")
-    public User updateUser(@PathVariable int id, @RequestBody User user){
-        return userService.updateUser(id, user);
+    public UserDTO updateUser(@PathVariable int id, @RequestBody UserDTO userDTO){
+            User user = userMapper.apply(userDTO);
+            User updatedUser = userService.updateUser(id, user);
+            return userDTOMapper.apply(updatedUser);
     }
 
     @DeleteMapping(value = "/deleteUser/{id}")

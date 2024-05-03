@@ -20,4 +20,3 @@ public class UserDTOMapper implements Function<User, UserDTO> {
         );
     }
 }
-//needs more work

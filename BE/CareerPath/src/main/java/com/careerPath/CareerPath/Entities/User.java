@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,4 +30,7 @@ public class User  {
     private String password;
     @Column(name="roles", columnDefinition = "string default 'user'")
     private String roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<DiaryEntry> diaryEntries;
 }
