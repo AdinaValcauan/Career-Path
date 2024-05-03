@@ -7,7 +7,7 @@ export const MenuItemsAdmin = [
     },
     {
         title: "Jurnal în carieră",
-        url: "Journal", //check here
+        url: "diary", //check here
         cName: "nav-links",
         icon: "fa-solid fa-book",
     },
