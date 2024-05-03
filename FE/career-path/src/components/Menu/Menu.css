@@ -8,11 +8,13 @@
     width: 95%;
     height: 80px;
     border-radius: 13px;
-    position: relative;
+    position: absolute;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
+
+    margin: 0;
 }
 
 .logoc {

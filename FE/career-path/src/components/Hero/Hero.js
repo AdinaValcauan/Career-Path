@@ -5,15 +5,13 @@ function Hero(props) {
     return (
         <>
             <div className={props.hname}>
-                <img src={coerb1} alt="Hero Image" className="hero-image"/>
+                <img src={props.image} alt="Hero Image" className="hero-image"/>
 
-                <div className="text">
-                    <h1 className="hero-title">Jurnal de Călătorie în carieră</h1>
-                    <p className="hero-subtitle">
-                        visează departe, planifică răbdător, acționează încrezător
-                    </p>
-                    <a href="details" className="buttonDetails">
-                        Find out more
+                <div className="hero-text">
+                    <h1 className="hero-title">{props.title}</h1>
+                    <p className="hero-subtitle">{props.subtitle}</p>
+                    <a href={props.link} className="buttonDetails">
+                        {props.buttonText}
                     </a>
                 </div>
             </div>
