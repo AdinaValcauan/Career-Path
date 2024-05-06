@@ -1,14 +1,19 @@
 import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./Login.css";
 import {loginService} from "../../services/loginService";
 
 function Login() {
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
+
     const [errMsg, setErrMsg] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
+    const [passwordFocus, setPasswordFocus] = useState(false);
+    const [passwordTouched, setPasswordTouched] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,6 +39,10 @@ function Login() {
         }
 
         setIsLoading(false);
+    };
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -62,15 +71,26 @@ function Login() {
                     </label>
                     <br></br>
                     <label htmlFor="password">
-                        <input
-                            className="input-login"
-                            type="password"
-                            placeholder="Parola"
-                            id="password"
-                            name="password"
-                            value={userPassword}
-                            onChange={(e) => setUserPassword(e.target.value)}
-                        />
+                        <div className="password-wrapper">
+                            <input
+                                className="input-login"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Parola"
+                                id="password"
+                                name="password"
+                                value={userPassword}
+                                onChange={(e) => {
+                                    setUserPassword(e.target.value);
+                                    setPasswordTouched(true);
+                                }}
+                                onFocus={() => setPasswordFocus(true)}
+                                onBlur={() => setPasswordFocus(false)}
+                            />
+                            <button type="button" onClick={handleShowPassword} className="toggle-password-visibility">
+                                {showPassword ? <i className="fa-regular fa-eye-slash"></i> :
+                                    <i className="fa-regular fa-eye"></i>}
+                            </button>
+                            </div>
                     </label>
                     <br></br>
                     <button className="login-button" type="submit">Autentifică-te</button>

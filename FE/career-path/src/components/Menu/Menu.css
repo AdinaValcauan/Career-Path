@@ -22,6 +22,7 @@
     height: auto;
     margin-right: 30px;
     top: 4px;
+    border-radius: 8px;
 }
 
 .nav-menu {
@@ -113,28 +114,4 @@
         font-size: 1.2rem;
         color: #222;
     }
-}
-
-.menu.small {
-    height: 80px;
-    width: 140px;
-    right: 0;
-    left: auto;
-    justify-content: center;
-}
-
-.menu.small .nav-menu,
-.menu.small .menu-icon {
-    display: none; /* ascunde elementele de meniu și iconița de meniu */
-}
-
-.menu.open {
-    display: flex;
-    transition: display 0.3s ease-in-out;
-    cursor: pointer;
-}
-
-/*TODO: sa se deschida meniul daca e*/
-.menu.open .nav-menu {
-
 }

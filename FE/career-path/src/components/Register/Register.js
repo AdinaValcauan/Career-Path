@@ -27,6 +27,7 @@ function Register() {
     const [validPassword, setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
     const [passwordTouched, setPasswordTouched] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const [errMsg, setErrMsg] = useState(""); // error message to display
     const [succes, setSucces] = useState(false); // true if form is valid
@@ -61,28 +62,6 @@ function Register() {
             return;
         }
 
-        // try {
-        //     const response = await fetch("http://localhost:8080/api/register", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({firstName, lastName, email, password}),
-        //     });
-        //
-        //     console.log(response);
-        //
-        //     if (response.ok == true) {
-        //         setSucces(true);
-        //         navigate("/login");
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        //     setErrMsg("Failed to register");
-        // } finally {
-        //     setIsLoading(false);
-        // }
-
         const {success, error} = await registerService(firstName, lastName, email, password);
 
         if (error) {
@@ -90,6 +69,10 @@ function Register() {
         } else if (success) {
             navigate("/login");
         }
+    };
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -142,31 +125,39 @@ function Register() {
                     </label>
                     <br></br>
                     <label htmlFor="password">
-                        <input
-                            className="input-register"
-                            type="password"
-                            placeholder="Parola"
-                            id="password"
-                            name="password"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                setPasswordTouched(true);
-                            }}
-                            onFocus={() => setPasswordFocus(true)}
-                            onBlur={() => setPasswordFocus(false)}
-                        />
-
-                        {passwordTouched && !validPassword && (
-                            <PasswordChecklist
-                                rules={["minLength", "specialChar", "number", "capital"]}
-                                minLength={8}
+                        <div className="password-wrapper">
+                            <input
+                                className="input-register"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Parola"
+                                id="password"
+                                name="password"
                                 value={password}
-                                onChange={(isValid) => {
-                                    setValidPassword(isValid);
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    setPasswordTouched(true);
                                 }}
+                                onFocus={() => setPasswordFocus(true)}
+                                onBlur={() => setPasswordFocus(false)}
                             />
-                        )}
+                            <button type="button" onClick={handleShowPassword} className="toggle-password-visibility">
+                                {showPassword ? <i className="fa-regular fa-eye-slash"></i> :
+                                    <i className="fa-regular fa-eye"></i>}
+                            </button>
+                        </div>
+                        {validPassword ? null : <div className="password-checklist">
+                            {passwordFocus && passwordTouched && !validPassword && (
+                                <PasswordChecklist
+                                    rules={["minLength", "specialChar", "number", "capital"]}
+                                    minLength={8}
+                                    value={password}
+                                    onChange={(isValid) => {
+                                        setValidPassword(isValid);
+                                    }}
+                                />
+                            )}
+                        </div>
+                        }
                     </label>
                     <br></br>
                     <button className="register-button" type="submit">Înregistrează-te</button>

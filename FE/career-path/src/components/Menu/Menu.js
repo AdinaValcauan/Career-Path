@@ -1,45 +1,27 @@
 import React, {Component} from "react";
 import {useState, useEffect} from "react";
 import "./Menu.css";
-import logo from "../../assets/logo.png";
+import log_reg1 from "../../assets/log_reg1.png";
 
 
 const Menu = (props) => {
-    const [isScrolling, setIsScrolling] = useState(false);
     const [clicked, setClicked] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    useEffect(() => {
-    const handleScroll = () => {
-        const isScroll = window.scrollY > 50;
-        setIsScrolling(isScroll);
-
-    };
-
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-    document.removeEventListener("scroll", handleScroll);
-};
-}, []);
 
     const handleClick = () => {
         setClicked(!clicked);
     };
 
     const handleMenuClick = () => {
-        setIsMenuOpen(!isMenuOpen); // Toggle the isMenuOpen state variable when the menu is clicked
+        setIsMenuOpen(!isMenuOpen);
     };
 
-    const menu = isScrolling ? 'menu small' : 'menu';
-    const menuClass = isMenuOpen ? `${menu} open` : menu;
+    const menuClass = isMenuOpen ? 'menu open' : 'menu';
 
         return (
             <nav className={menuClass} onClick={handleMenuClick}>
-                {/* <i className="fas fa-brain"></i> */}
-                {/* <h1 className="logo">Jurnal de Călătorie în carieră</h1> */}
-
                 <img
-                    src={logo}
+                    src={log_reg1}
                     alt="Jurnal de călătorie în carieră"
                     className="logoc"
                 />

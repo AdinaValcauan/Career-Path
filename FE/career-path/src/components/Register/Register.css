@@ -74,3 +74,34 @@
     margin-bottom: 10px;
     font-family: 'Roboto', sans-serif;
 }
+
+.password-checklist {
+    position: absolute;
+    background: #EDEDED;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+    font-size: 11px;
+    color: #D2691E;
+}
+
+.input-register:not(:focus) + .password-checklist {
+    background: transparent;
+    border: none;
+}
+
+.password-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.toggle-password-visibility {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+
+    background-color: #DCDCDC;
+    border: none;
+}

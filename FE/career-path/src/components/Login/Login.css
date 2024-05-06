@@ -75,3 +75,18 @@
     margin-bottom: 10px;
     font-family: 'Roboto', sans-serif;
 }
+
+.password-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.toggle-password-visibility {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+
+    background-color: #DCDCDC;
+    border: none;
+}
