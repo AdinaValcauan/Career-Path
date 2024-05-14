@@ -41,4 +41,24 @@ public class DayController {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/addday")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public String addDay(@RequestBody DayDTO dayDTO){
+        Day day = dayMapper.apply(dayDTO);
+        return dayService.addDay(day);
+    }
+
+    @PutMapping("/updateDay/{dayId}")
+    public DayDTO updateDay(@PathVariable int dayId, @RequestBody DayDTO dayDTO){
+        Day day = dayMapper.apply(dayDTO);
+        Day updatedday = dayService.updateDay(dayId, day);
+        return dayDTOMapper.apply(updatedday);
+    }
+
+    @DeleteMapping(value = "/deleteDay/{dayId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public void deleteDay(@PathVariable int dayId){
+        dayService.deleteDay(dayId);
+    }
+
 }

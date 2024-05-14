@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IDayService {
     List<Day> getAllDays();
-
-    Day getDayById(int id);
+    Day getDayById(int dayId);
+    Day updateDay(int dayId, Day day);
+    void deleteDay(int dayId);
+    String addDay(Day day);
 }

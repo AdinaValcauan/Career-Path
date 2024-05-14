@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,8 +19,26 @@ public class DayService implements IDayService {
         return dayRepository.findAll();
     }
 
-    public Day getDayById(int id) {
-        return dayRepository.findById(id).get();
+    public Day getDayById(int dayId) {
+        return dayRepository.findById(dayId).get();
     }
 
+    public Day updateDay(int dayId, Day day){
+        Day existingDay = dayRepository.findById(dayId).get();
+
+        existingDay.setDayText(day.getDayText());
+        existingDay.setDayNumber(day.getDayNumber());
+
+        return dayRepository.save(existingDay);
+    }
+
+    public void deleteDay(int dayId){
+        Day dayToDelete = dayRepository.findById(dayId).get();
+        dayRepository.delete(dayToDelete);
+    }
+
+    public String addDay(Day day){
+        dayRepository.save(day);
+        return "Day added successfully \n" + day;
+    }
 }

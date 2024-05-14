@@ -31,4 +31,5 @@ public class DiaryEntry {
 
     @Column(name = "entry_date", nullable = false)
     private LocalDate entryDate;
+
 }
