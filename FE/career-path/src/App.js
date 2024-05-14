@@ -9,7 +9,7 @@ import DiaryMainWithRole from "./components/HigherOrderComponents/DiaryMainWithR
 import DiaryDays from "./components/DiaryDays/DiaryDays";
 import UserContext from "./contexts/UserContext";
 import {useState} from "react";
-import LoginRegister from "./pages/LoginRegister/LoginRegister";
+import LoginRegister from "./views/LoginRegister/LoginRegister";
 
 function App() {
     const [user, setUser] = useState(null);

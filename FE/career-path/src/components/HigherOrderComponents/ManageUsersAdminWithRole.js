@@ -1,5 +1,5 @@
 import withRole from './withRole';
-import ManageUsersAdmin from '../../pages/ManageUsersAdmin/ManageUsersAdmin';
+import ManageUsersAdmin from '../../views/ManageUsersAdmin/ManageUsersAdmin';
 
 
 const ManageUsersAdminWithRole = withRole(ManageUsersAdmin, ['admin']);

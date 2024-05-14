@@ -1,0 +1,89 @@
+/*.edit-input {*/
+/*    width: 150px;*/
+/*}*/
+
+/*.errMsgLine .errMsgLine {*/
+/*    color: #ff6347;*/
+/*    text-align: center;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*header {*/
+/*    background: #50b3a2;*/
+/*    color: white;*/
+/*    padding-top: 30px;*/
+/*    min-height: 70px;*/
+/*    border-bottom: #e8491d 3px solid;*/
+/*}*/
+
+/*header a {*/
+/*    color: #ffffff;*/
+/*    text-decoration: none;*/
+/*    text-transform: uppercase;*/
+/*    font-size: 16px;*/
+/*}*/
+
+/*header li {*/
+/*    float: left;*/
+/*    display: inline;*/
+/*    padding: 0 20px 0 20px;*/
+/*}*/
+
+/*header #branding {*/
+/*    float: left;*/
+/*}*/
+
+/*header #branding h1 {*/
+/*    margin: 0;*/
+/*}*/
+
+/*header nav {*/
+/*    float: right;*/
+/*    margin-top: 10px;*/
+/*}*/
+
+/*header .highlight, header .current a {*/
+/*    color: #e8491d;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*header a:hover {*/
+/*    color: #cccccc;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.users-table {*/
+/*    width: 40%;*/
+/*    border-collapse: collapse;*/
+/*    clear: both;*/
+/*    margin: auto;*/
+/*}*/
+
+/*.users-table, th, td {*/
+/*    text-align: center;*/
+/*    padding: 20px 40px;*/
+/*    background-color: #FAF0E6;*/
+/*    border-radius: 13px;*/
+/*}*/
+
+/*.users-table tr:hover {*/
+/*    background-color: #ddd;*/
+/*}*/
+
+/*.editButton {*/
+/*    color: white;*/
+/*    padding: 10px 20px;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    display: inline-block;*/
+/*    font-size: 16px;*/
+/*    margin: 4px 2px;*/
+/*    cursor: pointer;*/
+/*    border-radius: 13px;*/
+/*    border: none;*/
+/*    background-color: #FFA07A;*/
+/*}*/
+
+/*.editButton:hover {*/
+/*    background-color: #E9967A;*/
+/*}*/

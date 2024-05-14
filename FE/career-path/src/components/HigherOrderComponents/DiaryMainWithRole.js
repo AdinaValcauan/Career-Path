@@ -1,5 +1,5 @@
 import withRole from './withRole';
-import DiaryMain from '../../pages/DiaryMain/DiaryMain';
+import DiaryMain from '../../views/DiaryMain/DiaryMain';
 
 
 const DiaryMainWithRole = withRole(DiaryMain, ['admin','user']);

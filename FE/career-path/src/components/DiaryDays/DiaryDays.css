@@ -1,0 +1,24 @@
+/*!* career-path/src/components/DiaryDays/DiaryDays.css *!*/
+/*.diary-days {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));*/
+/*    gap: 1em;*/
+/*    padding: 1em;*/
+/*}*/
+
+/*.day-card {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    text-decoration: none;*/
+/*    color: black;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 1em;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.day-card img {*/
+/*    width: 100%;*/
+/*    height: 200px;*/
+/*    object-fit: cover;*/
+/*}*/

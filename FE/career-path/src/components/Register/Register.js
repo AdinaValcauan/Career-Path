@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import "./Register.css";
 import {registerService} from "../../services/registerService";
 import PasswordChecklist from "react-password-checklist";
-import {useEffectValidation} from "../useEffectValidation";
+import {useEffectValidation} from "../../hooks/useEffectValidation";
 
 function Register() {
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

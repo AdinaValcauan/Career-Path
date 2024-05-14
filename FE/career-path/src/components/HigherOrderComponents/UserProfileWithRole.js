@@ -1,5 +1,5 @@
 import withRole from './withRole';
-import UserProfile from '../../pages/UserProfile/UserProfile';
+import UserProfile from '../../views/UserProfile/UserProfile';
 
 
 const UserProfileWithRole = withRole(UserProfile, ['admin', 'user']);

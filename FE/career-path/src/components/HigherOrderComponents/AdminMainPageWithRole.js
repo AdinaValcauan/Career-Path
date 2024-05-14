@@ -1,5 +1,5 @@
 import withRole from './withRole';
-import AdminMainPage from '../../pages/AdminMainPage/AdminMainPage';
+import AdminMainPage from '../../views/AdminMainPage/AdminMainPage';
 
 
 const AdminMainPageWithRole = withRole(AdminMainPage, ['admin']);
