@@ -39,4 +39,8 @@ public class QuestionService implements IQuestionService {
         Question questionToDelete = questionRepository.findById(questionId).get();
         questionRepository.delete(questionToDelete);
     }
+
+    public List<Question> getQuestionsByDay(int dayId){
+        return questionRepository.findByDay_DayIdOrderByOrder(dayId);
+    }
 }

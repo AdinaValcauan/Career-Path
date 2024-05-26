@@ -10,6 +10,7 @@ import DiaryDays from "./components/DiaryDays/DiaryDays";
 import UserContext from "./contexts/UserContext";
 import {useState} from "react";
 import LoginRegister from "./views/LoginRegister/LoginRegister";
+import DiaryMain from "./views/DiaryMain/DiaryMain";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -23,8 +24,6 @@ function App() {
                 <Route path="/profile" element={<UserProfileWithRole/>}/>
                 <Route path="/mainpageadmin" element={<AdminMainPageWithRole/>}/>
                 <Route path="/diary" element={<DiaryMainWithRole/>}/>
-                {/*<Route path="/diary" element={<DiaryDays/>}/>*/}
-
             </Routes>
         </Router>
         </UserContext.Provider>

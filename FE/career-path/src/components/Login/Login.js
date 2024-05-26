@@ -21,7 +21,7 @@ function Login() {
         setErrMsg("");
 
         if (!userEmail || !userPassword) {
-            setErrMsg("Please fill in all fields");
+            setErrMsg("Completează toate câmpurile!");
             setIsLoading(false);
             return;
         }

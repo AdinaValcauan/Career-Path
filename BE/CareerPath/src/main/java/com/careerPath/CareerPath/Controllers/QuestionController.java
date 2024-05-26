@@ -1,9 +1,11 @@
 package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.QuestionDTO;
+import com.careerPath.CareerPath.Entities.Day;
 import com.careerPath.CareerPath.Entities.Question;
 import com.careerPath.CareerPath.Mappers.QuestionDTOMapper;
 import com.careerPath.CareerPath.Mappers.QuestionMapper;
+import com.careerPath.CareerPath.Services.DayService;
 import com.careerPath.CareerPath.Services.Interfaces.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,9 @@ public class QuestionController {
     @Autowired
     private QuestionDTOMapper questionDTOMapper;
 
+    @Autowired
+    private DayService dayService;
+
     @GetMapping("/questionById/{questionId}")
     @PreAuthorize("hasAnyAuthority('admin','user')")
     public QuestionDTO getQuestionById(@PathVariable int questionId) {
@@ -45,6 +50,8 @@ public class QuestionController {
     @PreAuthorize("hasAnyAuthority('admin')")
     public String addQuestion(@RequestBody QuestionDTO questionDTO){
         Question question = questionMapper.apply(questionDTO);
+        Day day = dayService.getDayById(questionDTO.getDayId());
+        question.setDay(day);
         return questionService.addQuestion(question);
     }
 

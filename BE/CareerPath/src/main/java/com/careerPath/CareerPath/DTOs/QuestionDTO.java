@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class QuestionDTO {
     private int questionId;
     private int dayId;
+    private int order;
     private String questionText;
 }

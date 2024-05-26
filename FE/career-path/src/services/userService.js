@@ -31,7 +31,6 @@ export const updateUserService = async (updatedUser) => {
             return {success: true, error: null};
         }
     } catch (error) {
-
         throw error;
     }
 };
@@ -66,7 +65,7 @@ export const deleteUserService = async (id) => {
     } catch (error) {
         return {success: false, error: 'Failed to delete the user'};
     }
-}
+};
 
 export const getUserByIdService = async () => {
     try {
@@ -80,4 +79,4 @@ export const getUserByIdService = async () => {
         console.error('Error fetching user', error);
         throw error;
     }
-}
+};

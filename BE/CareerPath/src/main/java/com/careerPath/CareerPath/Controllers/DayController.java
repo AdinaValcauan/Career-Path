@@ -25,10 +25,10 @@ public class DayController {
     @Autowired
     private DayDTOMapper dayDTOMapper;
 
-    @GetMapping("/dayById")
+    @GetMapping("/dayById/{dayId}")
     @PreAuthorize("hasAnyAuthority('admin','user')")
-    public DayDTO getDayById(@PathVariable int id) {
-        Day day = dayService.getDayById(id);
+    public DayDTO getDayById(@PathVariable int dayId) {
+        Day day = dayService.getDayById(dayId);
         return dayDTOMapper.apply(day);
     }
 

@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DiaryEntryDTO {
-    private int diaryEntryId;
-    private int userId;
+public class TitleDTO {
+    private int titleId;
+    private String titleText;
+    private int order;
     private int dayId;
-    private LocalDate entryDate;
 }

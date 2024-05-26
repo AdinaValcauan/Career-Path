@@ -10,4 +10,5 @@ public interface IQuestionService {
     String addQuestion(Question question);
     Question updateQuestion(int questionId, Question question);
     void deleteQuestion(int questionId);
+    List<Question> getQuestionsByDay(int dayId);
 }

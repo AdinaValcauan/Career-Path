@@ -43,21 +43,21 @@ function Register() {
         setErrMsg("");
 
         if (!email || !password || !firstName || !lastName) {
-            setErrMsg("Please fill in all fields");
+            setErrMsg("Completează toate câmpurile!");
             setIsLoading(false);
             return;
         }
 
         if (!validEmail && !validPassword) {
-            setErrMsg("Please enter a valid email and password");
+            setErrMsg("Introduceți un email și o parolă valide!");
             setIsLoading(false);
             return;
         } else if (!validEmail) {
-            setErrMsg("Please enter a valid email");
+            setErrMsg("Introduceți un email valid!");
             setIsLoading(false);
             return;
         } else if (!validPassword) {
-            setErrMsg("Please enter a valid password");
+            setErrMsg("Introduceți o parolă validă!");
             setIsLoading(false);
             return;
         }

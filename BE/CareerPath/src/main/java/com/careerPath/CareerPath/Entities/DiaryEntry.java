@@ -1,10 +1,7 @@
 package com.careerPath.CareerPath.Entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+//@RequiredArgsConstructor
 @Entity
 @Table(name = "DiaryEntry")
 public class DiaryEntry {
@@ -32,4 +30,12 @@ public class DiaryEntry {
     @Column(name = "entry_date", nullable = false)
     private LocalDate entryDate;
 
+
+    public int getUserId() {
+        return this.user.getId();
+    }
+
+    public int getDayId() {
+        return this.day.getDayId();
+    }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 public interface IDiaryEntryService {
     List<DiaryEntry> getAllDiaryEntries();
     DiaryEntry getDiaryEntryById(int diaryEntryId);
+    String addDiaryEntry(DiaryEntry diaryEntry);
     DiaryEntry updateDiaryEntry(int diaryEntryId, DiaryEntry diaryEntry);
     void deleteDiaryEntry(int diaryEntryId);
 

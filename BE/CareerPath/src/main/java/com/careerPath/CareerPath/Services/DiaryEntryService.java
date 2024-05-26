@@ -1,6 +1,7 @@
 package com.careerPath.CareerPath.Services;
 
 import com.careerPath.CareerPath.Entities.DiaryEntry;
+import com.careerPath.CareerPath.Entities.Question;
 import com.careerPath.CareerPath.Repositories.DiaryEntryRepository;
 import com.careerPath.CareerPath.Services.Interfaces.IDiaryEntryService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class DiaryEntryService implements IDiaryEntryService {
 
     public DiaryEntry getDiaryEntryById(int diaryEntryId) {
         return diaryEntryRepository.findById(diaryEntryId).get();
+    }
+
+    public String addDiaryEntry(DiaryEntry diaryEntry){
+        diaryEntryRepository.save(diaryEntry);
+        return "Question added successfully \n" + diaryEntry;
     }
 
     public DiaryEntry updateDiaryEntry(int diaryEntryId, DiaryEntry diaryEntry){
