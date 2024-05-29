@@ -23,7 +23,7 @@ public class SubtitleMapper implements Function<SubtitleDTO, Subtitle> {
         subtitle.setSubtitleId(subtitleDTO.getSubtitleId());
         subtitle.setDay(dayService.getDayById(subtitleDTO.getDayId()));
         subtitle.setSubtitleText(subtitleDTO.getSubtitleText());
-        subtitle.setOrder(subtitleDTO.getOrder());
+        subtitle.setOrderForm(subtitleDTO.getOrderForm());
         return subtitle;
     }
 }

@@ -13,7 +13,7 @@ public class SubtitleDTOMapper implements Function<Subtitle, SubtitleDTO> {
         return new SubtitleDTO(
                 subtitle.getSubtitleId(),
                 subtitle.getSubtitleText(),
-                subtitle.getOrder(),
+                subtitle.getOrderForm(),
                 subtitle.getDay().getDayId()
         );
     }

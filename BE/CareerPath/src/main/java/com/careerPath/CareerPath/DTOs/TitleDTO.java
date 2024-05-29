@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class TitleDTO {
     private int titleId;
     private String titleText;
-    private int order;
+    private int orderForm;
     private int dayId;
 }

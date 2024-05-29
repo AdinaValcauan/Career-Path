@@ -23,7 +23,7 @@ public class ParagraphMapper implements Function<ParagraphDTO, Paragraph> {
         paragraph.setParagraphId(paragraphDTO.getParagraphId());
         paragraph.setDay(dayService.getDayById(paragraphDTO.getDayId()));
         paragraph.setParagraphText(paragraphDTO.getParagraphText());
-        paragraph.setOrder(paragraphDTO.getOrder());
+        paragraph.setOrderForm(paragraphDTO.getOrderForm());
         return paragraph;
     }
 }

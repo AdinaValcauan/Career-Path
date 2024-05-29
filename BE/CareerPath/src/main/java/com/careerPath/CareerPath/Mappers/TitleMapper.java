@@ -23,7 +23,7 @@ public class TitleMapper implements Function<TitleDTO, Title> {
         title.setTitleId(titleDTO.getTitleId());
         title.setDay(dayService.getDayById(titleDTO.getDayId()));
         title.setTitleText(titleDTO.getTitleText());
-        title.setOrder(titleDTO.getOrder());
+        title.setOrderForm(titleDTO.getOrderForm());
         return title;
     }
 }

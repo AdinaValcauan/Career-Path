@@ -13,7 +13,7 @@ public class ParagraphDTOMapper implements Function<Paragraph, ParagraphDTO> {
         return new ParagraphDTO(
                 paragraph.getParagraphId(),
                 paragraph.getParagraphText(),
-                paragraph.getOrder(),
+                paragraph.getOrderForm(),
                 paragraph.getDay().getDayId()
         );
     }

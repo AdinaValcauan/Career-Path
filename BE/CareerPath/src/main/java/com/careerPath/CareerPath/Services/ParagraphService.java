@@ -37,6 +37,6 @@ public class ParagraphService implements IParagraphService {
     }
 
     public List<Paragraph> getParagraphsByDay(int dayId){
-        return paragraphRepository.findByDay_DayIdOrderByOrder(dayId);
+        return paragraphRepository.findByDay_DayIdOrderByOrderForm(dayId);
     }
 }

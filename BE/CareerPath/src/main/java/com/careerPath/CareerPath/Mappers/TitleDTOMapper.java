@@ -13,7 +13,7 @@ public class TitleDTOMapper implements Function<Title, TitleDTO> {
         return new TitleDTO(
                 title.getTitleId(),
                 title.getTitleText(),
-                title.getOrder(),
+                title.getOrderForm(),
                 title.getDay().getDayId()
         );
     }

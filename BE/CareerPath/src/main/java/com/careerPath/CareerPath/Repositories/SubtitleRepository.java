@@ -10,5 +10,5 @@ import java.util.List;
 public interface SubtitleRepository extends JpaRepository<Subtitle, Integer> {
     List<Subtitle> findByDay_DayId(int dayId);
 
-    List<Subtitle> findByDay_DayIdOrderByOrder(int dayId);
+    List<Subtitle> findByDay_DayIdOrderByOrderForm(int dayId);
 }

@@ -13,7 +13,7 @@ public class QuestionDTOMapper implements Function<Question, QuestionDTO> {
         return new QuestionDTO(
                 question.getQuestionId(),
                 question.getDay().getDayId(),
-                question.getOrder(),
+                question.getOrderForm(),
                 question.getQuestionText()
         );
     }

@@ -21,10 +21,10 @@ public class Paragraph {
     @Column(name = "paragraph_text")
     private String paragraphText;
 
-    @Column(name = "order")
-    private int order;
+    @Column(name = "order_form")
+    private int orderForm;
 
     @ManyToOne
-    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_Title"))
+    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_Paragraph"))
     private Day day;
 }

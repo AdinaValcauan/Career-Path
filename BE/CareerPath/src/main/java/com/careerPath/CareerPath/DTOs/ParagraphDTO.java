@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class ParagraphDTO {
     private int paragraphId;
     private String paragraphText;
-    private int order;
+    private int orderForm;
     private int dayId;
 }

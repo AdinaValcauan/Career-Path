@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping("/getUsers")
-    @PreAuthorize("hasAnyAuthority('admin')") //this helps us authorize only specific roles
+    @PreAuthorize("hasAnyAuthority('admin')")
     public List<UserDTO> getAllUsers(){
 
         List<User> users = userService.getAllUsers();

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface TitleRepository extends JpaRepository<Title, Integer> {
-    List<Title> findByDay_DayIdOrderByOrder(int dayId);
+    List<Title> findByDay_DayIdOrderByOrderForm(int dayId);
 }

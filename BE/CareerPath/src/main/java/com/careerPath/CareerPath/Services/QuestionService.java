@@ -41,6 +41,6 @@ public class QuestionService implements IQuestionService {
     }
 
     public List<Question> getQuestionsByDay(int dayId){
-        return questionRepository.findByDay_DayIdOrderByOrder(dayId);
+        return questionRepository.findByDay_DayIdOrderByOrderForm(dayId);
     }
 }

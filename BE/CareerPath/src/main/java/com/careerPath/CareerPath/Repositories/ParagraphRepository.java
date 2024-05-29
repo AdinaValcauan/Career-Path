@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ParagraphRepository extends JpaRepository<Paragraph, Integer> {
 
-    List<Paragraph> findByDay_DayIdOrderByOrder(int dayId);
+    List<Paragraph> findByDay_DayIdOrderByOrderForm(int dayId);
 }

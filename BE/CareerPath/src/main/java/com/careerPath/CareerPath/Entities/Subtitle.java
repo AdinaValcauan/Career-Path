@@ -21,10 +21,10 @@ public class Subtitle {
     @Column(name = "subtitle_text")
     private String subtitleText;
 
-    @Column(name = "order")
-    private int order;
+    @Column(name = "order_form")
+    private int orderForm;
 
     @ManyToOne
-    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_Title"))
+    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_subTitle"))
     private Day day;
 }

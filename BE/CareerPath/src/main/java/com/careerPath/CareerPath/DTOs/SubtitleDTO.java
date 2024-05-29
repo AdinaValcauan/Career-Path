@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class SubtitleDTO {
     private int subtitleId;
     private String subtitleText;
-    private int order;
+    private int orderForm;
     private int dayId;
 }

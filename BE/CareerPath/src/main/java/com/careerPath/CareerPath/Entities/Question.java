@@ -24,8 +24,8 @@ public class Question {
     @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_Question"))
     private Day day;
 
-    @Column(name = "order")
-    private int order;
+    @Column(name = "order_form")
+    private int orderForm;
 
     @Column(name = "question_text", nullable = false)
     private String questionText;
