@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './DiaryDays.css';
 import {getDaysService} from "../../services/dayService";
 import DiaryForm from '../DiaryForm/DiaryForm';
+import DiaryEditForm from "../DiaryEditForm/DiaryEditForm";
 
 const DiaryDays = () => {
     const [days, setDays] = useState([]);

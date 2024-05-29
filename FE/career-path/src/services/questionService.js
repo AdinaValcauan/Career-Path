@@ -12,12 +12,13 @@ export const getQuestionsByDayService = async (dayId) => {
     }
 }
 
-export const addQuestionService = async (dayId, questionText) => {
+export const addQuestionService = async (dayId, questionText, order) => {
     try {
         const token = sessionStorage.getItem('token');
         const response = await api.post('/addQuestion', {
             dayId,
-            questionText
+            questionText,
+            order
         }, {headers: {Authorization: `Bearer ${token}`}});
 
         if (response.status === 200) {
@@ -28,10 +29,10 @@ export const addQuestionService = async (dayId, questionText) => {
     }
 };
 
-export const deleteQuestionService = async (id) => {
+export const deleteQuestionService = async (questionId) => {
     try {
         const token = sessionStorage.getItem('token');
-        const response = await api.delete(`/deleteQuestion/${id}`, {headers: {Authorization: `Bearer ${token}`}});
+        const response = await api.delete(`/deleteQuestion/${questionId}`, {headers: {Authorization: `Bearer ${token}`}});
 
         if (response.status === 200) {
             return {success: true, error: null};
@@ -45,11 +46,12 @@ export const updateQuestionService = async (updatedQuestion) => {
     try {
         const token = sessionStorage.getItem('token');
 
-        let questionId = updatedQuestion.id;
+        let questionId = updatedQuestion.questionId;
         let questionText = updatedQuestion.questionText;
         let dayId = updatedQuestion.dayId;
+        let order = updatedQuestion.order;
 
-        const question = {questionId, questionText, dayId};
+        const question = {questionId, questionText, dayId, order};
 
         const response = await api.put(`/updateQuestion/${question.questionId}`, question, {headers: {Authorization: `Bearer ${token}`}});
 
