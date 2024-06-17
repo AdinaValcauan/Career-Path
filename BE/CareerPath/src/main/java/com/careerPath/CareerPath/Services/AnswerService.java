@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -38,5 +39,9 @@ public class AnswerService implements IAnswerService {
     public void deleteAnswer(int answerId){
         Answer answerToDelete = answerRepository.findById(answerId).get();
         answerRepository.delete(answerToDelete);
+    }
+
+    public Optional<Answer> getAnswerByDayAndUser(int questionId, int id){
+        return answerRepository.findByQuestion_QuestionIdAndUser_Id(questionId, id);
     }
 }

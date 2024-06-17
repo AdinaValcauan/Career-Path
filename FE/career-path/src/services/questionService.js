@@ -4,7 +4,6 @@ export const getQuestionsByDayService = async (dayId) => {
     try {
         const token = sessionStorage.getItem('token');
         const response = await api.get(`/getQuestionsByDay/${dayId}`, {headers: {Authorization: `Bearer ${token}`}});
-
         return response;
     } catch (error) {
         console.error('Error fetching questions', error);
@@ -12,13 +11,13 @@ export const getQuestionsByDayService = async (dayId) => {
     }
 }
 
-export const addQuestionService = async (dayId, questionText, order) => {
+export const addQuestionService = async (questionText, dayId, orderForm) => {
     try {
         const token = sessionStorage.getItem('token');
         const response = await api.post('/addQuestion', {
-            dayId,
             questionText,
-            order
+            dayId,
+            orderForm
         }, {headers: {Authorization: `Bearer ${token}`}});
 
         if (response.status === 200) {
@@ -49,9 +48,9 @@ export const updateQuestionService = async (updatedQuestion) => {
         let questionId = updatedQuestion.questionId;
         let questionText = updatedQuestion.questionText;
         let dayId = updatedQuestion.dayId;
-        let order = updatedQuestion.order;
+        let orderForm = updatedQuestion.orderForm;
 
-        const question = {questionId, questionText, dayId, order};
+        const question = {questionId, questionText, dayId, orderForm};
 
         const response = await api.put(`/updateQuestion/${question.questionId}`, question, {headers: {Authorization: `Bearer ${token}`}});
 

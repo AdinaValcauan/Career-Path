@@ -18,7 +18,7 @@ public class Paragraph {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int paragraphId;
 
-    @Column(name = "paragraph_text")
+    @Column(name = "paragraph_text", columnDefinition = "LONGTEXT")
     private String paragraphText;
 
     @Column(name = "order_form")

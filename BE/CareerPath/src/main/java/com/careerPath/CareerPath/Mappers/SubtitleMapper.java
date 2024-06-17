@@ -21,9 +21,9 @@ public class SubtitleMapper implements Function<SubtitleDTO, Subtitle> {
     public Subtitle apply(SubtitleDTO subtitleDTO) {
         Subtitle subtitle = new Subtitle();
         subtitle.setSubtitleId(subtitleDTO.getSubtitleId());
-        subtitle.setDay(dayService.getDayById(subtitleDTO.getDayId()));
         subtitle.setSubtitleText(subtitleDTO.getSubtitleText());
         subtitle.setOrderForm(subtitleDTO.getOrderForm());
+        subtitle.setDay(dayService.getDayById(subtitleDTO.getDayId()));
         return subtitle;
     }
 }

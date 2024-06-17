@@ -18,13 +18,18 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int answerId;
 
-    @Column(name = "question_id", nullable = false)
-    private int questionId;
-
     @Column(name = "answer_text", nullable = false)
     private String answerText;
 
     @ManyToOne
-    @JoinColumn(name = "diary_entry_id", nullable = false, foreignKey = @ForeignKey(name = "FK_diaryentryid_Answers"))
-    private DiaryEntry diaryEntryId;
+    @JoinColumn(name = "question_id", nullable = false, foreignKey = @ForeignKey(name = "FK_answer_questionid"))
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_answer_userid"))
+    private User user;
+
+//    @ManyToOne
+//    @JoinColumn(name = "diary_entry_id", nullable = false, foreignKey = @ForeignKey(name = "FK_diaryentryid_Answers"))
+//    private DiaryEntry diaryEntryId;
 }

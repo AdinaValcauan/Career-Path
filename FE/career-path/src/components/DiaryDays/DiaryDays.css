@@ -1,3 +1,15 @@
+.day-button {
+    background: #D2691E;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: bold;
+    height: 30px;
+    width: 120px;
+    cursor: pointer;
+    margin: auto auto 20px 10px;
+}
+
 /*!* career-path/src/components/DiaryDays/DiaryDays.css *!*/
 /*.diary-days {*/
 /*    display: grid;*/

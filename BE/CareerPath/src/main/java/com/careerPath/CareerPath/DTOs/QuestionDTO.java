@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class QuestionDTO {
     private int questionId;
+    private String questionText;
     private int dayId;
     private int orderForm;
-    private String questionText;
 }

@@ -12,8 +12,9 @@ public class AnswerDTOMapper implements Function<Answer, AnswerDTO> {
     public AnswerDTO apply(Answer answer) {
         return new AnswerDTO(
                 answer.getAnswerId(),
-                answer.getQuestionId(),
-                answer.getAnswerText()
+                answer.getAnswerText(),
+                answer.getQuestion().getQuestionId(),
+                answer.getUser().getId()
         );
     }
 }

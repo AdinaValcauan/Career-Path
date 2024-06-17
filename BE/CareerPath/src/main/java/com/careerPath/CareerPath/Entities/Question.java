@@ -20,6 +20,9 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int questionId;
 
+    @Column(name = "question_text", nullable = false)
+    private String questionText;
+
     @ManyToOne
     @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_Question"))
     private Day day;
@@ -27,9 +30,6 @@ public class Question {
     @Column(name = "order_form")
     private int orderForm;
 
-    @Column(name = "question_text", nullable = false)
-    private String questionText;
-
-//    @OneToMany(mappedBy = "question")
-//    private List<Answer> answers;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Answer> answers;
 }

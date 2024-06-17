@@ -1,12 +1,12 @@
 import api from "./axiosConfig";
 
-export const addParagraphService = async (paragraphText, dayId, order) => {
+export const addParagraphService = async (paragraphText, orderForm, dayId) => {
     try {
         const token = sessionStorage.getItem('token');
         const response = await api.post('/addParagraph', {
             paragraphText,
-            dayId,
-            order
+            orderForm,
+            dayId
         }, {headers: {Authorization: `Bearer ${token}`}});
 
         if (response.status === 200) {
@@ -35,18 +35,31 @@ export const updateParagraphService = async (updatedParagraph) => {
         const token = sessionStorage.getItem('token');
 
         let paragraphId = updatedParagraph.paragraphId;
-        let paragraphText = updatedParagraph.questionText;
+        let paragraphText = updatedParagraph.paragraphText;
         let dayId = updatedParagraph.dayId;
-        let order = updatedParagraph.order;
+        let orderForm = updatedParagraph.orderForm;
 
-        const paragraph = {paragraphId, paragraphText, dayId, order};
+        const paragraph = {paragraphId, paragraphText, dayId, orderForm};
 
+        console.log(paragraph);
         const response = await api.put(`/updateParagraph/${paragraph.paragraphId}`, paragraph, {headers: {Authorization: `Bearer ${token}`}});
 
+        console.log(response);
         if (response.status === 200) {
             return {success: true, error: null};
         }
     } catch (error) {
+        throw error;
+    }
+}
+
+export const getParagraphsByDayService = async (dayId) => {
+    try {
+        const token = sessionStorage.getItem('token');
+        const response = await api.get(`/getParagraphsByDay/${dayId}`, {headers: {Authorization: `Bearer ${token}`}});
+        return response;
+    } catch (error) {
+        console.error('Error fetching paragraphs', error);
         throw error;
     }
 }

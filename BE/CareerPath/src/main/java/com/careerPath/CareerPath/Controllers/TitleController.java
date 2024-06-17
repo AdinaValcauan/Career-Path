@@ -49,6 +49,7 @@ public class TitleController {
     }
 
     @PutMapping("/updateTitle/{titleId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public TitleDTO updateTitle(@PathVariable int titleId, @RequestBody TitleDTO titleDTO) {
         Title title = titleMapper.apply(titleDTO);
         Title updatedTitle = titleService.updateTitle(titleId, title);

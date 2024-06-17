@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -37,8 +39,12 @@ public class TitleService implements ITitleService {
     }
 
     public void deleteTitle(int titleId) {
-        Title titleToDelete = titleRepository.findById(titleId).get();
-        titleRepository.delete(titleToDelete);
+        Optional<Title> titleToDelete = titleRepository.findById(titleId);
+        if (titleToDelete.isPresent()){
+            titleRepository.delete(titleToDelete.get());
+        } else {
+            throw new NoSuchElementException("No title found with id: " + titleId);
+        }
     }
 
     public List<Title> getTitlesByDay(int dayId){

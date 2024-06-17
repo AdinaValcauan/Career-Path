@@ -1,0 +1,208 @@
+.form-diary {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-left: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 85vw;
+    max-width: 2300px;
+    background-color: #f0f0f0; /* light gray */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* subtle shadow for "pop" effect */
+}
+
+.button-column {
+    padding: 0 0 15px 0;
+    border: none;
+    border-radius: 20px;
+    background-color: #bdbcbc; /* soft pink */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+    display: flex;
+}
+
+button:hover {
+    background-color: #ff4f4f; /* slightly darker pink on hover */
+}
+
+.input-form{
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: #f0f0f0; /* light gray */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* subtle shadow for "pop" effect */
+}
+
+.form-button {
+    background: #D2691E;
+    border: none;
+    /*border-radius: 13px;*/
+    color: #fff;
+    /*font-weight: bold;*/
+    height: 30px;
+    width: 150px;
+    cursor: pointer;
+    margin: 20px auto auto 20px;
+}
+
+.form-button:hover {
+    background: #ff6347;
+}
+
+.delete-button {
+    background: #D2691E;
+    border: none;
+    border-radius: 13px;
+    color: #fff;
+    /*font-weight: bold;*/
+    height: 30px;
+    width: 120px;
+    cursor: pointer;
+    margin: auto auto 20px 10px;
+}
+
+.delete-button:hover {
+    background: #ff6347;
+}
+
+.input-title {
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    border: none;
+    cursor: default;
+    color: #e8491d;
+}
+
+.input-title:focus{
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    border: none;
+    cursor: default;
+
+}
+
+.input-editing:focus {
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* subtle shadow for "pop" effect */
+    background-color: rgb(248, 246, 246);
+    cursor: text;
+}
+
+textarea:focus {
+    outline: none;
+
+}
+
+
+.input-subtitle {
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    font-size: 1.05em;
+    color: #D2691E;
+    font-family: 'Arial', sans-serif;
+    text-align: justify;
+    border: none;
+    cursor: default;
+}
+
+.input-subtitle:focus{
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    cursor: default;
+}
+
+.input-paragraph {
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    text-align: justify;
+    border: none;
+    cursor: default;
+}
+
+.input-paragraph:focus{
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    text-align: justify;
+    border: none;
+    cursor: default;
+}
+
+.input-question {
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    font-size: 1.05em;
+    font-family: 'Arial', sans-serif;
+    text-align: justify;
+    border: none;
+    cursor: default;
+}
+
+.input-question:focus{
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    cursor: default;
+}
+
+.input-answer {
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* subtle shadow for "pop" effect */
+    background-color: rgb(241, 240, 240);
+    cursor: text;
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1.05em;
+    font-family: 'Arial', sans-serif;
+    text-align: justify;
+    border: none;
+    color: darkblue;
+}
+
+.input-answer:focus{
+    width: 83vw;
+    max-width: 2000px;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    cursor: default;
+    color: darkblue;
+}

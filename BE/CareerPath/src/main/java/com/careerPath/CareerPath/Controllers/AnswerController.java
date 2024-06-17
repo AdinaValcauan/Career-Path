@@ -6,10 +6,13 @@ import com.careerPath.CareerPath.Mappers.AnswerDTOMapper;
 import com.careerPath.CareerPath.Mappers.AnswerMapper;
 import com.careerPath.CareerPath.Services.Interfaces.IAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,13 +45,14 @@ public class AnswerController {
     }
 
     @PostMapping("/addAnswer")
-    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('admin','user')")
     public String addAnswer(@RequestBody AnswerDTO answerDTO){
         Answer answer = answerMapper.apply(answerDTO);
         return answerService.addAnswer(answer);
     }
 
     @PutMapping("/updateAnswer/{answerId}")
+    @PreAuthorize("hasAnyAuthority('admin', 'user')")
     public AnswerDTO updateAnswer(@PathVariable int answerId, @RequestBody AnswerDTO answerDTO){
         Answer answer = answerMapper.apply(answerDTO);
         Answer updatedAnswer = answerService.updateAnswer(answerId, answer);
@@ -59,5 +63,16 @@ public class AnswerController {
     @PreAuthorize("hasAnyAuthority('admin')")
     public void deleteAnswer(@PathVariable int answerId){
         answerService.deleteAnswer(answerId);
+    }
+
+    @GetMapping("/getAnswerByQuestionAndUser/{questionId}/{userId}")
+    @PreAuthorize("hasAnyAuthority('admin','user')")
+    public ResponseEntity<AnswerDTO> getAnswerByQuestionAndUser(@PathVariable int questionId, @PathVariable int userId) {
+        Optional<Answer> answer = answerService.getAnswerByDayAndUser(questionId, userId);
+        if (answer.isPresent()) {
+            return new ResponseEntity<>(answerDTOMapper.apply(answer.get()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

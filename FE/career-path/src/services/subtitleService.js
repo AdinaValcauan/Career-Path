@@ -1,12 +1,12 @@
 import api from "./axiosConfig";
 
-export const addSubtitleService = async (dayId, subtitleText, order) => {
+export const addSubtitleService = async (dayId, subtitleText, orderForm) => {
     try {
         const token = sessionStorage.getItem('token');
         const response = await api.post('/addSubtitle', {
-            dayId,
             subtitleText,
-            order
+            orderForm,
+            dayId
         }, {headers: {Authorization: `Bearer ${token}`}});
 
         if (response.status === 200) {
@@ -23,7 +23,7 @@ export const deleteSubtitleService = async (subtitleId) => {
         const response = await api.delete(`/deleteSubtitle/${subtitleId}`, {headers: {Authorization: `Bearer ${token}`}});
 
         if (response.status === 200) {
-            return {success: true, error: null};
+            return response.data;
         }
     } catch (error) {
         return {success: false, error: 'Failed to delete the question'};
@@ -37,9 +37,9 @@ export const updateSubtitleService = async (updatedSubtitle) => {
         let subtitleId = updatedSubtitle.subtitleId;
         let subtitleText = updatedSubtitle.subtitleText;
         let dayId = updatedSubtitle.dayId;
-        let order = updatedSubtitle.order;
+        let orderForm = updatedSubtitle.orderForm;
 
-        const subtitle = {subtitleId, subtitleText, dayId, order};
+        const subtitle = {subtitleId, subtitleText, orderForm,  dayId};
 
         const response = await api.put(`/updateSubtitle/${subtitle.subtitleId}`, subtitle, {headers: {Authorization: `Bearer ${token}`}});
 
@@ -47,6 +47,17 @@ export const updateSubtitleService = async (updatedSubtitle) => {
             return {success: true, error: null};
         }
     } catch (error) {
+        throw error;
+    }
+}
+
+export const getSubtitlesByDayService = async (dayId) => {
+    try {
+        const token = sessionStorage.getItem('token');
+        const response = await api.get(`/getSubtitlesByDay/${dayId}`, {headers: {Authorization: `Bearer ${token}`}});
+        return response;
+    } catch (error) {
+        console.error('Error fetching subtitles', error);
         throw error;
     }
 }

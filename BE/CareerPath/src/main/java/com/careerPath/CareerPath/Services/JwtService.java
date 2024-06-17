@@ -46,7 +46,9 @@ public class JwtService implements IJwtService {
     public String extractUserEmail(String token){
         return extractClaim(token, Claims::getSubject);
     }
-
+    public String extractUserId(String token){
+        return (String) extractClaim(token, claims -> claims.get("id"));
+    }
     public Date extractExpiration(String token){
         return extractClaim(token, Claims::getExpiration);
     }

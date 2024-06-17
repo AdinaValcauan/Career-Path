@@ -21,9 +21,9 @@ public class QuestionMapper implements Function<QuestionDTO, Question> {
     public Question apply(QuestionDTO questionDTO) {
         Question question = new Question();
         question.setQuestionId(questionDTO.getQuestionId());
+        question.setQuestionText(questionDTO.getQuestionText());
         question.setDay(dayService.getDayById(questionDTO.getDayId()));
         question.setOrderForm(questionDTO.getOrderForm());
-        question.setQuestionText(questionDTO.getQuestionText());
         return question;
     }
 }

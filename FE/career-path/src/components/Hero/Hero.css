@@ -74,3 +74,20 @@
     }
 
 }
+
+/*//adaugate recent*/
+@media screen and (max-width: 555px) {
+    .hero-text h1 {
+        font-size: 2rem; /* Reduceti dimensiunea fontului */
+        padding: 10px 20px;
+    }
+
+    .hero-text p {
+        font-size: 1rem; /* Reduceti dimensiunea fontului */
+        padding: 0 0 2rem 0;
+    }
+
+    .hero-text .buttonDetails {
+        font-size: 0.9rem; /* Reduceti dimensiunea fontului */
+    }
+}

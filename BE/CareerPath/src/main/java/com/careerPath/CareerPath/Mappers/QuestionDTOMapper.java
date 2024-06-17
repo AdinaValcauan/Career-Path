@@ -12,9 +12,10 @@ public class QuestionDTOMapper implements Function<Question, QuestionDTO> {
     public QuestionDTO apply(Question question) {
         return new QuestionDTO(
                 question.getQuestionId(),
+                question.getQuestionText(),
                 question.getDay().getDayId(),
-                question.getOrderForm(),
-                question.getQuestionText()
+                question.getOrderForm()
+
         );
     }
 }

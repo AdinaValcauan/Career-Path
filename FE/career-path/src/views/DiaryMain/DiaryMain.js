@@ -5,7 +5,7 @@ import {MenuItemsUser} from "../../components/Menu/MenuItemsUser";
 import DiaryDays from "../../components/DiaryDays/DiaryDays";
 import Footer from "../../components/Footer/Footer";
 import Hero from "../../components/Hero/Hero";
-import coverb from "../../assets/coverb.jpg";
+import colt_de_scris from "../../assets/colt_de_scris1.jpg";
 import UserContext from "../../contexts/UserContext";
 
 const DiaryMain = () => {
@@ -19,7 +19,7 @@ const DiaryMain = () => {
                 <Menu menuItems={isAdmin ? MenuItemsAdmin : MenuItemsUser}/>
                 <Hero
                     hname="user-hero"
-                    image={coverb}
+                    image={colt_de_scris}
                     title="Colțul tău de scris"
                     // subtitle="scrie-ți gândurile în fiecare zi"
                     buttonText="Start"

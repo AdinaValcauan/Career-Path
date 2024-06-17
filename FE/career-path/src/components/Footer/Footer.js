@@ -12,7 +12,7 @@ const Footer = () => {
                     <div>
                         <h1>Jurnal de călătorie în carieră</h1>
                     </div>
-                    <div>
+                    <div className="hrefs">
                         <a href="https://www.facebook.com/consiliereuniversitateatehnica/">
                             <i className="fa-brands fa-facebook"></i>
                         </a>

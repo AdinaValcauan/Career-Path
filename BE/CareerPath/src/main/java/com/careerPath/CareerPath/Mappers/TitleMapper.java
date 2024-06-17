@@ -21,9 +21,9 @@ public class TitleMapper implements Function<TitleDTO, Title> {
     public Title apply(TitleDTO titleDTO) {
         Title title = new Title();
         title.setTitleId(titleDTO.getTitleId());
-        title.setDay(dayService.getDayById(titleDTO.getDayId()));
         title.setTitleText(titleDTO.getTitleText());
         title.setOrderForm(titleDTO.getOrderForm());
+        title.setDay(dayService.getDayById(titleDTO.getDayId()));
         return title;
     }
 }

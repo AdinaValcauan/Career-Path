@@ -9,6 +9,8 @@ public interface IJwtService {
 
     String extractUserEmail(String token);
 
+    String extractUserId(String token);
+
     Date extractExpiration(String token);
 
     Boolean validateToken(String token, UserDetails userDetails);

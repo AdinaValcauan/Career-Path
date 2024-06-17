@@ -1,8 +1,10 @@
 package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.ParagraphDTO;
+import com.careerPath.CareerPath.DTOs.TitleDTO;
 import com.careerPath.CareerPath.Entities.Day;
 import com.careerPath.CareerPath.Entities.Paragraph;
+import com.careerPath.CareerPath.Entities.Title;
 import com.careerPath.CareerPath.Mappers.ParagraphDTOMapper;
 import com.careerPath.CareerPath.Mappers.ParagraphMapper;
 import com.careerPath.CareerPath.Services.DayService;
@@ -59,5 +61,14 @@ public class ParagraphController {
     @PreAuthorize("hasAnyAuthority('admin')")
     public void deleteParagraph(@PathVariable int paragraphId){
         paragraphService.deleteParagraph(paragraphId);
+    }
+
+    @GetMapping(value = "/getParagraphsByDay/{dayId}")
+    @PreAuthorize("hasAnyAuthority('admin', 'user')")
+    public List<ParagraphDTO> getParagraphsByDay(@PathVariable int dayId){
+        List<Paragraph> paragraphs = paragraphService.getParagraphsByDay(dayId);
+        return paragraphs.stream()
+                .map(paragraphDTOMapper)
+                .collect(Collectors.toList());
     }
 }

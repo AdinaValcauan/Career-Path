@@ -27,7 +27,7 @@ const DiaryDays = () => {
                     {days.map(day => (
                         <tr key={day.dayId}>
                             <td>
-                                <button onClick={() => {
+                                <button className="day-button" onClick={() => {
                                     setSelectedDay(day.dayId);
                                 }}>{day.dayText}</button>
                             </td>

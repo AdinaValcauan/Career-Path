@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AnswerDTO {
         private int answerId;
-        private int questionId;
         private String answerText;
+        private int questionId;
+        private int userId;
 }

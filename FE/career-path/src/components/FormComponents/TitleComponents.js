@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
-const TitleComponent = ({ field, handleFieldChange, handleDeleteField}) => {
+const TitleComponent = ({ field, isEditing, handleFieldChange, handleDeleteField}) => {
+    const textareaRef = useRef(null);
+
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+    }, [field.content]);
+
+    const handleOnChange = (e) => {
+        handleFieldChange(e.target.value);
+        const textarea = textareaRef.current;
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+    };
+
     return (
         <div>
-            <input
-                type="text"
+            <textarea
+                ref={textareaRef}
+                className={`input-title ${isEditing ? 'input-editing' : ''}`}
                 placeholder="Titlu"
                 value={field.content}
-                onChange={(event) => handleFieldChange(field.id, event)}
+                onChange={handleOnChange}
+                readOnly={!isEditing}
             />
-            <button onClick={() => handleDeleteField(field.id)}>Șterge</button>
-
+            {isEditing && <button className='delete-button' onClick={() => handleDeleteField(field.id)}>Șterge</button>}
         </div>
     );
 };

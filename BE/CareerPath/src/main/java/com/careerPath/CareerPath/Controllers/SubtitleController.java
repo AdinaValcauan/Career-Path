@@ -60,4 +60,13 @@ public class SubtitleController {
     public void deleteSubtitle(@PathVariable int subtitleId){
         subtitleService.deleteSubtitle(subtitleId);
     }
+
+    @GetMapping(value = "/getSubtitlesByDay/{dayId}")
+    @PreAuthorize("hasAnyAuthority('admin', 'user')")
+    public List<SubtitleDTO> getSubtitlesByDay(@PathVariable int dayId){
+        List<Subtitle> subtitles = subtitleService.getSubtitlesByDay(dayId);
+        return subtitles.stream()
+                .map(subtitleDTOMapper)
+                .collect(Collectors.toList());
+    }
 }

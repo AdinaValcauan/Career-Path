@@ -1,7 +1,9 @@
 package com.careerPath.CareerPath.Controllers;
 
+import com.careerPath.CareerPath.DTOs.ParagraphDTO;
 import com.careerPath.CareerPath.DTOs.QuestionDTO;
 import com.careerPath.CareerPath.Entities.Day;
+import com.careerPath.CareerPath.Entities.Paragraph;
 import com.careerPath.CareerPath.Entities.Question;
 import com.careerPath.CareerPath.Mappers.QuestionDTOMapper;
 import com.careerPath.CareerPath.Mappers.QuestionMapper;
@@ -66,5 +68,14 @@ public class QuestionController {
     @PreAuthorize("hasAnyAuthority('admin')")
     public void deleteQuestion(@PathVariable int questionId){
         questionService.deleteQuestion(questionId);
+    }
+
+    @GetMapping(value = "/getQuestionsByDay/{dayId}")
+    @PreAuthorize("hasAnyAuthority('admin', 'user')")
+    public List<QuestionDTO> getQuestionsByDay(@PathVariable int dayId){
+        List<Question> questions = questionService.getQuestionsByDay(dayId);
+        return questions.stream()
+                .map(questionDTOMapper)
+                .collect(Collectors.toList());
     }
 }
