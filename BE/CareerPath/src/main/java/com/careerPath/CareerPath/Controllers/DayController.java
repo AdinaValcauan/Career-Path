@@ -26,7 +26,7 @@ public class DayController {
     private DayDTOMapper dayDTOMapper;
 
     @GetMapping("/dayById/{dayId}")
-    @PreAuthorize("hasAnyAuthority('admin','user')")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public DayDTO getDayById(@PathVariable int dayId) {
         Day day = dayService.getDayById(dayId);
         return dayDTOMapper.apply(day);
@@ -49,6 +49,7 @@ public class DayController {
     }
 
     @PutMapping("/updateDay/{dayId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public DayDTO updateDay(@PathVariable int dayId, @RequestBody DayDTO dayDTO){
             Day day = dayService.getDayById(dayId);
             day.setDayNumber(dayDTO.getDayNumber());
