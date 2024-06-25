@@ -66,6 +66,7 @@
 @media screen and (max-width: 1270px) {
     .menu {
         z-index: 99;
+        /* height: 100px; */
     }
 
     .nav-menu {
@@ -85,6 +86,10 @@
         border-radius: 13px;
         transition: 0.3s ease-in-out;
     }
+
+    /* .menu{
+        height: 50px;
+    } */
 
     .nav-menu.active {
         left: 0;
@@ -114,5 +119,28 @@
     .menu-icon i {
         font-size: 1.2rem;
         color: #222;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .logoc {
+        display: none;
+    }
+    
+    .menu-icon i {
+        font-size: 1.5rem; /* Mărește dimensiunea iconiței pentru a fi mai accesibilă pe ecranul telefonului */
+    }
+    .nav-menu {
+        position: absolute;
+        top: 0;
+        left: -100%; /* Ascunde meniul în afara ecranului */
+        flex-direction: column; /* Afișează linkurile vertical */
+        transition: 0.3s;
+    }
+    .nav-menu.active {
+        left: 0; /* Afișează meniul când este activ */
+    }
+    .nav-links {
+        padding: 1.5rem; /* Mărește spațiul pentru fiecare link pentru a facilita atingerea pe ecranul tactil */
     }
 }
