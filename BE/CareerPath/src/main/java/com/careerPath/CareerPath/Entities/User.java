@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,8 +30,10 @@ public class User  {
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name="roles", columnDefinition = "string default 'user'")
-    private String roles;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<DiaryEntry> diaryEntries;

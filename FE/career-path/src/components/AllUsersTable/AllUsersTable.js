@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AddUserRow from "../AddUserRow/AddUserRow";
+import {getRolesService} from "../../services/roleService";
 
 const AllUsersTable = ({
                            users,
@@ -17,8 +18,8 @@ const AllUsersTable = ({
                            setUpdateEmail,
                            updatePassword,
                            setUpdatePassword,
-                           updateRoles,
-                           setUpdateRoles,
+                           updateRole,
+                           setUpdateRole,
                            errMsgLine,
                            adding,
                            setAdding,
@@ -26,15 +27,22 @@ const AllUsersTable = ({
                            newLastName,
                            newEmail,
                            newPassword,
-                           newRoles,
+                           newRole,
                            setNewFirstName,
                            setNewLastName,
                            setNewEmail,
                            setNewPassword,
-                           setNewRoles,
+                           setNewRole,
                            successMsg
                        }) => {
 
+    const [roles, setRoles] = useState([]);
+
+    useEffect(() => {
+        getRolesService().then(response => {
+            setRoles(response.data);
+        });
+    }, []);
 
     return (
         <table className="users-table">
@@ -58,12 +66,12 @@ const AllUsersTable = ({
                     newLastName={newLastName}
                     newEmail={newEmail}
                     newPassword={newPassword}
-                    newRoles={newRoles}
+                    newRole={newRole}
                     setNewFirstName={setNewFirstName}
                     setNewLastName={setNewLastName}
                     setNewEmail={setNewEmail}
                     setNewPassword={setNewPassword}
-                    setNewRoles={setNewRoles}
+                    setNewRole={setNewRole}
                     errMsgLine={errMsgLine}
                     successMsg={successMsg}
                 />
@@ -85,8 +93,16 @@ const AllUsersTable = ({
                                    value={updatePassword}
                                    onChange={e => setUpdatePassword(e.target.value)}/>
                         </td>
-                        <td><input className="edit-input" type="text" value={updateRoles}
-                                   onChange={e => setUpdateRoles(e.target.value)}/>
+                        {/*<td><input className="edit-input" type="text" value={updateRole}*/}
+                        {/*           onChange={e => setUpdateRole(e.target.value)}/>*/}
+                        {/*</td>*/}
+                        <td>
+                            <select className="edit-input" value={updateRole}
+                                    onChange={e => setUpdateRole(e.target.value)}>
+                                {roles.map(role => (
+                                    <option key={role.roleId} value={role.roleName}>{role.roleName}</option>
+                                ))}
+                            </select>
                         </td>
                         <td>
                             <button className="edit-button"
@@ -112,7 +128,7 @@ const AllUsersTable = ({
                         <td> {user.lastName}</td>
                         <td>{user.email}</td>
                         <td></td>
-                        <td>{user.roles}</td>
+                        <td>{user.role.name}</td>
                         <td>
                             <button className="edit-button" onClick={() => handleEdit(user.id)}>Editează</button>
                         </td>

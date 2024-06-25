@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DayDTO {
-    private int dayId;
-    private int dayNumber;
-    private String dayText;
-    private int orderDay;
+public class RoleDTO {
+    private int roleId;
+    private String name;
+
 }

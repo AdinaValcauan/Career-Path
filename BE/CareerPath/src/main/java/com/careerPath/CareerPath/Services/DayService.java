@@ -5,6 +5,7 @@ import com.careerPath.CareerPath.Repositories.DayRepository;
 import com.careerPath.CareerPath.Services.Interfaces.IDayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -16,7 +17,8 @@ public class DayService implements IDayService {
     @Autowired
     private DayRepository dayRepository;
     public List<Day> getAllDays() {
-        return dayRepository.findAll();
+        Sort sort = Sort.by(Sort.Direction.ASC, "orderDay");
+        return dayRepository.findAll(sort);
     }
 
     public Day getDayById(int dayId) {
@@ -28,6 +30,7 @@ public class DayService implements IDayService {
 
         existingDay.setDayText(day.getDayText());
         existingDay.setDayNumber(day.getDayNumber());
+        existingDay.setOrderDay(day.getOrderDay());
 
         return dayRepository.save(existingDay);
     }

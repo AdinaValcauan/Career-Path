@@ -13,7 +13,8 @@ public class DayDTOMapper implements Function<Day, DayDTO> {
         return new DayDTO(
                 day.getDayId(),
                 day.getDayNumber(),
-                day.getDayText()
+                day.getDayText(),
+                day.getOrderDay()
         );
     }
 }

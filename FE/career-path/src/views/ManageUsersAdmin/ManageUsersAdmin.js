@@ -27,13 +27,13 @@ const ManageUsersAdmin = ({user}) => {
     const [validUpdatePassword, setValidUpdatePassword] = useState(false);
     const [validNewPassword, setValidNewPassword] = useState(false);
 
-    const [updateRoles, setUpdateRoles] = useState("");
+    const [updateRole, setUpdateRole] = useState("");
 
     const [newFirstName, setNewFirstName] = useState('');
     const [newLastName, setNewLastName] = useState('');
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [newRoles, setNewRoles] = useState('');
+    const [newRole, setNewRole] = useState('');
 
     const [errMsgLine, setErrMsgLine] = useState("");
     const [successMsg, setSuccessMsg] = useState(false);
@@ -54,12 +54,11 @@ const ManageUsersAdmin = ({user}) => {
     const fetchUsers = async () => {
         const response = await getUsersService();
 
-        // sort the users so that the admins are at the top
         const sortedUsers = response.data.sort((a, b) => {
-            if (a.roles === 'admin' && b.roles !== 'admin') {
+            if (a.role && a.role.name === 'admin' && (!b.role || b.role.name !== 'admin')) {
                 return -1;
             }
-            if (a.roles !== 'admin' && b.roles === 'admin') {
+            if ((!a.role || a.role.name !== 'admin') && b.role && b.role.name === 'admin') {
                 return 1;
             }
             return 0;
@@ -74,54 +73,11 @@ const ManageUsersAdmin = ({user}) => {
         setUpdateFirstName(userToEdit.firstName);
         setUpdateLastName(userToEdit.lastName);
         setUpdateEmail(userToEdit.email);
-        setUpdateRoles(userToEdit.roles);
+        setUpdateRole(userToEdit.role.name);
     }
-
-    // useEffect(() => {
-    //     useEffectValidation(updateEmail, EMAIL_REGEX, setValidUpdateEmail);
-    // }, [updateEmail]);
-
-    // useEffect(() => {
-    //     useEffectValidation(updatePassword, PASSWORD_REGEX, setValidUpdatePassword);
-    // }, [updatePassword]);
 
     useEffectValidation(updateEmail, EMAIL_REGEX, setValidUpdateEmail);
     useEffectValidation(updatePassword, PASSWORD_REGEX, setValidUpdatePassword);
-
-    // const handleUpdate = async (id) => {
-    //     setIsLoading(true);
-    //     setErrMsgLine("");
-    //
-    //     if (updateEmail && !validUpdateEmail) {
-    //         setErrMsgLine("Not a valid email");
-    //         setIsLoading(false);
-    //         return;
-    //     }
-    //     if (updatePassword && !validUpdatePassword) {
-    //         setErrMsgLine("Not a valid password");
-    //         setIsLoading(false);
-    //         return;
-    //     }
-    //
-    //     const updatedUser = {id, updateFirstName, updateLastName, updateEmail, updatePassword, updateRoles};
-    //
-    //     const {success, error} = await updateUserService(updatedUser);
-    //
-    //     if (error) {
-    //         setErrMsgLine(error);
-    //     } else if (success) {
-    //         await fetchUsers();
-    //         setEditId(null);
-    //
-    //         setUpdateFirstName("");
-    //         setUpdateLastName("");
-    //         setUpdateEmail("");
-    //         setUpdatePassword("");
-    //         setUpdateRoles("");
-    //     }
-    //
-    //     setIsLoading(false);
-    // }
 
     const handleUpdate = createHandleUpdateUser(setErrMsgLine, setSuccessMsg, setIsLoading, fetchUsers, updateUserService);
 
@@ -144,7 +100,9 @@ const ManageUsersAdmin = ({user}) => {
         setUpdateLastName("");
         setUpdateEmail("");
         setUpdatePassword("");
-        setUpdateRoles("");
+        setUpdateRole("");
+        setErrMsgLine("");
+        setSuccessMsg("");
     }
 
     useEffectValidation(newEmail, EMAIL_REGEX, setValidNewEmail);
@@ -156,7 +114,7 @@ const ManageUsersAdmin = ({user}) => {
         setErrMsgLine("");
         // setSuccessMsg(null)
 
-        if (!newEmail || !newPassword || !newFirstName || !newLastName || !newRoles) {
+        if (!newEmail || !newPassword || !newFirstName || !newLastName || !newRole) {
             setErrMsgLine("Exista câmpuri incomplete!");
             setIsLoading(false);
             return;
@@ -176,14 +134,20 @@ const ManageUsersAdmin = ({user}) => {
             return;
         }
 
-        const {success, error} = await addUserService(newFirstName, newLastName, newEmail, newPassword, newRoles);
+        const {success, error} = await addUserService(newFirstName, newLastName, newEmail, newPassword, newRole);
 
         if (error) {
             setErrMsgLine(error);
         } else if (success) {
             setAdding(false);
             await fetchUsers();
+            setNewFirstName("");
+            setNewLastName("");
+            setNewEmail("");
+            setNewPassword("");
+            setNewRole("");
         }
+        setIsLoading(false);
     }
 
     return (
@@ -198,7 +162,7 @@ const ManageUsersAdmin = ({user}) => {
                     editId={editId}
                     handleEdit={handleEdit}
                     handleDelete={handleDelete}
-                    handleUpdate={(id) => handleUpdate(id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName)}
+                    handleUpdate={(id) => handleUpdate(id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName, updateRole)}
                     handleExit={handleExit}
                     handleSave={handleSave}
                     updateFirstName={updateFirstName}
@@ -209,8 +173,8 @@ const ManageUsersAdmin = ({user}) => {
                     setUpdateEmail={setUpdateEmail}
                     updatePassword={updatePassword}
                     setUpdatePassword={setUpdatePassword}
-                    updateRoles={updateRoles}
-                    setUpdateRoles={setUpdateRoles}
+                    updateRole={updateRole}
+                    setUpdateRole={setUpdateRole}
                     errMsgLine={errMsgLine}
                     adding={adding}
                     setAdding={setAdding}
@@ -218,12 +182,12 @@ const ManageUsersAdmin = ({user}) => {
                     newLastName={newLastName}
                     newEmail={newEmail}
                     newPassword={newPassword}
-                    newRoles={newRoles}
+                    newRole={newRole}
                     setNewFirstName={setNewFirstName}
                     setNewLastName={setNewLastName}
                     setNewEmail={setNewEmail}
                     setNewPassword={setNewPassword}
-                    setNewRoles={setNewRoles}
+                    setNewRole={setNewRole}
                     successMsg={successMsg}
                 />
             </div>

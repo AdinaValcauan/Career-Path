@@ -42,7 +42,7 @@ function UserProfile() {
         setUpdateLastName(fetchedUser.lastName || "");
         setUpdateEmail(fetchedUser.email || "");
         setUpdatePassword("");
-        setUpdateRoles(fetchedUser.roles || "");
+        setUpdateRoles(fetchedUser.role.name || "");
     };
 
     const handleUpdateUser = createHandleUpdateUser(setErrMsg, setSuccessMsg, setIsLoading, fetchUser, updateUserService);
@@ -102,28 +102,16 @@ function UserProfile() {
     return (
         <div className="profile-container">
             <div className="top">
-                <Menu menuItems={user.roles === 'admin' ? MenuItemsAdmin : MenuItemsUser}/>
+                <Menu menuItems={user.role.name === 'admin' ? MenuItemsAdmin : MenuItemsUser}/>
             </div>
 
             <div className="profile-content">
                 <h1 className="h1-profile">Profilul meu</h1>
-                <form className="profile-form" onSubmit={() => handleUpdateUser(user.id, updateEmail, updatePassword, updateFirstName, updateLastName)}>
+                <form className="profile-form" onSubmit={() => handleUpdateUser(user.id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName, updateRoles)}>
                     <label>
                         Prenume:
                         <input className="input-profile" type="text" value={updateFirstName}
                                    onChange={e => setUpdateFirstName(e.target.value)}/>
-                        {/*{isEditingFirstName ? (*/}
-                        {/*    <input className="input-profile" type="text" value={updateFirstName}*/}
-                        {/*           onChange={e => setUpdateFirstName(e.target.value)}/>*/}
-                        {/*) : (*/}
-                        {/*    <p>{user.firstName}</p>*/}
-                        {/*)}*/}
-                        {/*<button onClick={() => setIsEditingFirstName(true)}>Edit</button>*/}
-                        {/*{isEditingFirstName && (*/}
-                        {/*    <>*/}
-                        {/*        <button onClick={(e) => handleUpdateUser(e, 'firstName')}>Enter</button>*/}
-                        {/*        <button onClick={() => handleCancel('firstName')}>Cancel</button>*/}
-                        {/*    </>*/}
                     </label>
                     <label>
                         Nume de familie:

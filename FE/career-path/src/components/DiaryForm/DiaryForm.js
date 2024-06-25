@@ -217,11 +217,16 @@ const DiaryForm = ({selectedDay}) => {
         }
         newFormField.splice(fieldIndex, 1);
 
-        for (let i = 0; i < newFormField.length; i++) {
-            newFormField[i].orderForm = i;
+        // for (let i = 0; i < newFormField.length; i++) {
+        //     newFormField[i].orderForm = i;
+        // }
+        for (let i = fieldIndex; i < newFormField.length; i++) {
+            newFormField[i].orderForm--;
         }
 
         setFormField(newFormField);
+        console.log(newFormField);
+        console.log(formField);
     };
 
     const handleSubmit = async (event) => {
@@ -230,18 +235,7 @@ const DiaryForm = ({selectedDay}) => {
         for (const field of formField) {
             switch (field.type) {
                 case 'title':
-                    if (field.isNew === false) {
-                        const updatedTitle = {
-                            titleId: field.BeId,
-                            titleText: field.content,
-                            dayId: selectedDay,
-                            orderForm: field.orderForm,
-                        };
-                        const {success, error} = await updateTitleService(updatedTitle);
-                        if (error) {
-                            console.log(error);
-                        }
-                    } else {
+                    if (field.isNew) {
                         let titleText = field.content;
                         let orderForm = field.orderForm;
                         let dayId = selectedDay;
@@ -253,21 +247,21 @@ const DiaryForm = ({selectedDay}) => {
                             field.isNew = false;
                             field.BeId = response.titleId;
                         }
-                    }
-                    break;
-                case 'subtitle':
-                    if (field.isNew === false) {
-                        const updatedSubtitle = {
-                            subtitleId: field.BeId,
-                            subtitleText: field.content,
+                    } else {
+                        const updatedTitle = {
+                            titleId: field.BeId,
+                            titleText: field.content,
                             dayId: selectedDay,
                             orderForm: field.orderForm,
                         };
-                        const {success, error} = await updateSubtitleService(updatedSubtitle);
+                        const {success, error} = await updateTitleService(updatedTitle);
                         if (error) {
                             console.log(error);
                         }
-                    } else {
+                    }
+                    break;
+                case 'subtitle':
+                    if (field.isNew) {
                         let subtitleText = field.content;
                         let orderForm = field.orderForm;
                         let dayId = selectedDay;
@@ -279,21 +273,21 @@ const DiaryForm = ({selectedDay}) => {
                             field.isNew = false;
                             field.BeId = response.subtitleId;
                         }
-                    }
-                    break;
-                case 'paragraph':
-                    if (field.isNew === false) {
-                        const updatedParagraph = {
-                            paragraphId: field.BeId,
-                            paragraphText: field.content,
+                    } else {
+                        const updatedSubtitle = {
+                            subtitleId: field.BeId,
+                            subtitleText: field.content,
                             dayId: selectedDay,
                             orderForm: field.orderForm,
                         };
-                        const {success, error} = await updateParagraphService(updatedParagraph);
+                        const {success, error} = await updateSubtitleService(updatedSubtitle);
                         if (error) {
                             console.log(error);
                         }
-                    } else {
+                    }
+                    break;
+                case 'paragraph':
+                    if (field.isNew) {
                         let paragraphText = field.content;
                         let orderForm = field.orderForm;
                         let dayId = selectedDay;
@@ -305,21 +299,21 @@ const DiaryForm = ({selectedDay}) => {
                             field.isNew = false;
                             field.BeId = response.paragraphId;
                         }
-                    }
-                    break;
-                case 'question':
-                    if (field.isNew === false) {
-                        const updatedQuestion = {
-                            questionId: field.BeId,
-                            questionText: field.content,
+                    } else {
+                        const updatedParagraph = {
+                            paragraphId: field.BeId,
+                            paragraphText: field.content,
                             dayId: selectedDay,
                             orderForm: field.orderForm,
                         };
-                        const {success, error} = await updateQuestionService(updatedQuestion);
+                        const {success, error} = await updateParagraphService(updatedParagraph);
                         if (error) {
                             console.log(error);
                         }
-                    } else if (field.isNew === true) {
+                    }
+                    break;
+                case 'question':
+                    if (field.isNew) {
                         let questionText = field.content;
                         let orderForm = field.orderForm;
                         let dayId = selectedDay;
@@ -333,6 +327,17 @@ const DiaryForm = ({selectedDay}) => {
                             field.answer = null;
                             field.BeId = response.paragraphId;
                         }
+                    } else {
+                        const updatedQuestion = {
+                            questionId: field.BeId,
+                            questionText: field.content,
+                            dayId: selectedDay,
+                            orderForm: field.orderForm,
+                        };
+                        const {success, error} = await updateQuestionService(updatedQuestion);
+                        if (error) {
+                            console.log(error);
+                        }
                     }
                     break;
                 default:
@@ -345,7 +350,7 @@ const DiaryForm = ({selectedDay}) => {
         for (const field of formField) {
             if (field.type === 'question' && field.answer !== null && field.answer !== '' && field.answer !== undefined) {
                 console.log(field.answerId, field.answer, field.BeId, userId)
-                if (field.answerId!==undefined) {
+                if (field.answerId !== undefined) {
                     // Update existing answer
                     const updatedAnswer = {
                         answerId: field.answerId,
@@ -422,6 +427,48 @@ const DiaryForm = ({selectedDay}) => {
         }));
     };
 
+    const handleMoveUp = (id) => {
+        const newFormField = [...formField];
+        const index = newFormField.findIndex(field => field.id === id);
+
+        if (index === 0) return; // Elementul este deja la începutul listei
+
+        // Swap orderForm values
+        const tempOrderForm = newFormField[index].orderForm;
+        newFormField[index].orderForm = newFormField[index - 1].orderForm;
+        newFormField[index - 1].orderForm = tempOrderForm;
+
+        // // Swap fields
+        // const temp = newFormField[index];
+        // newFormField[index] = newFormField[index - 1];
+        // newFormField[index - 1] = temp;
+
+        setFormField(newFormField);
+        console.log(newFormField);
+        console.log(formField);
+    };
+
+    const handleMoveDown = (id) => {
+        const newFormField = [...formField];
+        const index = newFormField.findIndex(field => field.id === id);
+
+        if (index === newFormField.length - 1) return; // Elementul este deja la sfârșitul listei
+
+
+        // Swap orderForm values
+        const tempOrderForm = newFormField[index].orderForm;
+        newFormField[index].orderForm = newFormField[index + 1].orderForm;
+        newFormField[index + 1].orderForm = tempOrderForm;
+
+        // Swap fields
+        const temp = newFormField[index];
+        newFormField[index] = newFormField[index + 1];
+        newFormField[index + 1] = temp;
+
+
+        setFormField(newFormField);
+    };
+
     return (<form className="form-diary" style={{flex: 1}}>
         <label>
             Day {selectedDay}:
@@ -443,23 +490,31 @@ const DiaryForm = ({selectedDay}) => {
                         return <QuestionComponent key={index} field={field} isEditing={isEditing}
                                                   handleFieldChange={(content) => handleFieldChange(field.id, content)}
                                                   handleDeleteField={() => handleDeleteField(field.id)}
-                                                  handleAnswerChange={(answer) => handleAnswerChange(field.id, answer)}/>;
+                                                  handleAnswerChange={(answer) => handleAnswerChange(field.id, answer)}
+                                                  handleMoveUp={() => handleMoveUp(field.id)}
+                                                  handleMoveDown={() => handleMoveDown(field.id)}
+                        />;
                     default:
                         return null;
                 }
             })}
             <div className="button-column">
                 {isEditing && userRole === 'admin' &&
-                    <button className='form-button' type="button" onClick={() => handleAddField('title')}>Titlu</button>}
+                    <button className='form-button' type="button"
+                            onClick={() => handleAddField('title')}>Titlu</button>}
                 {isEditing && userRole === 'admin' &&
-                    <button type="button" className='form-button' onClick={() => handleAddField('subtitle')}>Subtitlu</button>}
+                    <button type="button" className='form-button'
+                            onClick={() => handleAddField('subtitle')}>Subtitlu</button>}
                 {isEditing && userRole === 'admin' &&
-                    <button type="button" className='form-button' onClick={() => handleAddField('paragraph')}>Paragraf</button>}
+                    <button type="button" className='form-button'
+                            onClick={() => handleAddField('paragraph')}>Paragraf</button>}
                 {isEditing && userRole === 'admin' &&
-                    <button type="button" className='form-button' onClick={() => handleAddField('question')}>Întrebare</button>}
+                    <button type="button" className='form-button'
+                            onClick={() => handleAddField('question')}>Întrebare</button>}
             </div>
         </label>
-        {userRole === 'admin' && !isEditing && <button className='login-button' type="button" onClick={handleEditClick}>Edit</button>}
+        {userRole === 'admin' && !isEditing &&
+            <button className='login-button' type="button" onClick={handleEditClick}>Edit</button>}
         <button className='login-button' type="submit" onClick={handleSubmit}>Submit</button>
     </form>);
 };

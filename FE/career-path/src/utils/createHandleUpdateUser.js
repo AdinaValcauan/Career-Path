@@ -1,5 +1,5 @@
 export function createHandleUpdateUser(setErrMsg, setSuccessMsg, setIsLoading, fetchUsers, updateUserService) {
-    return async (id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName) => {
+    return async (id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName, updateRole) => {
         setIsLoading(true);
         setErrMsg("");
         setSuccessMsg("");
@@ -16,7 +16,8 @@ export function createHandleUpdateUser(setErrMsg, setSuccessMsg, setIsLoading, f
             return;
         }
 
-        const updatedUser = {id, updateFirstName, updateLastName, updateEmail};
+        const updatedUser = {id, updateFirstName, updateLastName, updateEmail, updateRole};
+        console.log(updateRole);
 
         if (updatePassword) {
             updatedUser.updatePassword = updatePassword;

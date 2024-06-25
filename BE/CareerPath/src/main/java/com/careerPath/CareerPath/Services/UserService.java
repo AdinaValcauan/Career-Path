@@ -1,7 +1,9 @@
 package com.careerPath.CareerPath.Services;
 
+import com.careerPath.CareerPath.Entities.Role;
 import com.careerPath.CareerPath.Entities.User;
 import com.careerPath.CareerPath.Exceptions.UserAlreadyExistsException;
+import com.careerPath.CareerPath.Repositories.RoleRepository;
 import com.careerPath.CareerPath.Security.UserInfoDetails;
 import com.careerPath.CareerPath.Repositories.UserRepository;
 import com.careerPath.CareerPath.Services.Interfaces.IUserService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +25,8 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -38,10 +43,29 @@ public class UserService implements IUserService {
             throw new UserAlreadyExistsException("User already exists!");
         }
 
-        if (user.getRoles() == null || user.getRoles().isEmpty()) {
-            user.setRoles("user");
-        } else if (user.getRoles().equals("admin")){
-            user.setRoles("admin");
+        Role userRole = roleRepository.findByRoleName("user").orElse(null);
+        Role adminRole = roleRepository.findByRoleName("admin").orElse(null);
+
+//        if (user.getRoles() == null || user.getRoles().isEmpty() || user.getRoles().contains(userRole)) {
+//            if (userRole != null) {
+//                user.getRoles().clear();
+//                user.getRoles().add(userRole);
+//            }
+//        } else if (user.getRoles().contains(adminRole)) {
+//            if (adminRole != null) {
+//                user.getRoles().clear();
+//                user.getRoles().add(adminRole);
+//            }
+//        }
+
+        if (user.getRole() == null || user.getRole().equals(userRole)) {
+            if (userRole != null) {
+                user.setRole(userRole);
+            }
+        } else if (user.getRole().equals(adminRole)) {
+            if (adminRole != null) {
+                user.setRole(adminRole);
+            }
         }
 
         userRepository.save(user);
@@ -63,8 +87,11 @@ public class UserService implements IUserService {
         if (user.getPassword()!=null && !user.getEmail().isEmpty()) {
             existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        if (user.getRoles()!=null && !user.getRoles().isEmpty()) {
-            existingUser.setRoles(user.getRoles());
+        if (user.getRole()!=null) {
+            Role existingRole = roleRepository.findByRoleName(user.getRole().getRoleName()).orElse(null);
+            if (existingRole != null) {
+                existingUser.setRole(existingRole);
+            }
         }
 
         return userRepository.save(existingUser);
@@ -90,7 +117,7 @@ public class UserService implements IUserService {
 
         User user = userOptional.get();
 
-        return user.getRoles();
+        return user.getRole().getRoleName();
     }
 
     public Integer getUserByEmail(String userEmail) {

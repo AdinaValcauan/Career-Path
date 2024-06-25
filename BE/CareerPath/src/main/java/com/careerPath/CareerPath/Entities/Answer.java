@@ -29,7 +29,4 @@ public class Answer {
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_answer_userid"))
     private User user;
 
-//    @ManyToOne
-//    @JoinColumn(name = "diary_entry_id", nullable = false, foreignKey = @ForeignKey(name = "FK_diaryentryid_Answers"))
-//    private DiaryEntry diaryEntryId;
 }

@@ -14,6 +14,7 @@ public class DayMapper implements Function<DayDTO, Day> {
         day.setDayId(dayDTO.getDayId());
         day.setDayNumber(dayDTO.getDayNumber());
         day.setDayText(dayDTO.getDayText());
+        day.setOrderDay(dayDTO.getOrderDay());
         return day;
     }
 

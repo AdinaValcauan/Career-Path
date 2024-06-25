@@ -23,12 +23,23 @@ public class Day {
     @Column(name = "day_number", nullable = false)
     private int dayNumber;
 
-    @Column(name = "day_text")
+    @Column(name = "day_text", nullable = false)
     private String dayText;
 
-    @OneToMany(mappedBy = "day")
+    @Column(name = "order_day")
+    private int orderDay;
+
+
+    @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Title> titles;
+
+    @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Subtitle> subtitles;
+
+    @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paragraph> paragraphs;
+
+    @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
-    @OneToMany(mappedBy = "day")
-    private List<DiaryEntry> diaryEntries;
 }

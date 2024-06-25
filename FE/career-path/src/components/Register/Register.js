@@ -29,8 +29,7 @@ function Register() {
     const [passwordTouched, setPasswordTouched] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const [errMsg, setErrMsg] = useState(""); // error message to display
-    const [succes, setSucces] = useState(false); // true if form is valid
+    const [errMsg, setErrMsg] = useState("");
 
     const navigate = useNavigate();
 
@@ -67,7 +66,7 @@ function Register() {
         if (error) {
             setErrMsg(error);
         } else if (success) {
-            navigate("/login");
+            navigate("/");
         }
     };
 

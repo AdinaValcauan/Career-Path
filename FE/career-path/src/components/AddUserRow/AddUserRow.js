@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {getRolesService} from "../../services/roleService";
 
 const AddUserRow = ({
                         handleSave,
@@ -7,25 +8,26 @@ const AddUserRow = ({
                         newLastName,
                         newEmail,
                         newPassword,
-                        newRoles,
+                        newRole,
                         setNewFirstName,
                         setNewLastName,
                         setNewEmail,
                         setNewPassword,
-                        setNewRoles,
+                        setNewRole,
                         errMsgLine
                     }) => {
 
-    // const handleInputChange = (event) => {
-    //     setNewUser({...newUser, [event.target.name]: event.target.value});
-    // };
+    const [roles, setRoles] = useState([]);
 
-    // const handleSaveClick = (e) => {
-    //     e.preventDefault();
-    //     handleSave(newUser);
-    //     // setNewUser({firstName: '', lastName: '', email: '', password: '', roles: ''});
-    //     setAdding(false);
-    // };
+    useEffect(() => {
+        getRolesService().then(response => {
+            setRoles(response.data);
+
+            if (response.data.length > 0) {
+                setNewRole(response.data[0].roleName);
+            }
+        });
+    }, []);
 
     return (
         <tr>
@@ -38,8 +40,14 @@ const AddUserRow = ({
                        value={newEmail} onChange={e => setNewEmail(e.target.value)}/></td>
             <td><input className="edit-input" type="text" placeholder="Parola user"
                        value={newPassword} onChange={e => setNewPassword(e.target.value)}/></td>
-            <td><input className="edit-input" type="text" placeholder="Rol user"
-                       value={newRoles} onChange={e => setNewRoles(e.target.value)}/></td>
+            {/*<td><input className="edit-input" type="text" placeholder="Rol user"*/}
+            {/*           value={newRole} onChange={e => setNewRole(e.target.value)}/></td>*/}
+            <td>
+            <select className="edit-input" value={newRole} onChange={e => setNewRole(e.target.value)}>
+                {roles.map(role => (
+                    <option key={role.roleId} value={role.roleName}>{role.roleName}</option>
+                ))}
+            </select></td>
             <td>
                 <button className="edit-button" onClick={handleSave}>Save</button>
             </td>

@@ -1,4 +1,5 @@
 import api from "./axiosConfig";
+import {jwtDecode} from "jwt-decode";
 
 export const getUsersService = async () => {
     try {
@@ -15,15 +16,17 @@ export const getUsersService = async () => {
 export const updateUserService = async (updatedUser) => {
     try {
         const token = sessionStorage.getItem('token');
-
         let id = updatedUser.id;
         let firstName = updatedUser.updateFirstName;
         let lastName = updatedUser.updateLastName;
         let email = updatedUser.updateEmail;
         let password = updatedUser.updatePassword
-        let roles = updatedUser.updateRoles;
+        let roleName = updatedUser.updateRole;
 
-        const user = {id, firstName, lastName, email, password, roles};
+        console.log(updatedUser);
+        let roleId = await api.get(`/getRoleId/${roleName}`, {headers: {Authorization: `Bearer ${token}`}});
+
+        const user = {id, firstName, lastName, email, password, role: {roleName: roleName, roleId: roleId.data}};
 
         const response = await api.put(`/updateUser/${user.id}`, user, {headers: {Authorization: `Bearer ${token}`}});
 
@@ -35,15 +38,17 @@ export const updateUserService = async (updatedUser) => {
     }
 };
 
-export const addUserService = async (firstName, lastName, email, password, roles) => {
+export const addUserService = async (firstName, lastName, email, password, roleName) => {
     try {
         const token = sessionStorage.getItem('token');
+        let roleId = await api.get(`/getRoleId/${roleName}`, {headers: {Authorization: `Bearer ${token}`}});
+
         const response = await api.post('/addUser', {
             firstName,
             lastName,
             email,
             password,
-            roles
+            role: {roleName, roleId: roleId.data}
         }, {headers: {Authorization: `Bearer ${token}`}});
 
         if (response.status === 200) {
