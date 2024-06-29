@@ -1,56 +1,113 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  addQuestionService,
+  deleteQuestionService,
+  updateQuestionService,
+} from "../../services/questionService";
 import {
   faArrowUp,
   faArrowDown,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteTitleService } from "../../services/titleService";
 
 const QuestionComponent = ({
   field,
   isEditing,
+  selectedDay,
   handleFieldChange,
   handleDeleteField,
+  fetchForms,
   handleAnswerChange,
   handleMoveUp,
   handleMoveDown,
 }) => {
   const textareaRef = useRef(null);
+  const [contentQ, setContentQ] = useState(field.content);
+  const [answer, setAnswer] = useState(field.answer);
 
   useEffect(() => {
     const textarea = textareaRef.current;
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
-  }, [field.content]);
+  }, [contentQ]);
 
   useEffect(() => {
     const textarea = textareaRef.current;
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
-  }, [field.answer]);
+  }, [answer]);
 
   const handleOnChange = (e) => {
-    handleFieldChange(e.target.value);
+    const newContent = e.target.value;
+    setContentQ(newContent);
+    handleFieldChange(field.orderForm, newContent);
     const textarea = textareaRef.current;
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
   };
 
   const handleOnChangeAnswer = (e) => {
-    handleAnswerChange(e.target.value);
+    const newAnswer = e.target.value;
+    setAnswer(newAnswer);
+    handleAnswerChange(field.orderForm, newAnswer);
     const textarea = textareaRef.current;
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
   };
 
+  const handleSaveField = async () => {
+    if (contentQ !== field.content && !field.BeId) {
+      const response = await addQuestionService(
+        contentQ,
+        selectedDay,
+        field.orderForm
+      );
+      if (response.success) {
+        console.log("Question adăugat cu succes");
+        // Actualizați starea componentei aici, dacă este necesar
+      } else {
+        console.error(response.error);
+      }
+    } else if (contentQ !== field.content && field.BeId) {
+      const updatedQuestion = {
+        questionId: field.BeId,
+        questionText: contentQ,
+        dayId: selectedDay,
+        orderForm: field.orderForm,
+      };
+      const response = await updateQuestionService(updatedQuestion);
+      if (response.success) {
+        console.log("Question actualizat cu succes");
+        // Actualizați starea componentei aici, dacă este necesar
+      } else {
+        console.error(response.error);
+      }
+    }
+    await fetchForms();
+  };
+
+  const handleDeleteQuestion = async (event) => {
+    event.preventDefault();
+
+    const { success, error } = await deleteQuestionService(field.BeId);
+    if (success) {
+      console.log("Intrebare ștearsa cu succes");
+    } else {
+      console.error(error);
+    }
+    await fetchForms();
+  };
   return (
     <div>
       <textarea
         ref={textareaRef}
         className={`input-question ${isEditing ? "input-editing" : ""}`}
         placeholder="Întrebare"
-        value={field.content}
+        value={contentQ}
         onChange={handleOnChange}
+        onBlur={handleSaveField}
         readOnly={!isEditing}
       />
       <textarea
@@ -64,7 +121,7 @@ const QuestionComponent = ({
       {isEditing && (
         <button
           className="util-button"
-          onClick={() => handleDeleteField(field.id)}
+          onClick={(event) => handleDeleteQuestion(event)}
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>

@@ -1,30 +1,83 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import {
+  addParagraphService,
+  deleteParagraphService,
+  updateParagraphService,
+} from "../../services/paragraphService";
 import {
   faArrowUp,
   faArrowDown,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteTitleService } from "../../services/titleService";
 
 const ParagraphComponent = ({
   field,
   isEditing,
+  selectedDay,
   handleFieldChange,
-  handleDeleteField,
+  fetchForms,
 }) => {
   const textareaRef = useRef(null);
+  const [contentP, setContentP] = useState(field.content);
 
   useEffect(() => {
     const textarea = textareaRef.current;
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
-  }, [field.content]);
+  }, [contentP]);
 
   const handleOnChange = (e) => {
-    handleFieldChange(e.target.value);
+    const newContent = e.target.value;
+    setContentP(newContent);
+    handleFieldChange(field.orderForm, newContent);
     const textarea = textareaRef.current;
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
+  };
+
+  const handleDeleteParagraph = async (event) => {
+    event.preventDefault();
+
+    const { success, error } = await deleteParagraphService(field.BeId);
+    if (success) {
+      console.log("Paragraph șters cu succes");
+    } else {
+      console.error(error); // TODO: in caz de eroare sa apara un popup cu mesajul de eroare
+    }
+    await fetchForms();
+  };
+
+  const handleSaveField = async () => {
+    if (contentP !== field.content && !field.BeId) {
+      const response = await addParagraphService(
+        contentP,
+        field.orderForm,
+        selectedDay
+      );
+      if (response.success) {
+        console.log("Paragraph adăugat cu succes");
+        // Actualizați starea componentei aici, dacă este necesar
+      } else {
+        console.error(response.error);
+      }
+    } else if (contentP !== field.content && field.BeId) {
+      const updatedParagraph = {
+        paragraphId: field.BeId,
+        paragraphText: contentP,
+        dayId: selectedDay,
+        orderForm: field.orderForm,
+      };
+      const response = await updateParagraphService(updatedParagraph);
+      if (response.success) {
+        console.log("Paragraph actualizat cu succes");
+        // Actualizați starea componentei aici, dacă este necesar
+      } else {
+        console.error(response.error);
+      }
+    }
+    await fetchForms();
   };
 
   return (
@@ -33,14 +86,15 @@ const ParagraphComponent = ({
         ref={textareaRef}
         className={`input-paragraph ${isEditing ? "input-editing" : ""}`}
         placeholder="Paragraf"
-        value={field.content}
+        value={contentP}
         onChange={handleOnChange}
+        onBlur={handleSaveField}
         readOnly={!isEditing}
       />
       {isEditing && (
         <button
           className="util-button"
-          onClick={() => handleDeleteField(field.id)}
+          onClick={(event) => handleDeleteParagraph(event)}
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>

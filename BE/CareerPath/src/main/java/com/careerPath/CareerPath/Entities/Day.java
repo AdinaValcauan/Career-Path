@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,7 +32,7 @@ public class Day {
 
 
     @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Title> titles;
+    private Set<Title> titles;
 
     @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Subtitle> subtitles;
