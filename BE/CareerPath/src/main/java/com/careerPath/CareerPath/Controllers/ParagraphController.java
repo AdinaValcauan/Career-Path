@@ -71,4 +71,11 @@ public class ParagraphController {
                 .map(paragraphDTOMapper)
                 .collect(Collectors.toList());
     }
+
+    @PatchMapping("/updateOrderForm/{paragraphIdId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public ParagraphDTO updateOrderForm(@PathVariable int paragraphId, @RequestBody int orderForm) {
+        Paragraph updatedParagraph = paragraphService.updateOrderForm(paragraphId, orderForm);
+        return paragraphDTOMapper.apply(updatedParagraph);
+    }
 }

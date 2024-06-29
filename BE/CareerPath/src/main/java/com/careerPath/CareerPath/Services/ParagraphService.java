@@ -39,4 +39,11 @@ public class ParagraphService implements IParagraphService {
     public List<Paragraph> getParagraphsByDay(int dayId){
         return paragraphRepository.findByDay_DayIdOrderByOrderForm(dayId);
     }
+
+    public Paragraph updateOrderForm(int paragraphId, int orderForm) {
+        Paragraph existingParagraph = paragraphRepository.findById(paragraphId).get();
+        existingParagraph.setOrderForm(orderForm);
+
+        return paragraphRepository.save(existingParagraph);
+    }
 }

@@ -43,4 +43,11 @@ public class QuestionService implements IQuestionService {
     public List<Question> getQuestionsByDay(int dayId){
         return questionRepository.findByDay_DayIdOrderByOrderForm(dayId);
     }
+
+    public Question updateOrderForm(int questionId, int orderForm) {
+        Question existingQuestion = questionRepository.findById(questionId).get();
+        existingQuestion.setOrderForm(orderForm);
+
+        return questionRepository.save(existingQuestion);
+    }
 }

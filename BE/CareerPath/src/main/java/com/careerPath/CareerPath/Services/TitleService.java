@@ -50,4 +50,11 @@ public class TitleService implements ITitleService {
     public List<Title> getTitlesByDay(int dayId){
         return titleRepository.findByDay_DayIdOrderByOrderForm(dayId);
     }
+
+    public Title updateOrderForm(int titleId, int orderForm) {
+        Title existingTitle = titleRepository.findById(titleId).get();
+        existingTitle.setOrderForm(orderForm);
+
+        return titleRepository.save(existingTitle);
+    }
 }

@@ -10,4 +10,5 @@ public interface IParagraphService {
     Paragraph updateParagraph(int paragraphId, Paragraph paragraph);
     void deleteParagraph(int paragraphId);
     List<Paragraph> getParagraphsByDay(int dayId);
+    Paragraph updateOrderForm(int paragraphId, int orderForm);
 }

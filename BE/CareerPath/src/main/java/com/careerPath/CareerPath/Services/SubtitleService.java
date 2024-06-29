@@ -43,4 +43,11 @@ public class SubtitleService implements ISubtitleService {
     public List<Subtitle> getSubtitlesByDay(int dayId){
         return subtitleRepository.findByDay_DayIdOrderByOrderForm(dayId);
     }
+
+    public Subtitle updateOrderForm(int subtitleId, int orderForm) {
+        Subtitle existingSubtitle = subtitleRepository.findById(subtitleId).get();
+        existingSubtitle.setOrderForm(orderForm);
+
+        return subtitleRepository.save(existingSubtitle);
+    }
 }

@@ -11,4 +11,5 @@ public interface ISubtitleService {
     Subtitle updateSubtitle(int subtitleId, Subtitle subtitle);
     void deleteSubtitle(int subtitleId);
     List<Subtitle> getSubtitlesByDay(int dayId);
+    Subtitle updateOrderForm(int subtitleId, int orderForm);
 }

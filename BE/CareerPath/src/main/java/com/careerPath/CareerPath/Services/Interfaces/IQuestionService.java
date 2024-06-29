@@ -11,4 +11,5 @@ public interface IQuestionService {
     Question updateQuestion(int questionId, Question question);
     void deleteQuestion(int questionId);
     List<Question> getQuestionsByDay(int dayId);
+    Question updateOrderForm(int questionId, int orderForm);
 }

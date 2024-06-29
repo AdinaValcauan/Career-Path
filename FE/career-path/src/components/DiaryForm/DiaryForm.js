@@ -34,6 +34,7 @@ import {
   getAnswersByQuestionAndUserService,
   updateAnswerService,
 } from "../../services/answerService";
+import {updateOrderFormService} from "../../services/orderFormService";
 
 const DiaryForm = ({ selectedDay }) => {
   const [formField, setFormField] = useState([]);
@@ -167,7 +168,7 @@ const DiaryForm = ({ selectedDay }) => {
 
   const handleAddField = (type) => {
     const newField = {
-      orderForm: formField.length + 2,
+      orderForm: formField.length + 1,
       type: type,
       content: "",
       BeId: null,
@@ -181,251 +182,218 @@ const DiaryForm = ({ selectedDay }) => {
     setFormField([...formField, newField]);
   };
 
-  const handleDeleteField = async (event, orderForm) => {
-
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const newFormField = [...formField];
+    setIsEditing(false);
+  };
 
-    const fieldIndex = newFormField.findIndex((field) => field.orderForm === orderForm);
-    if (fieldIndex === -1) return;
+  const handleSaveAnswer = async (fieldId, event) => {
+    event.preventDefault();
 
-    const currentField = newFormField[fieldIndex];
+    const userId = sessionStorage.getItem("userId");
+    const field = formField.find((field) => field.id === fieldId);
 
-      switch (currentField.type) {
-        case "title":
-          const {successT, errorT} = deleteTitleService(currentField.BeId);
-          if (errorT) {
-            console.log(errorT);
-            return;
-          }
-          break;
-        case "subtitle":
-          const {successS, errorS} = deleteSubtitleService(currentField.BeId);
-          if (errorS) {
-            console.log(errorS);
-            return;
-          }
-          break;
-        case "paragraph":
-          const {successP, errorP} = deleteParagraphService(
-              currentField.BeId
-          );
-          if (errorP) {
-            console.log(errorP);
-            return;
-          }
-          break;
-        case "question":
-          const {successQ, errorQ} = deleteQuestionService(currentField.BeId);
-          if (errorQ) {
-            console.log(errorQ);
-            return;
-          }
-          if (currentField.answerId) {
-            const {successA, errorA} = deleteAnswerService(
-                currentField.answerId
-            );
-            if (errorA) {
-              console.log(errorA);
-              return;
-            }
-          }
-          break;
-        default:
-          break;
+    if (field.answerId) {
+      // Update existing answer
+      const updatedAnswer = {
+        answerId: field.answerId,
+        answerText: field.answer,
+        questionId: field.BeId,
+        userId: userId,
+      };
+      const { success, error } = await updateAnswerService(updatedAnswer);
+      if (error) {
+        console.log(error);
       }
+    } else {
+      const response = await addAnswerService(field.answer, field.BeId, userId);
+      if (response.error) {
+        console.log(response.error);
+      } else if (response.success) {
+        // Update the answerId in the formField state
+        const newFormField = formField.map((field) => {
+          if (field.id === fieldId) {
+            return { ...field, answerId: response.answerId };
+          } else {
+            return field;
+          }
+        });
+        setFormField(newFormField);
+      }
+    }
+  };
 
-      await fetchForms();
+  const handleAnswerChange = (fieldId, answer) => {
+    if (answer === undefined) {
+      answer = "";
     }
 
-    const handleSubmit = async (event) => {
-      setIsEditing(false);
-    };
-
-    const handleSaveAnswer = async (fieldId, event) => {
-      event.preventDefault();
-
-      const userId = sessionStorage.getItem("userId");
-      const field = formField.find((field) => field.id === fieldId);
-
-      if (field.answerId) {
-        // Update existing answer
-        const updatedAnswer = {
-          answerId: field.answerId,
-          answerText: field.answer,
-          questionId: field.BeId,
-          userId: userId,
-        };
-        const {success, error} = await updateAnswerService(updatedAnswer);
-        if (error) {
-          console.log(error);
+    setFormField(
+      formField.map((field) => {
+        if (field.id === fieldId) {
+          return { ...field, answer: answer };
+        } else {
+          return field;
         }
-      } else {
-        const response = await addAnswerService(field.answer, field.BeId, userId);
-        if (response.error) {
-          console.log(response.error);
-        } else if (response.success) {
-          // Update the answerId in the formField state
-          const newFormField = formField.map((field) => {
-            if (field.id === fieldId) {
-              return {...field, answerId: response.answerId};
-            } else {
-              return field;
-            }
-          });
-          setFormField(newFormField);
-        }
-      }
-    };
-
-    const handleAnswerChange = (fieldId, answer) => {
-      if (answer === undefined) {
-        answer = "";
-      }
-
-      setFormField(
-          formField.map((field) => {
-            if (field.id === fieldId) {
-              return {...field, answer: answer};
-            } else {
-              return field;
-            }
-          })
-      );
-    };
-
-    const handleMoveUp = (id) => {
-    };
-
-    const handleMoveDown = (id) => {
-    };
-
-    return (
-        <form className="form-diary" style={{flex: 1}}>
-          <label>
-            Day {selectedDay}:
-            {formField.map((field, index) => {
-              switch (field.type) {
-                case "title":
-                  return (
-                      <TitleComponent
-                          key={index}
-                          field={field}
-                          isEditing={isEditing}
-                          selectedDay={selectedDay}
-                          handleFieldChange={(content) =>
-                              handleFieldChange(field.id, content)
-                          }
-                          handleDeleteField={() => handleDeleteField(field.orderForm)}
-                          formFields={formField}
-                          setFormField={setFormField}
-                          fetchForms={fetchForms}
-                      />
-                  );
-                case "subtitle":
-                  return (
-                      <SubtitleComponent
-                          key={index}
-                          field={field}
-                          isEditing={isEditing}
-                          selectedDay={selectedDay}
-                          handleFieldChange={(content) =>
-                              handleFieldChange(field.id, content)
-                          }
-                          handleDeleteField={() => handleDeleteField(field.orderForm)}
-                          fetchForms={fetchForms}
-                      />
-                  );
-                case "paragraph":
-                  return (
-                      <ParagraphComponent
-                          key={index}
-                          field={field}
-                          isEditing={isEditing}
-                          selectedDay={selectedDay}
-                          handleFieldChange={(content) =>
-                              handleFieldChange(field.id, content)
-                          }
-                          handleDeleteField={() => handleDeleteField(field.orderForm)}
-                          fetchForms={fetchForms}
-                      />
-                  );
-                case "question":
-                  return (
-                      <QuestionComponent
-                          key={index}
-                          field={field}
-                          isEditing={isEditing}
-                          selectedDay={selectedDay}
-                          handleFieldChange={(content) =>
-                              handleFieldChange(field.id, content)
-                          }
-                          handleDeleteField={() => handleDeleteField(field.orderForm)}
-                          fetchForms={fetchForms}
-                          handleAnswerChange={(answer) =>
-                              handleAnswerChange(field.id, answer)
-                          }
-                          handleMoveUp={() => handleMoveUp(field.id)}
-                          handleMoveDown={() => handleMoveDown(field.id)}
-                      />
-                  );
-                default:
-                  return null;
-              }
-            })}
-            <div className="button-column">
-              {isEditing && userRole === "admin" && (
-                  <button
-                      className="form-button"
-                      type="button"
-                      onClick={() => handleAddField("title")}
-                  >
-                    Titlu
-                  </button>
-              )}
-              {isEditing && userRole === "admin" && (
-                  <button
-                      type="button"
-                      className="form-button"
-                      onClick={() => handleAddField("subtitle")}
-                  >
-                    Subtitlu
-                  </button>
-              )}
-              {isEditing && userRole === "admin" && (
-                  <button
-                      type="button"
-                      className="form-button"
-                      onClick={() => handleAddField("paragraph")}
-                  >
-                    Paragraf
-                  </button>
-              )}
-              {isEditing && userRole === "admin" && (
-                  <button
-                      type="button"
-                      className="form-button"
-                      onClick={() => handleAddField("question")}
-                  >
-                    Întrebare
-                  </button>
-              )}
-            </div>
-          </label>
-          {userRole === "admin" && !isEditing && (
-              <button
-                  className="login-button"
-                  type="button"
-                  onClick={handleEditClick}
-              >
-                Edit
-              </button>
-          )}
-          <button className="login-button" type="submit" onClick={handleSubmit}>
-            Submit
-          </button>
-        </form>
+      })
     );
   };
+
+  const handleMoveUp = (id) => {};
+
+  const handleMoveDown = (id) => {};
+
+  const updateOrderForms = async (formFields, deletedFieldIndex) => {
+    for (let i = deletedFieldIndex; i < formFields.length; i++) {
+      formFields[i].orderForm--;
+
+      const response = await updateOrderFormService(
+          formFields[i].type,
+          formFields[i].BeId,
+          formFields[i].orderForm
+      );
+      if (response.success) {
+        console.log("Field updated successfully");
+      } else {
+        console.error(response.error);
+      }
+    }
+  };
+
+  return (
+    <form className="form-diary" style={{ flex: 1 }}>
+      <label>
+        Day {selectedDay}:
+        {formField.map((field, index) => {
+          switch (field.type) {
+            case "title":
+              return (
+                <TitleComponent
+                  key={index}
+                  field={field}
+                  isEditing={isEditing}
+                  selectedDay={selectedDay}
+                  handleFieldChange={(content) =>
+                    handleFieldChange(field.id, content)
+                  }
+                  handleDeleteField={() => handleDeleteField(field.orderForm)}
+                  formFields={formField}
+                  setFormField={setFormField}
+                  fetchForms={fetchForms}
+                  formField={formField}
+                  updateOrderForms={updateOrderForms}
+                />
+              );
+            case "subtitle":
+              return (
+                <SubtitleComponent
+                  key={index}
+                  field={field}
+                  isEditing={isEditing}
+                  selectedDay={selectedDay}
+                  handleFieldChange={(content) =>
+                    handleFieldChange(field.id, content)
+                  }
+                  handleDeleteField={() => handleDeleteField(field.orderForm)}
+                  fetchForms={fetchForms}
+                  formField={formField}
+                  updateOrderForms={updateOrderForms}
+                />
+              );
+            case "paragraph":
+              return (
+                <ParagraphComponent
+                  key={index}
+                  field={field}
+                  isEditing={isEditing}
+                  selectedDay={selectedDay}
+                  handleFieldChange={(content) =>
+                    handleFieldChange(field.id, content)
+                  }
+                  handleDeleteField={() => handleDeleteField(field.orderForm)}
+                  fetchForms={fetchForms}
+                  formField={formField}
+                  updateOrderForms={updateOrderForms}
+                />
+              );
+            case "question":
+              return (
+                <QuestionComponent
+                  key={index}
+                  field={field}
+                  isEditing={isEditing}
+                  selectedDay={selectedDay}
+                  handleFieldChange={(content) =>
+                    handleFieldChange(field.id, content)
+                  }
+                  handleDeleteField={() => handleDeleteField(field.orderForm)}
+                  fetchForms={fetchForms}
+                  formField={formField}
+                  updateOrderForms={updateOrderForms}
+                  handleAnswerChange={(answer) =>
+                    handleAnswerChange(field.id, answer)
+                  }
+                  handleMoveUp={() => handleMoveUp(field.id)}
+                  handleMoveDown={() => handleMoveDown(field.id)}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
+        <div className="button-column">
+          {isEditing && userRole === "admin" && (
+            <button
+              className="form-button"
+              type="button"
+              onClick={() => handleAddField("title")}
+            >
+              Titlu
+            </button>
+          )}
+          {isEditing && userRole === "admin" && (
+            <button
+              type="button"
+              className="form-button"
+              onClick={() => handleAddField("subtitle")}
+            >
+              Subtitlu
+            </button>
+          )}
+          {isEditing && userRole === "admin" && (
+            <button
+              type="button"
+              className="form-button"
+              onClick={() => handleAddField("paragraph")}
+            >
+              Paragraf
+            </button>
+          )}
+          {isEditing && userRole === "admin" && (
+            <button
+              type="button"
+              className="form-button"
+              onClick={() => handleAddField("question")}
+            >
+              Întrebare
+            </button>
+          )}
+        </div>
+      </label>
+      {userRole === "admin" && !isEditing && (
+        <button
+          className="login-button"
+          type="button"
+          onClick={handleEditClick}
+        >
+          Edit
+        </button>
+      )}
+      <button className="login-button" type="submit" onClick={handleSubmit}>
+        Submit
+      </button>
+    </form>
+  );
+};
 
 export default DiaryForm;

@@ -69,4 +69,11 @@ public class SubtitleController {
                 .map(subtitleDTOMapper)
                 .collect(Collectors.toList());
     }
+
+    @PatchMapping("/updateOrderForm/{subitleId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public SubtitleDTO updateOrderForm(@PathVariable int subtitleId, @RequestBody int orderForm) {
+        Subtitle updatedSubtitle = subtitleService.updateOrderForm(subtitleId, orderForm);
+        return subtitleDTOMapper.apply(updatedSubtitle);
+    }
 }

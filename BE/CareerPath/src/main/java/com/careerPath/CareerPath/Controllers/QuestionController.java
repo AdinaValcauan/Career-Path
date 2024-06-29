@@ -1,9 +1,7 @@
 package com.careerPath.CareerPath.Controllers;
 
-import com.careerPath.CareerPath.DTOs.ParagraphDTO;
 import com.careerPath.CareerPath.DTOs.QuestionDTO;
 import com.careerPath.CareerPath.Entities.Day;
-import com.careerPath.CareerPath.Entities.Paragraph;
 import com.careerPath.CareerPath.Entities.Question;
 import com.careerPath.CareerPath.Mappers.QuestionDTOMapper;
 import com.careerPath.CareerPath.Mappers.QuestionMapper;
@@ -77,5 +75,12 @@ public class QuestionController {
         return questions.stream()
                 .map(questionDTOMapper)
                 .collect(Collectors.toList());
+    }
+
+    @PatchMapping("/updateOrderForm/{questionId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public QuestionDTO updateOrderForm(@PathVariable int questionId, @RequestBody int orderForm) {
+        Question updatedQuestion = questionService.updateOrderForm(questionId, orderForm);
+        return questionDTOMapper.apply(updatedQuestion);
     }
 }

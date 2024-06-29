@@ -14,7 +14,7 @@ export const addTitleService = async (dayId, titleText, orderForm) => {
     );
 
     if (response.status === 200) {
-      return { success: true, error: null };
+      return { success: "Succes", error: null };
     }
   } catch (error) {
     return { success: false, error: "Failed to add the title" };
@@ -29,7 +29,7 @@ export const deleteTitleService = async (titleId) => {
     });
 
     if (response.status === 200) {
-      return response.data;
+      return { success: true, error: null };
     }
   } catch (error) {
     return { success: false, error: "Failed to delete the title" };

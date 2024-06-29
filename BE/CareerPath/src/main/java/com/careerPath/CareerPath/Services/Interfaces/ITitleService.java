@@ -11,4 +11,5 @@ public interface ITitleService {
     Title updateTitle(int titleId, Title title);
     void deleteTitle(int titleId);
     List<Title> getTitlesByDay(int dayId);
+    Title updateOrderForm(int titleId, int orderForm);
 }

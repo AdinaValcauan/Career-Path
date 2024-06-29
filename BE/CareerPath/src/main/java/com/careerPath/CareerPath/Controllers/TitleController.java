@@ -71,4 +71,11 @@ public class TitleController {
                 .collect(Collectors.toList());
     }
 
+    @PatchMapping("/updateOrderForm/{titleId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public TitleDTO updateOrderForm(@PathVariable int titleId, @RequestBody int orderForm) {
+        Title updatedTitle = titleService.updateOrderForm(titleId, orderForm);
+        return titleDTOMapper.apply(updatedTitle);
+    }
+
 }
