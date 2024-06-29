@@ -11,6 +11,8 @@ const ParagraphComponent = ({
                                 fetchForms,
                                 formField,
                                 updateOrderForms,
+                                handleMoveUp,
+                                handleMoveDown,
                             }) => {
     const textareaRef = useRef(null);
     const [contentP, setContentP] = useState(field.content);
@@ -100,14 +102,17 @@ const ParagraphComponent = ({
                 </button>
             )}
             {isEditing && (
-                <button className="util-button" onClick={() => handleMoveUp(field.id)}>
+                <button
+                    className="util-button"
+                    onClick={(event) => handleMoveUp(event, field.orderForm)}
+                >
                     <FontAwesomeIcon icon={faArrowUp}/>
                 </button>
             )}
             {isEditing && (
                 <button
                     className="util-button"
-                    onClick={() => handleMoveDown(field.id)}
+                    onClick={(event) => handleMoveDown(event, field.orderForm)}
                 >
                     <FontAwesomeIcon icon={faArrowDown}/>
                 </button>

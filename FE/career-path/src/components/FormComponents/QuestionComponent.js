@@ -93,7 +93,6 @@ const QuestionComponent = ({
 
             formFields.splice(deletedFieldIndex, 1);
             await updateOrderForms(formFields, deletedFieldIndex);
-
         } else {
             console.error(error);
         }
@@ -127,14 +126,17 @@ const QuestionComponent = ({
                 </button>
             )}
             {isEditing && (
-                <button className="util-button" onClick={() => handleMoveUp(field.id)}>
+                <button
+                    className="util-button"
+                    onClick={(event) => handleMoveUp(event, field.orderForm)}
+                >
                     <FontAwesomeIcon icon={faArrowUp}/>
                 </button>
             )}
             {isEditing && (
                 <button
                     className="util-button"
-                    onClick={() => handleMoveDown(field.id)}
+                    onClick={(event) => handleMoveDown(event, field.orderForm)}
                 >
                     <FontAwesomeIcon icon={faArrowDown}/>
                 </button>

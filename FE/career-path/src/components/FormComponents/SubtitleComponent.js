@@ -10,7 +10,9 @@ const SubtitleComponent = ({
                                handleFieldChange,
                                fetchForms,
                                formField,
-                               updateOrderForms
+                               updateOrderForms,
+                               handleMoveUp,
+                               handleMoveDown,
                            }) => {
     const textareaRef = useRef(null);
     const [contentS, setContentS] = useState(field.content);
@@ -74,7 +76,6 @@ const SubtitleComponent = ({
 
             formFields.splice(deletedFieldIndex, 1);
             await updateOrderForms(formFields, deletedFieldIndex);
-
         } else {
             console.error(error);
         }
@@ -101,14 +102,17 @@ const SubtitleComponent = ({
                 </button>
             )}
             {isEditing && (
-                <button className="util-button" onClick={() => handleMoveUp(field.id)}>
+                <button
+                    className="util-button"
+                    onClick={(event) => handleMoveUp(event, field.orderForm)}
+                >
                     <FontAwesomeIcon icon={faArrowUp}/>
                 </button>
             )}
             {isEditing && (
                 <button
                     className="util-button"
-                    onClick={() => handleMoveDown(field.id)}
+                    onClick={(event) => handleMoveDown(event, field.orderForm)}
                 >
                     <FontAwesomeIcon icon={faArrowDown}/>
                 </button>

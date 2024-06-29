@@ -4,37 +4,16 @@ import TitleComponent from "../FormComponents/TitleComponents";
 import SubtitleComponent from "../FormComponents/SubtitleComponent";
 import ParagraphComponent from "../FormComponents/ParagraphComponent";
 import QuestionComponent from "../FormComponents/QuestionComponent";
-import {
-  addTitleService,
-  deleteTitleService,
-  getTitlesByDayService,
-  updateTitleService,
-} from "../../services/titleService";
-import {
-  addSubtitleService,
-  deleteSubtitleService,
-  getSubtitlesByDayService,
-  updateSubtitleService,
-} from "../../services/subtitleService";
-import {
-  addParagraphService,
-  deleteParagraphService,
-  getParagraphsByDayService,
-  updateParagraphService,
-} from "../../services/paragraphService";
-import {
-  addQuestionService,
-  deleteQuestionService,
-  getQuestionsByDayService,
-  updateQuestionService,
-} from "../../services/questionService";
+import { getTitlesByDayService } from "../../services/titleService";
+import { getSubtitlesByDayService } from "../../services/subtitleService";
+import { getParagraphsByDayService } from "../../services/paragraphService";
+import { getQuestionsByDayService } from "../../services/questionService";
 import {
   addAnswerService,
-  deleteAnswerService,
   getAnswersByQuestionAndUserService,
   updateAnswerService,
 } from "../../services/answerService";
-import {updateOrderFormService} from "../../services/orderFormService";
+import { updateOrderFormService } from "../../services/orderFormService";
 
 const DiaryForm = ({ selectedDay }) => {
   const [formField, setFormField] = useState([]);
@@ -239,18 +218,74 @@ const DiaryForm = ({ selectedDay }) => {
     );
   };
 
-  const handleMoveUp = (id) => {};
+  const handleMoveUp = async (event, orderForm) => {
+    event.preventDefault();
+    let formFields = [...formField];
 
-  const handleMoveDown = (id) => {};
+    const currentField = formFields.find((f) => f.orderForm === orderForm);
+    const previousField = formFields.find(
+      (f) => f.orderForm === currentField.orderForm - 1
+    );
+
+    if (previousField) {
+      [currentField.orderForm, previousField.orderForm] = [
+        previousField.orderForm,
+        currentField.orderForm,
+      ];
+
+      await updateOrderFormService(
+        currentField.type,
+        currentField.BeId,
+        currentField.orderForm
+      );
+      await updateOrderFormService(
+        previousField.type,
+        previousField.BeId,
+        previousField.orderForm
+      );
+    }
+
+    await fetchForms();
+  };
+
+  const handleMoveDown = async (event, orderForm) => {
+    event.preventDefault();
+    let formFields = [...formField];
+
+    const currentField = formFields.find((f) => f.orderForm === orderForm);
+    const nextField = formFields.find(
+      (f) => f.orderForm === currentField.orderForm + 1
+    );
+
+    if (nextField) {
+      [currentField.orderForm, nextField.orderForm] = [
+        nextField.orderForm,
+        currentField.orderForm,
+      ];
+
+      await updateOrderFormService(
+        currentField.type,
+        currentField.BeId,
+        currentField.orderForm
+      );
+      await updateOrderFormService(
+        nextField.type,
+        nextField.BeId,
+        nextField.orderForm
+      );
+    }
+
+    await fetchForms();
+  };
 
   const updateOrderForms = async (formFields, deletedFieldIndex) => {
     for (let i = deletedFieldIndex; i < formFields.length; i++) {
       formFields[i].orderForm--;
 
       const response = await updateOrderFormService(
-          formFields[i].type,
-          formFields[i].BeId,
-          formFields[i].orderForm
+        formFields[i].type,
+        formFields[i].BeId,
+        formFields[i].orderForm
       );
       if (response.success) {
         console.log("Field updated successfully");
@@ -276,12 +311,15 @@ const DiaryForm = ({ selectedDay }) => {
                   handleFieldChange={(content) =>
                     handleFieldChange(field.id, content)
                   }
-                  handleDeleteField={() => handleDeleteField(field.orderForm)}
                   formFields={formField}
                   setFormField={setFormField}
                   fetchForms={fetchForms}
                   formField={formField}
                   updateOrderForms={updateOrderForms}
+                  handleMoveUp={(event) => handleMoveUp(event, field.orderForm)}
+                  handleMoveDown={(event) =>
+                    handleMoveDown(event, field.orderForm)
+                  }
                 />
               );
             case "subtitle":
@@ -294,10 +332,13 @@ const DiaryForm = ({ selectedDay }) => {
                   handleFieldChange={(content) =>
                     handleFieldChange(field.id, content)
                   }
-                  handleDeleteField={() => handleDeleteField(field.orderForm)}
                   fetchForms={fetchForms}
                   formField={formField}
                   updateOrderForms={updateOrderForms}
+                  handleMoveUp={(event) => handleMoveUp(event, field.orderForm)}
+                  handleMoveDown={(event) =>
+                    handleMoveDown(event, field.orderForm)
+                  }
                 />
               );
             case "paragraph":
@@ -310,10 +351,13 @@ const DiaryForm = ({ selectedDay }) => {
                   handleFieldChange={(content) =>
                     handleFieldChange(field.id, content)
                   }
-                  handleDeleteField={() => handleDeleteField(field.orderForm)}
                   fetchForms={fetchForms}
                   formField={formField}
                   updateOrderForms={updateOrderForms}
+                  handleMoveUp={(event) => handleMoveUp(event, field.orderForm)}
+                  handleMoveDown={(event) =>
+                    handleMoveDown(event, field.orderForm)
+                  }
                 />
               );
             case "question":
@@ -326,15 +370,16 @@ const DiaryForm = ({ selectedDay }) => {
                   handleFieldChange={(content) =>
                     handleFieldChange(field.id, content)
                   }
-                  handleDeleteField={() => handleDeleteField(field.orderForm)}
                   fetchForms={fetchForms}
                   formField={formField}
                   updateOrderForms={updateOrderForms}
                   handleAnswerChange={(answer) =>
                     handleAnswerChange(field.id, answer)
                   }
-                  handleMoveUp={() => handleMoveUp(field.id)}
-                  handleMoveDown={() => handleMoveDown(field.id)}
+                  handleMoveUp={(event) => handleMoveUp(event, field.orderForm)}
+                  handleMoveDown={(event) =>
+                    handleMoveDown(event, field.orderForm)
+                  }
                 />
               );
             default:

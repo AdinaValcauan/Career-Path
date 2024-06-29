@@ -10,7 +10,9 @@ const TitleComponent = ({
                             handleFieldChange,
                             fetchForms,
                             formField,
-                            updateOrderForms
+                            updateOrderForms,
+                            handleMoveUp,
+                            handleMoveDown,
                         }) => {
     const textareaRef = useRef(null);
     const [contentT, setContentT] = useState(field.content);
@@ -90,7 +92,7 @@ const TitleComponent = ({
           onChange={handleOnChange}
           onBlur={handleSaveField}
           readOnly={!isEditing}
-      />
+      />í
             {isEditing && (
                 <button
                     className="util-button"
@@ -100,14 +102,17 @@ const TitleComponent = ({
                 </button>
             )}
             {isEditing && (
-                <button className="util-button" onClick={() => handleMoveUp(field.id)}>
+                <button
+                    className="util-button"
+                    onClick={(event) => handleMoveUp(event, field.orderForm)}
+                >
                     <FontAwesomeIcon icon={faArrowUp}/>
                 </button>
             )}
             {isEditing && (
                 <button
                     className="util-button"
-                    onClick={() => handleMoveDown(field.id)}
+                    onClick={(event) => handleMoveDown(event, field.orderForm)}
                 >
                     <FontAwesomeIcon icon={faArrowDown}/>
                 </button>
