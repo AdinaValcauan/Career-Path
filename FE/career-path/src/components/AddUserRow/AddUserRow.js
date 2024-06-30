@@ -43,11 +43,11 @@ const AddUserRow = ({
             {/*<td><input className="edit-input" type="text" placeholder="Rol user"*/}
             {/*           value={newRole} onChange={e => setNewRole(e.target.value)}/></td>*/}
             <td>
-            <select className="edit-input" value={newRole} onChange={e => setNewRole(e.target.value)}>
-                {roles.map(role => (
-                    <option key={role.roleId} value={role.roleName}>{role.roleName}</option>
-                ))}
-            </select></td>
+                <select className="edit-input" value={newRole} onChange={e => setNewRole(e.target.value)}>
+                    {roles.map(role => (
+                        <option key={role.roleId} value={role.roleName}>{role.roleName}</option>
+                    ))}
+                </select></td>
             <td>
                 <button className="edit-button" onClick={handleSave}>Save</button>
             </td>

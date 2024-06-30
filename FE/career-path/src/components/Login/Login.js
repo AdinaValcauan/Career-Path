@@ -90,7 +90,7 @@ function Login() {
                                 {showPassword ? <i className="fa-regular fa-eye-slash"></i> :
                                     <i className="fa-regular fa-eye"></i>}
                             </button>
-                            </div>
+                        </div>
                     </label>
                     <br></br>
                     <button className="login-button" type="submit">Autentifică-te</button>

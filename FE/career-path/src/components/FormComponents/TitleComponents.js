@@ -92,7 +92,7 @@ const TitleComponent = ({
           onChange={handleOnChange}
           onBlur={handleSaveField}
           readOnly={!isEditing}
-      />í
+      />
             {isEditing && (
                 <button
                     className="util-button"

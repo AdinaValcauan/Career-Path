@@ -13,7 +13,7 @@ export const getAllDiaryEntries = async () => {
 };
 
 export const getDiaryEntryById = async () => {
-    try{
+    try {
         const token = sessionStorage.getItem('token');
         const id = sessionStorage.getItem('diaryEntryId');
 

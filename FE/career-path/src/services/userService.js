@@ -1,5 +1,4 @@
 import api from "./axiosConfig";
-import {jwtDecode} from "jwt-decode";
 
 export const getUsersService = async () => {
     try {
