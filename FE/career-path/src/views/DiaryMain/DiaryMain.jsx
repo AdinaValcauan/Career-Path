@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import Menu from "../../components/Menu/Menu";
 import {MenuItemsAdmin} from "../../components/Menu/MenuItemsAdmin";
 import {MenuItemsUser} from "../../components/Menu/MenuItemsUser";
@@ -6,7 +6,8 @@ import DiaryDays from "../../components/DiaryDays/DiaryDays";
 import Footer from "../../components/Footer/Footer";
 import Hero from "../../components/Hero/Hero";
 import colt_de_scris from "../../assets/colt_de_scris1.jpg";
-import UserContext from "../../contexts/UserContext";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DiaryMain = () => {
     // const user = useContext(UserContext);
@@ -15,6 +16,7 @@ const DiaryMain = () => {
 
     return (
         <div>
+            <ToastContainer/>
             <div className="top-diary">
                 <Menu menuItems={isAdmin ? MenuItemsAdmin : MenuItemsUser}/>
                 <Hero

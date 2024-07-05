@@ -6,6 +6,9 @@ import {MenuItemsAdmin} from "../../components/Menu/MenuItemsAdmin";
 import {useEffectValidation} from "../../hooks/useEffectValidation";
 import AllUsersTable from "../../components/AllUsersTable/AllUsersTable";
 import {createHandleUpdateUser} from "../../utils/createHandleUpdateUser";
+import Footer from "../../components/Footer/Footer";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Modal.setAppElement('#root');
 
@@ -151,46 +154,51 @@ const ManageUsersAdmin = ({user}) => {
     }
 
     return (
-        <div className="manage-container">
-            <Menu menuItems={MenuItemsAdmin}/>
+        <div>
+            <ToastContainer/>
+            <div className="manage-container">
+                <Menu menuItems={MenuItemsAdmin}/>
 
-            <div className="table-container">
-                <button className="edit-button" onClick={handleAdd}>Adaugă un user nou</button>
+                <div className="table-container">
+                    <button className="edit-button" onClick={handleAdd}>Adaugă un user nou</button>
 
-                <AllUsersTable
-                    users={users}
-                    editId={editId}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
-                    handleUpdate={(id) => handleUpdate(id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName, updateRole)}
-                    handleExit={handleExit}
-                    handleSave={handleSave}
-                    updateFirstName={updateFirstName}
-                    setUpdateFirstName={setUpdateFirstName}
-                    updateLastName={updateLastName}
-                    setUpdateLastName={setUpdateLastName}
-                    updateEmail={updateEmail}
-                    setUpdateEmail={setUpdateEmail}
-                    updatePassword={updatePassword}
-                    setUpdatePassword={setUpdatePassword}
-                    updateRole={updateRole}
-                    setUpdateRole={setUpdateRole}
-                    errMsgLine={errMsgLine}
-                    adding={adding}
-                    setAdding={setAdding}
-                    newFirstName={newFirstName}
-                    newLastName={newLastName}
-                    newEmail={newEmail}
-                    newPassword={newPassword}
-                    newRole={newRole}
-                    setNewFirstName={setNewFirstName}
-                    setNewLastName={setNewLastName}
-                    setNewEmail={setNewEmail}
-                    setNewPassword={setNewPassword}
-                    setNewRole={setNewRole}
-                    successMsg={successMsg}
-                />
+                    <AllUsersTable
+                        users={users}
+                        editId={editId}
+                        handleEdit={handleEdit}
+                        handleDelete={handleDelete}
+                        handleUpdate={(id) => handleUpdate(id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName, updateRole)}
+                        handleExit={handleExit}
+                        handleSave={handleSave}
+                        updateFirstName={updateFirstName}
+                        setUpdateFirstName={setUpdateFirstName}
+                        updateLastName={updateLastName}
+                        setUpdateLastName={setUpdateLastName}
+                        updateEmail={updateEmail}
+                        setUpdateEmail={setUpdateEmail}
+                        updatePassword={updatePassword}
+                        setUpdatePassword={setUpdatePassword}
+                        updateRole={updateRole}
+                        setUpdateRole={setUpdateRole}
+                        errMsgLine={errMsgLine}
+                        adding={adding}
+                        setAdding={setAdding}
+                        newFirstName={newFirstName}
+                        newLastName={newLastName}
+                        newEmail={newEmail}
+                        newPassword={newPassword}
+                        newRole={newRole}
+                        setNewFirstName={setNewFirstName}
+                        setNewLastName={setNewLastName}
+                        setNewEmail={setNewEmail}
+                        setNewPassword={setNewPassword}
+                        setNewRole={setNewRole}
+                        successMsg={successMsg}
+                    />
+                </div>
+                {/*<Footer></Footer>*/}
             </div>
+            <Footer/>
         </div>
     );
 }

@@ -21,3 +21,7 @@
     cursor: pointer;
     margin: auto auto 20px 10px;
 }
+
+.diary-days {
+    background-color: #f0f0f0;
+}

@@ -25,6 +25,6 @@ public class Paragraph {
     private int orderForm;
 
     @ManyToOne
-    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_Paragraph"))
+    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_day_paragraph_dayid"))
     private Day day;
 }

@@ -16,7 +16,7 @@
     padding: 0 0 15px 0;
     border: none;
     border-radius: 20px;
-    background-color: #bdbcbc; /* soft pink */
+    /*background-color: #bdbcbc; !*/
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -109,7 +109,6 @@ textarea:focus {
     outline: none;
 
 }
-
 
 .input-subtitle {
     width: 83vw;

@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class GeneralInfoDTO {
     private int infoId;
     private String infoText;
+    private String type;
 }

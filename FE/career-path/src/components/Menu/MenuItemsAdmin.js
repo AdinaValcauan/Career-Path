@@ -24,6 +24,12 @@ export const MenuItemsAdmin = [
         icon: "fa-solid fa-users",
     },
     {
+        title: "Contact",
+        url: "contactus",
+        cName: "nav-links",
+        icon: "fa-solid fa-envelope",
+    },
+    {
         title: "Deconectare",
         url: "/",
         cName: "nav-links",

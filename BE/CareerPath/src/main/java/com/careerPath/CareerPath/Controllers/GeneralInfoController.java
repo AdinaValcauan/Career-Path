@@ -6,6 +6,7 @@ import com.careerPath.CareerPath.Mappers.GeneralInfoDTOMapper;
 import com.careerPath.CareerPath.Mappers.GeneralInfoMapper;
 import com.careerPath.CareerPath.Services.Interfaces.IGeneralInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,5 +44,18 @@ public class GeneralInfoController {
         return generalInfos.stream()
                 .map(generalInfoDTOMapper)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/addInfo")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public String addGeneralInfo(@RequestBody GeneralInfoDTO generalInfoDTO) {
+        GeneralInfo generalInfo = generalInfoMapper.apply(generalInfoDTO);
+        return generalInfoService.addGeneralInfo(generalInfo);
+    }
+
+    @DeleteMapping(value = "/deleteInfo/{infoId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public void deleteInfo(@PathVariable int infoId) {
+        generalInfoService.deleteGeneralInfo(infoId);
     }
 }

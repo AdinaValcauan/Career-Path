@@ -22,11 +22,11 @@ public class Answer {
     private String answerText;
 
     @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false, foreignKey = @ForeignKey(name = "FK_answer_questionid"))
+    @JoinColumn(name = "question_id", nullable = false, foreignKey = @ForeignKey(name = "FK_question_answer_questionid"))
     private Question question;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_answer_userid"))
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_user_answer_userid"))
     private User user;
 
 }

@@ -20,4 +20,7 @@ public class GeneralInfo {
 
     @Column(name = "info_text", nullable = false)
     private String infoText;
+
+    @Column(name = "type", nullable = false)
+    private String type;
 }

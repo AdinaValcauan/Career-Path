@@ -32,7 +32,7 @@ public class User  {
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false, foreignKey = @ForeignKey(name = "FK_role_user_roleid"))
     private Role role;
 
     @OneToMany(mappedBy = "user")

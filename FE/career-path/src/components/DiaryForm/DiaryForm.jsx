@@ -22,6 +22,10 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
         fetchForms().then((r) => console.log("Forms fetched"));
     }, [selectedDay]);
 
+    useEffect(() => {
+        console.log(formField);
+    }, [formField]);
+
     const handleEditClick = async (event) => {
         event.preventDefault();
         setIsEditing(true);
@@ -30,15 +34,16 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
     const fetchForms = async () => {
         const userId = sessionStorage.getItem("userId");
 
-        let responseTitles = await getTitlesByDayService(selectedDay);
-        let responseSubtitles = await getSubtitlesByDayService(selectedDay);
-        let responseParagraphs = await getParagraphsByDayService(selectedDay);
-        let responseQuestions = await getQuestionsByDayService(selectedDay);
-
-        responseTitles = responseTitles.data.map((item) => ({
-            ...item,
-            type: "title",
-        }));
+        let [responseTitles, responseSubtitles, responseParagraphs, responseQuestions] = await Promise.all([
+            getTitlesByDayService(selectedDay),
+            getSubtitlesByDayService(selectedDay),
+            getParagraphsByDayService(selectedDay),
+            getQuestionsByDayService(selectedDay)
+        ]);
+            responseTitles = responseTitles.data.map((item) => ({
+                ...item,
+                type: "title",
+            }));
         responseSubtitles = responseSubtitles.data.map((item) => ({
             ...item,
             type: "subtitle",
@@ -127,7 +132,7 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
         formFields.sort((a, b) => a.orderForm - b.orderForm);
 
         setFormField(formFields);
-        console.log(formFields);
+        console.log(formField);
     };
 
     const handleFieldChange = (orderForm, content) => {

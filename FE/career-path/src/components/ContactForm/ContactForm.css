@@ -1,18 +1,4 @@
-/*.input-profile {*/
-/*    border: 1px solid #ddd;*/
-/*    border-radius: 4px;*/
-/*    height: 50px;*/
-/*    margin-bottom: 10px;*/
-/*    text-align: center;*/
-/*    width: 300px;*/
-/*}*/
-
-.Toastify__toast-container {
-    z-index: 99999;
-}
-
-.profile-container {
-    margin-top: 40px;
+.contactus-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,7 +8,8 @@
     background-color: #f5f5f5;
 }
 
-.profile-content {
+.contactus-content {
+    margin-top: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,51 +17,56 @@
     width: 30em;
     height: 35em;
     background-color: white;
-    /*padding: 10px;*/
     border-radius: 1em;
     box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
-    /*background: radial-gradient(circle, rgb(236, 197, 171) 0%, rgb(248, 204, 177) 100%);*/
 }
 
-.h1-profile {
+.h1-contactus {
     font-weight: bold;
     color: #D2691E;
     text-align: center;
 }
 
-.profile-form {
+.contactus-form {
     display: flex;
     flex-direction: column;
-    /*gap: 5px;*/
 }
 
-.profile-form input {
+.contactus-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1em;
+}
+
+.contactus-form input, .contactus-form textarea {
     padding: 10px;
     font-size: 1em;
     border-radius: 5px;
-    /*border: 1px solid #ccc;*/
     border:none;
     border-bottom: 1px solid #D9A768;
     margin-bottom: 20px;
+    width: 100%;
+    height: 60px;
 }
 
-.input-profile:focus {
-    border-bottom: 2px solid #D9A768;
+.input-contactus:focus {
+    border-bottom: 2.5px solid #D9A768;
     outline: none;
 }
 
-.input-profile::placeholder {
+.input-contactus::placeholder {
     position: absolute;
     top: 0;
     left: 10px;
     color:#D9A768;
 }
 
-.input-profile:focus::placeholder {
+.input-contactus:focus::placeholder {
+    outline: none;
     font-weight: bolder;
 }
 
-.profile-form button {
+.send-button{
     padding: 10px 10px;
     font-size: 1.2em;
     background-color: #D2691E;
@@ -90,6 +82,6 @@
     margin: 20px auto auto;
 }
 
-.profile-form button:hover {
+.send-button:hover {
     background-color: #ff6347;
 }

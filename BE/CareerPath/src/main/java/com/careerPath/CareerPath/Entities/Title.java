@@ -25,6 +25,6 @@ public class Title {
     private int orderForm;
 
     @ManyToOne
-    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_title_dayid"))
+    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_day_title_dayid"))
     private Day day;
 }

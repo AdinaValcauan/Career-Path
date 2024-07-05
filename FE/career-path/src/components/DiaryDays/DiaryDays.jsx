@@ -70,8 +70,8 @@ const DiaryDays = () => {
         }
     };
 
-    const handleMoveUp = async (id) => {
-        const dayToMove = await getDayByIdService(id);
+    const handleMoveUp = async (dayId) => {
+        const dayToMove = await getDayByIdService(dayId);
 
         if (dayToMove.orderDay === 1) return;
 
@@ -109,8 +109,8 @@ const DiaryDays = () => {
         }
     };
 
-    const handleMoveDown = async (id) => {
-        const dayToMove = await getDayByIdService(id);
+    const handleMoveDown = async (dayId) => {
+        const dayToMove = await getDayByIdService(dayId);
 
         if (dayToMove.orderDay === 1) return;
 
@@ -178,7 +178,7 @@ const DiaryDays = () => {
                                     <button
                                         className="util-button"
                                         onClick={() => {
-                                            handleMoveUp(day.dayId);
+                                            handleMoveUp(day.dayId).then(r => fetchDays());
                                         }}
                                     >
                                         <FontAwesomeIcon icon={faArrowUp}/>
@@ -188,7 +188,7 @@ const DiaryDays = () => {
                                     <button
                                         className="util-button"
                                         onClick={() => {
-                                            handleMoveDown(day.dayId);
+                                            handleMoveDown(day.dayId).then(r => fetchDays());
                                         }}
                                     >
                                         <FontAwesomeIcon icon={faArrowDown}/>
@@ -208,7 +208,7 @@ const DiaryDays = () => {
                 </table>
                 <div>
                     {selectedDay && (
-                        <DiaryForm selectedDay={selectedDay} dayNumber={selectedDayObj.dayNumber}/>
+                        <DiaryForm key={Date.now()} selectedDay={selectedDay} dayNumber={selectedDayObj.dayNumber}/>
                     )}
                 </div>
             </div>

@@ -13,6 +13,7 @@ public class GeneralInfoMapper implements Function<GeneralInfoDTO, GeneralInfo> 
         GeneralInfo generalInfo = new GeneralInfo();
         generalInfo.setInfoId(generalInfoDTO.getInfoId());
         generalInfo.setInfoText(generalInfoDTO.getInfoText());
+        generalInfo.setType(generalInfoDTO.getType());
         return generalInfo;
     }
 }

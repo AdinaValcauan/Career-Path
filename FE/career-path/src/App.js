@@ -9,6 +9,7 @@ import DiaryMainWithRole from "./components/HigherOrderComponents/DiaryMainWithR
 import UserContext from "./contexts/UserContext";
 import {useState} from "react";
 import LoginRegister from "./views/LoginRegister/LoginRegister";
+import ContactUs from "./views/ContactUs/ContactUs";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -22,6 +23,8 @@ function App() {
                     <Route path="/profile" element={<UserProfileWithRole/>}/>
                     <Route path="/mainpageadmin" element={<AdminMainPageWithRole/>}/>
                     <Route path="/diary" element={<DiaryMainWithRole/>}/>
+                    <Route path="/contactus" element={<ContactUs/>}/>
+                    <Route path="*" element={<h1>Page not found</h1>}/>
                 </Routes>
             </Router>
         </UserContext.Provider>

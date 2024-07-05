@@ -12,7 +12,8 @@ public class GeneralInfoDTOMapper implements Function<GeneralInfo, GeneralInfoDT
     public GeneralInfoDTO apply(GeneralInfo generalInfo) {
         return new GeneralInfoDTO(
                 generalInfo.getInfoId(),
-                generalInfo.getInfoText()
+                generalInfo.getInfoText(),
+                generalInfo.getType()
         );
     }
 }

@@ -24,7 +24,7 @@ public class Question {
     private String questionText;
 
     @ManyToOne
-    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_dayid_Question"))
+    @JoinColumn(name = "day_id", nullable = false, foreignKey = @ForeignKey(name = "FK_day_question_dayid"))
     private Day day;
 
     @Column(name = "order_form")
