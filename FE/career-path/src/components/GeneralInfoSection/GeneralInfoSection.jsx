@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {createRef, useEffect, useRef, useState} from "react";
 import {
     addInfoService,
     deleteInfoService,
@@ -8,24 +8,29 @@ import {
 import './GeneralInfoSection.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {toast} from "react-toastify";
 
 const GeneralInfoSection = () => {
     const [fieldInfo, setFieldInfo] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const textareaRef = useRef(null);
+    const textareaRefs = useRef([]);
+    textareaRefs.current = fieldInfo.map((_, i) => textareaRefs.current[i] ?? createRef());
 
     const userRole = sessionStorage.getItem("userRole");
 
     useEffect(() => {
-        fetchInfo().then((r) => console.log("Forms fetched"));
+        fetchInfo();
     }, []);
 
     useEffect(() => {
-        const textarea = textareaRef.current;
-        if (textarea) {
-            textarea.style.height = "auto";
-            textarea.style.height = textarea.scrollHeight + "px";
-        }
+        textareaRefs.current.forEach(textareaRef => {
+            const textarea = textareaRef.current;
+            if (textarea) {
+                textarea.style.height = "auto";
+                textarea.style.height = textarea.scrollHeight + "px";
+            }
+        });
     }, [fieldInfo]);
 
     const fetchInfo = async () => {
@@ -60,10 +65,8 @@ const GeneralInfoSection = () => {
             response = await addInfoService(fieldToAddOrUpdate.infoText, fieldToAddOrUpdate.type);
         }
 
-        if (response.success) {
-            console.log("Informația a fost adăugată cu succes");
-        } else {
-            console.error(response.error);
+        if (response.error) {
+            toast.error("A apărut o eroare la adăugarea informației");
         }
         await fetchInfo();
     };
@@ -79,14 +82,8 @@ const GeneralInfoSection = () => {
         const fieldToDelete = fieldInfo[index];
         const response = await deleteInfoService(fieldToDelete.infoId);
 
-        if (response.success) {
-            console.log("Informația a fost ștearsă cu succes");
-
-            const newFieldInfo = [...fieldInfo];
-            newFieldInfo.splice(index, 1);
-            setFieldInfo(newFieldInfo);
-        } else {
-            console.error(response.error);
+        if (response.error) {
+            toast.error("A apărut o eroare la ștergerea informației");
         }
         await fetchInfo();
     }
@@ -98,7 +95,7 @@ const GeneralInfoSection = () => {
                 switch (info.type) {
                     case 'title':
                         textarea = <textarea
-                            ref={textareaRef}
+                            ref={textareaRefs.current[index]}
                             key={index}
                             className={`info-title ${isEditing ? "info-editing" : ""}`}
                             value={info.infoText}
@@ -108,7 +105,7 @@ const GeneralInfoSection = () => {
                         break;
                     case 'subtitle':
                         textarea = <textarea
-                            ref={textareaRef}
+                            ref={textareaRefs.current[index]}
                             key={index}
                             className={`info-subtitle ${isEditing ? "info-editing" : ""}`}
                             value={info.infoText}
@@ -118,7 +115,7 @@ const GeneralInfoSection = () => {
                         break;
                     case 'paragraph':
                         textarea = <textarea
-                            ref={textareaRef}
+                            ref={textareaRefs.current[index]}
                             key={index}
                             className={`info-paragraph ${isEditing ? "info-editing" : ""}`}
                             value={info.infoText}
@@ -175,20 +172,20 @@ const GeneralInfoSection = () => {
             </div>
             {isEditing && userRole === "admin" && (
                 <button
-                    className="form-button"
+                    className="info-button"
                     type="button"
                     onClick={handleSubmit}
                 >
-                    Submit
+                    Salvează
                 </button>
             )}
             {!isEditing && userRole === "admin" && (
                 <button
-                    className="form-button"
+                    className="info-button"
                     type="button"
                     onClick={() => setIsEditing(true)}
                 >
-                    Edit
+                    Editează
                 </button>
             )}
         </div>

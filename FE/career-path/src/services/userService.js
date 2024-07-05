@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const getUsersService = async () => {
     try {
@@ -7,8 +9,7 @@ export const getUsersService = async () => {
 
         return response;
     } catch (error) {
-        console.error('Error fetching users', error);
-        throw error;
+        toast.error("Eroare la aducerea utilizatorilor");
     }
 };
 
@@ -22,7 +23,6 @@ export const updateUserService = async (updatedUser) => {
         let password = updatedUser.updatePassword
         let roleName = updatedUser.updateRole;
 
-        console.log(updatedUser);
         let roleId = await api.get(`/getRoleId/${roleName}`, {headers: {Authorization: `Bearer ${token}`}});
 
         const user = {id, firstName, lastName, email, password, role: {roleName: roleName, roleId: roleId.data}};
@@ -80,7 +80,6 @@ export const getUserByIdService = async () => {
 
         return response.data;
     } catch (error) {
-        console.error('Error fetching user', error);
-        throw error;
+        toast.error("Eroare la aducerea utilizatorului");
     }
 };

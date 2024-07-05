@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const addAnswerService = async (answerText, questionId, userId) => {
     try {
@@ -75,8 +77,7 @@ export const getAnswersByQuestionAndUserService = async (
         if (error.response && error.response.status === 404) {
             return {data: []};
         } else {
-            console.error("Error fetching answers", error);
-            throw error;
+           toast.error("Eroare la aducerea raspunsurilor");
         }
     }
 };

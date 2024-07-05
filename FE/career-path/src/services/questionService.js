@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const getQuestionsByDayService = async (dayId) => {
     try {
@@ -8,8 +10,7 @@ export const getQuestionsByDayService = async (dayId) => {
         });
         return response;
     } catch (error) {
-        console.error("Error fetching questions", error);
-        throw error;
+        toast.error("Eroare la aducerea întrebărilor");
     }
 };
 
@@ -70,6 +71,6 @@ export const updateQuestionService = async (updatedQuestion) => {
             return {success: true, error: null};
         }
     } catch (error) {
-        throw error;
+        toast.error("Eroare la modificarea întrebării");
     }
 };

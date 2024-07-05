@@ -10,6 +10,10 @@
     margin: auto auto 20px 10px;
 }
 
+.day-button:hover {
+    background: #b95d1b;
+}
+
 .util-button {
     background: #D2691E;
     border: none;
@@ -20,6 +24,10 @@
     width: 30px;
     cursor: pointer;
     margin: auto auto 20px 10px;
+}
+
+.util-button:hover {
+    background: #b95d1b;
 }
 
 .diary-days {

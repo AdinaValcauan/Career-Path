@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {addSubtitleService, deleteSubtitleService, updateSubtitleService,} from "../../services/subtitleService";
 import {faArrowDown, faArrowUp, faTrash,} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SubtitleComponent = ({
                                field,
@@ -39,11 +41,8 @@ const SubtitleComponent = ({
                 contentS,
                 field.orderForm
             );
-            if (response.success) {
-                console.log("Subitlu adăugat cu succes");
-                // Actualizați starea componentei aici, dacă este necesar
-            } else {
-                console.error(response.error);
+            if (response.error) {
+               toast.error("Subtitlul nu a putut fi adăugat");
             }
         } else if (contentS !== field.content && field.BeId) {
             const updatedSubtitle = {
@@ -53,11 +52,8 @@ const SubtitleComponent = ({
                 orderForm: field.orderForm,
             };
             const response = await updateSubtitleService(updatedSubtitle);
-            if (response.success) {
-                console.log("Subitlu actualizat cu succes");
-                // Actualizați starea componentei aici, dacă este necesar
-            } else {
-                console.error(response.error);
+            if (response.error) {
+                toast.error("Subtitlul nu a putut fi actualizat");
             }
         }
         await fetchForms();
@@ -77,7 +73,7 @@ const SubtitleComponent = ({
             formFields.splice(deletedFieldIndex, 1);
             await updateOrderForms(formFields, deletedFieldIndex);
         } else {
-            console.error(error);
+            toast.error("Subtitlul nu a putut fi șters");
         }
         await fetchForms();
     };

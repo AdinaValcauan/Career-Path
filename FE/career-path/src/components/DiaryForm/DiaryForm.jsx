@@ -10,6 +10,10 @@ import {getParagraphsByDayService} from "../../services/paragraphService";
 import {getQuestionsByDayService} from "../../services/questionService";
 import {addAnswerService, getAnswersByQuestionAndUserService, updateAnswerService,} from "../../services/answerService";
 import {updateOrderFormService} from "../../services/orderFormService";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const DiaryForm = ({selectedDay, dayNumber}) => {
     const [formField, setFormField] = useState([]);
@@ -19,12 +23,8 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
     const userId = sessionStorage.getItem("userId");
 
     useEffect(() => {
-        fetchForms().then((r) => console.log("Forms fetched"));
+        fetchForms();
     }, [selectedDay]);
-
-    useEffect(() => {
-        console.log(formField);
-    }, [formField]);
 
     const handleEditClick = async (event) => {
         event.preventDefault();
@@ -40,10 +40,10 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
             getParagraphsByDayService(selectedDay),
             getQuestionsByDayService(selectedDay)
         ]);
-            responseTitles = responseTitles.data.map((item) => ({
-                ...item,
-                type: "title",
-            }));
+        responseTitles = responseTitles.data.map((item) => ({
+            ...item,
+            type: "title",
+        }));
         responseSubtitles = responseSubtitles.data.map((item) => ({
             ...item,
             type: "subtitle",
@@ -132,7 +132,6 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
         formFields.sort((a, b) => a.orderForm - b.orderForm);
 
         setFormField(formFields);
-        console.log(formField);
     };
 
     const handleFieldChange = (orderForm, content) => {
@@ -182,32 +181,15 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
             };
             const {success, error} = await updateAnswerService(updatedAnswer);
             if (error) {
-                console.log(error);
+                toast.error()
             }
         } else {
             const response = await addAnswerService(field.answer, field.BeId, userId);
             if (response.error) {
-                console.log(response.error);
-            } else if (response.success) {
-                console.log("Answer added successfully");
+                toast.error("Eroare la adăugarea răspunsului");
             }
         }
         await fetchForms();
-    };
-
-    const handleAnswerChange = (orderForm, answer) => {
-        console.log(answer);
-
-        setFormField(
-            formField.map((field) => {
-                if (field.orderForm === orderForm) {
-                    console.log(field);
-                    return {...field, answer: answer};
-                } else {
-                    return field;
-                }
-            })
-        );
     };
 
     const handleMoveUp = async (event, orderForm) => {
@@ -225,16 +207,20 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
                 currentField.orderForm,
             ];
 
-            await updateOrderFormService(
+            const {successMU1, errorMU1} = await updateOrderFormService(
                 currentField.type,
                 currentField.BeId,
                 currentField.orderForm
             );
-            await updateOrderFormService(
+
+            const {successMU2, errorMU2} = await updateOrderFormService(
                 previousField.type,
                 previousField.BeId,
                 previousField.orderForm
             );
+            if (errorMU1 || errorMU2) {
+                toast.error("Eroare la schimbarea ordinii");
+            }
         }
 
         await fetchForms();
@@ -255,16 +241,19 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
                 currentField.orderForm,
             ];
 
-            await updateOrderFormService(
+            const {successMD1, errorMD1} = await updateOrderFormService(
                 currentField.type,
                 currentField.BeId,
                 currentField.orderForm
             );
-            await updateOrderFormService(
+            const {successMD2, errorMD2} = await updateOrderFormService(
                 nextField.type,
                 nextField.BeId,
                 nextField.orderForm
             );
+            if (errorMD1 || errorMD2) {
+                toast.error("Eroare la schimbarea ordinii");
+            }
         }
 
         await fetchForms();
@@ -279,12 +268,96 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
                 formFields[i].BeId,
                 formFields[i].orderForm
             );
-            if (response.success) {
-                console.log("Field updated successfully");
-            } else {
-                console.error(response.error);
+            if (response.error) {
+                toast.error("Eroare la actualizarea ordinii");
             }
         }
+    };
+
+    function removeDiacritics(str) {
+        str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        str = str.replace(/→/g, "->");
+        return str;
+    }
+
+    const downloadFormAsPDF = () => {
+        const doc = new jsPDF();
+
+        let currentHeight = 20;
+        const pageHeight = doc.internal.pageSize.height - 20;
+        const pageWidth = doc.internal.pageSize.width;
+
+        doc.setFont('Roboto-Regular');
+        doc.setFontSize(18);
+
+        const dayText = `Ziua ${dayNumber}:`;
+        const dayWidth = doc.getStringUnitWidth(dayText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        const dayPosition = (pageWidth - dayWidth) / 2;
+        doc.text(dayText, dayPosition, currentHeight);
+        currentHeight += 20; // Ajustează înălțimea curentă pentru a face loc pentru textul zilei
+
+
+        formField.forEach((field, index) => {
+            let titlePosition = 0;
+            switch (field.type) {
+                case 'title':
+                    doc.setFontSize(20);
+                    doc.setTextColor(232, 73, 29);
+                    const title = removeDiacritics(field.content);
+                    const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    titlePosition = (pageWidth - titleWidth) / 2;
+                    break;
+                case 'subtitle':
+                    doc.setFontSize(18);
+                    doc.setTextColor(210, 105, 30);
+                    break;
+                case 'paragraph':
+                    doc.setFontSize(14);
+                    doc.setTextColor(100);
+                    break;
+                case 'question':
+                    doc.setFontSize(14);
+                    doc.setTextColor(100);
+                    break;
+                default:
+                    doc.setFontSize(12);
+                    doc.setTextColor(100);
+                    break;
+            }
+
+            const lines = doc.splitTextToSize(`${removeDiacritics(field.content)}`, 180);
+
+
+
+            if (currentHeight + lines.length * 10 > pageHeight) {
+                doc.addPage();
+                currentHeight = 20;
+            }
+
+            if (field.type === 'title') {
+                doc.text(lines, titlePosition, currentHeight);
+            } else {
+                doc.text(lines, 14, currentHeight);
+            }
+            currentHeight += lines.length * 10;
+
+
+            if (field.type === 'question' && field.answer) {
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 139);
+                const answerLines = doc.splitTextToSize(`${removeDiacritics(field.answer)}`, 180);
+
+                if (currentHeight + answerLines.length * 10 > pageHeight) {
+                    doc.addPage();
+                    currentHeight = 20;
+                }
+
+                doc.text(answerLines, 14, currentHeight);
+                currentHeight += answerLines.length * 10;
+            }
+        });
+
+        doc.save('jurnal_calatorie.pdf');
     };
 
     return (
@@ -424,7 +497,7 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
                     type="button"
                     onClick={(event) => handleEditClick(event)}
                 >
-                    Edit
+                    Editează
                 </button>
             )}
             <button
@@ -432,8 +505,10 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
                 type="submit"
                 onClick={(event) => handleSubmit(event)}
             >
-                Submit
+                Salvează
             </button>
+            <p className="before-text"> Daca dorești și versiunea PDF completată de tine, apasă mai jos: </p>
+            <button type="button" className="login-button" onClick={downloadFormAsPDF}>Descarcă ca PDF</button>
         </form>
     );
 };

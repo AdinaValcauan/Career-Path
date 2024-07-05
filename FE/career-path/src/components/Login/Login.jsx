@@ -47,10 +47,6 @@ function Login() {
 
     return (
         <div className="login-all">
-            {/* <section className="login-container">
-           <h2>Welcome</h2>
-        <p>We're glad to see you again!</p>
-    </section> */}
 
             <section className="login-form">
                 <h1 className="h1-login">Autentificare</h1>

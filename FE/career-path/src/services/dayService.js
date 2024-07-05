@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const getDaysService = async () => {
     try {
@@ -9,8 +11,7 @@ export const getDaysService = async () => {
 
         return response;
     } catch (error) {
-        console.error("Error fetching days", error);
-        throw error;
+        toast.error("Eroare la aducerea zilelor");
     }
 };
 
@@ -23,8 +24,7 @@ export const getDayByIdService = async (id) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error fetching the day", error);
-        throw error;
+        toast.error("Eroare la aducerea zilei");
     }
 };
 
@@ -56,8 +56,7 @@ export const deleteDayService = async (id) => {
 
         return response;
     } catch (error) {
-        console.error("Error deleting the day", error);
-        throw error;
+        toast.error("Eroare la ștergerea zilei");
     }
 };
 

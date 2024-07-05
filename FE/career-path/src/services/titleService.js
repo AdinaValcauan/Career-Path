@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const addTitleService = async (dayId, titleText, orderForm) => {
     try {
@@ -67,7 +69,6 @@ export const getTitlesByDayService = async (dayId) => {
         });
         return response;
     } catch (error) {
-        console.error("Error fetching titles", error);
-        throw error;
+        toast.error("Eroare la aducerea titlurilor");
     }
 };

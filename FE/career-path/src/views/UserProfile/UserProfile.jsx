@@ -28,7 +28,7 @@ function UserProfile() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        fetchUser().then(r => console.log("User fetched"));
+        fetchUser();
     }, []);
 
     useEffectValidation(updateEmail, EMAIL_REGEX, setValidUpdateEmail);

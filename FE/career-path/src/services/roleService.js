@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const getRolesService = async () => {
     try {
@@ -7,7 +9,6 @@ export const getRolesService = async () => {
 
         return response;
     } catch (error) {
-        console.error('Error fetching roles', error);
-        throw error;
+        toast.error("Eroare la aducerea rolurilor");
     }
 };

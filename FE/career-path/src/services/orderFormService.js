@@ -1,4 +1,6 @@
 import api from './axiosConfig';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const updateOrderFormService = async (resourceType, resourceId, orderForm) => {
     try {
@@ -11,6 +13,6 @@ export const updateOrderFormService = async (resourceType, resourceId, orderForm
             return {success: true, error: null};
         }
     } catch (error) {
-        throw error;
+        toast.error('Eroare la actualizarea formularului de ordine');
     }
 };

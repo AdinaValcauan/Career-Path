@@ -10,6 +10,8 @@ import {
 import DiaryForm from "../DiaryForm/DiaryForm";
 import {faArrowDown, faArrowUp, faTrash,} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DiaryDays = () => {
     const [days, setDays] = useState([]);
@@ -17,7 +19,7 @@ const DiaryDays = () => {
     const userRole = sessionStorage.getItem("userRole");
 
     useEffect(() => {
-        fetchDays().then((r) => console.log("Days fetched"));
+        fetchDays();
     }, []);
 
     const fetchDays = async () => {
@@ -39,6 +41,8 @@ const DiaryDays = () => {
         const response = await addDayService(newDay);
         if (response.status === 200) {
             setDays([...days, newDay]);
+        } else {
+            toast.error("Ziua nu a putut fi adăugată");
         }
 
         await fetchDays();
@@ -49,24 +53,24 @@ const DiaryDays = () => {
         const response = await deleteDayService(id);
 
         if (response.status === 200) {
-            if (response.status === 200) {
-                for (let i = 0; i < days.length; i++) {
-                    if (dayToDelete.orderDay < days[i].orderDay) {
-                        const newDay = {
-                            dayId: days[i].dayId,
-                            dayNumber: days[i].dayNumber - 1,
-                            dayText: `Ziua ${days[i].dayNumber - 1}`,
-                            orderDay: days[i].orderDay - 1,
-                        };
-                        const {success, error} = await updateDayService(newDay);
-                        if (!success) {
-                            console.log(error);
-                            break;
-                        }
+            for (let i = 0; i < days.length; i++) {
+                if (dayToDelete.orderDay < days[i].orderDay) {
+                    const newDay = {
+                        dayId: days[i].dayId,
+                        dayNumber: days[i].dayNumber - 1,
+                        dayText: `Ziua ${days[i].dayNumber - 1}`,
+                        orderDay: days[i].orderDay - 1,
+                    };
+                    const {success, error} = await updateDayService(newDay);
+                    if (!success) {
+                        toast.error("Eroare internă");
+                        break;
                     }
                 }
-                await fetchDays();
             }
+            await fetchDays();
+        } else {
+            toast.error("Ziua nu a putut fi ștearsă");
         }
     };
 
@@ -92,17 +96,13 @@ const DiaryDays = () => {
                 };
 
                 const {successMU1, errorMU1} = await updateDayService(newDay);
-                if (successMU1) {
-                    console.log("Day moved up successfully");
-                } else {
-                    console.log(errorMU1);
+                if (errorMU1) {
+                    toast.error("Eroare în mutare zi");
                 }
 
                 const {successMU2, errorMU2} = await updateDayService(newDayToSwap);
-                if (successMU2) {
-                    console.log("Day moved down successfully");
-                } else {
-                    console.log(errorMU2);
+                if (errorMU2) {
+                    toast.error("Eroare în mutare zi");
                 }
             }
             await fetchDays();
@@ -130,18 +130,14 @@ const DiaryDays = () => {
                     orderDay: dayToMove.orderDay,
                 };
 
-                const {successMU1, errorMU1} = await updateDayService(newDay);
-                if (successMU1) {
-                    console.log("Day moved up successfully");
-                } else {
-                    console.log(errorMU1);
+                const {successMD1, errorMD1} = await updateDayService(newDay);
+                if (errorMD1) {
+                    toast.error("Eroare în mutare zi");
                 }
 
-                const {successMU2, errorMU2} = await updateDayService(newDayToSwap);
-                if (successMU2) {
-                    console.log("Day moved down successfully");
-                } else {
-                    console.log(errorMU2);
+                const {successMD2, errorMD2} = await updateDayService(newDayToSwap);
+                if (errorMD2) {
+                    toast.error("Eroare în mutare zi");
                 }
             }
             await fetchDays();

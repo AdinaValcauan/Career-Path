@@ -19,7 +19,7 @@
 
 .hero-text{
     position: absolute;
-    top: 52%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
@@ -27,7 +27,7 @@
 }
 
 .hero-text h1{
-    font-size: calc(2rem + 1vw); /* Scalabil */
+    font-size: calc(2rem + 1vw);
     background: black;
     font-family: 'Orelega One', serif;
     font-style: normal;
@@ -37,7 +37,7 @@
 }
 
 .hero-text p{
-    font-size: calc(1rem + 0.3vw); /* Scalabil */
+    font-size: calc(1rem + 0.3vw);
     color: black;
     padding: 0.5em 0 2em 0;
     font-family: 'Slackside One', cursive;

@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {addParagraphService, deleteParagraphService, updateParagraphService,} from "../../services/paragraphService";
 import {faArrowDown, faArrowUp, faTrash,} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ParagraphComponent = ({
                                 field,
@@ -46,7 +48,7 @@ const ParagraphComponent = ({
             formFields.splice(deletedFieldIndex, 1);
             await updateOrderForms(formFields, deletedFieldIndex);
         } else {
-            console.error(error); // TODO: in caz de eroare sa apara un popup cu mesajul de eroare
+            toast.error("Paragraful nu a putut fi șters");
         }
         await fetchForms();
     };
@@ -58,11 +60,8 @@ const ParagraphComponent = ({
                 field.orderForm,
                 selectedDay
             );
-            if (response.success) {
-                console.log("Paragraph adăugat cu succes");
-                // Actualizați starea componentei aici, dacă este necesar
-            } else {
-                console.error(response.error);
+            if (response.error) {
+                toast.error("Paragraful nu a putut fi adăugat");
             }
         } else if (contentP !== field.content && field.BeId) {
             const updatedParagraph = {
@@ -72,11 +71,8 @@ const ParagraphComponent = ({
                 orderForm: field.orderForm,
             };
             const response = await updateParagraphService(updatedParagraph);
-            if (response.success) {
-                console.log("Paragraph actualizat cu succes");
-                // Actualizați starea componentei aici, dacă este necesar
-            } else {
-                console.error(response.error);
+            if (response.error) {
+                toast.error("Paragraful nu a putut fi actualizat");
             }
         }
         await fetchForms();

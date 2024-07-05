@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const addParagraphService = async (paragraphText, orderForm, dayId) => {
     try {
@@ -47,14 +49,12 @@ export const updateParagraphService = async (updatedParagraph) => {
 
         const paragraph = {paragraphId, paragraphText, dayId, orderForm};
 
-        console.log(paragraph);
         const response = await api.put(
             `/updateParagraph/${paragraph.paragraphId}`,
             paragraph,
             {headers: {Authorization: `Bearer ${token}`}}
         );
 
-        console.log(response);
         if (response.status === 200) {
             return {success: true, error: null};
         }
@@ -71,7 +71,6 @@ export const getParagraphsByDayService = async (dayId) => {
         });
         return response;
     } catch (error) {
-        console.error("Error fetching paragraphs", error);
-        throw error;
+       toast.error("Eroare la aducerea paragrafelor");
     }
 };

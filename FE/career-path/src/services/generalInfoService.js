@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const getAllInfoService = async () => {
     try {
@@ -7,8 +9,7 @@ export const getAllInfoService = async () => {
 
         return response;
     } catch (error) {
-        console.error('Error fetching info', error);
-        throw error;
+       toast.error("Eroare la aducerea informațiilor generale");
     }
 };
 

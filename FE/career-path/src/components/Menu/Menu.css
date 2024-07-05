@@ -71,7 +71,6 @@
 @media screen and (max-width: 1320px) {
     .menu {
         z-index: 99;
-        /* height: 100px; */
     }
 
     .nav-menu {
@@ -91,10 +90,6 @@
         border-radius: 13px;
         transition: 0.3s ease-in-out;
     }
-
-    /* .menu{
-        height: 50px;
-    } */
 
     .nav-menu.active {
         left: 0;
@@ -138,14 +133,14 @@
     .nav-menu {
         position: absolute;
         top: 0;
-        left: -100%; /* Ascunde meniul în afara ecranului */
-        flex-direction: column; /* Afișează linkurile vertical */
+        left: -100%;
+        flex-direction: column;
         transition: 0.3s;
     }
     .nav-menu.active {
-        left: 0; /* Afișează meniul când este activ */
+        left: 0;
     }
     .nav-links {
-        padding: 1.5rem; /* Mărește spațiul pentru fiecare link pentru a facilita atingerea pe ecranul tactil */
+        padding: 1.5rem;
     }
 }

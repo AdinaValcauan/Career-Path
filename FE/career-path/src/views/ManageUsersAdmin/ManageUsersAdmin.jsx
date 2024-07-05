@@ -51,7 +51,7 @@ const ManageUsersAdmin = ({user}) => {
     };
 
     useEffect(() => {
-        fetchUsers().then(r => console.log("Users fetched"));
+        fetchUsers();
     }, []);
 
     const fetchUsers = async () => {

@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {addQuestionService, deleteQuestionService, updateQuestionService,} from "../../services/questionService";
 import {faArrowDown, faArrowUp, faTrash,} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const QuestionComponent = ({
                                field,
@@ -54,7 +56,6 @@ const QuestionComponent = ({
         setFormField(
             formField.map((field) => {
                 if (field.orderForm === orderForm) {
-                    console.log(field);
                     return {...field, answer: answer};
                 } else {
                     return field;
@@ -70,11 +71,8 @@ const QuestionComponent = ({
                 selectedDay,
                 field.orderForm
             );
-            if (response.success) {
-                console.log("Question adăugat cu succes");
-                // Actualizați starea componentei aici, dacă este necesar
-            } else {
-                console.error(response.error);
+            if (response.error) {
+                toast.error("Întrebarea nu a putut fi adăugată");
             }
         } else if (contentQ !== field.content && field.BeId) {
             const updatedQuestion = {
@@ -84,11 +82,8 @@ const QuestionComponent = ({
                 orderForm: field.orderForm,
             };
             const response = await updateQuestionService(updatedQuestion);
-            if (response.success) {
-                console.log("Question actualizat cu succes");
-                // Actualizați starea componentei aici, dacă este necesar
-            } else {
-                console.error(response.error);
+            if (response.error) {
+                toast.error("Întrebarea nu a putut fi actualizată");
             }
         }
         await fetchForms();
@@ -108,7 +103,7 @@ const QuestionComponent = ({
             formFields.splice(deletedFieldIndex, 1);
             await updateOrderForms(formFields, deletedFieldIndex);
         } else {
-            console.error(error);
+            toast.error("Întrebarea nu a putut fi ștearsă");
         }
         await fetchForms();
     };

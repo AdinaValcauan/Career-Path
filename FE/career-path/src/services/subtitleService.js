@@ -1,4 +1,6 @@
 import api from "./axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const addSubtitleService = async (dayId, subtitleText, orderForm) => {
     try {
@@ -69,7 +71,6 @@ export const getSubtitlesByDayService = async (dayId) => {
         });
         return response;
     } catch (error) {
-        console.error("Error fetching subtitles", error);
-        throw error;
+        toast.error("Eroare la aducerea subtitlurilor");
     }
 };
