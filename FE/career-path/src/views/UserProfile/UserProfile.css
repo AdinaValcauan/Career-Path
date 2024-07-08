@@ -85,3 +85,11 @@
 .profile-form button:hover {
     background-color: #b95d1b;
 }
+
+.Toastify__toast--success {
+    background-color: #f0f0f0;
+}
+
+.Toastify__toast--error {
+    background-color: #f0f0f0;
+}
