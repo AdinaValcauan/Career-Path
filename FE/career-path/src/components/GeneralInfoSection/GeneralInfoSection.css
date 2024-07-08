@@ -88,6 +88,17 @@ textarea {
         background: #b95d1b;
     }
 
-    .form-button:hover {
-        background: #b95d1b;
-    }
+.formi-button {
+    background: #FFA07A;
+    border: none;
+    color: #fff;
+    height: 40px;
+    width: 300px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin: 20px auto auto 20px;
+}
+
+.formi-button:hover {
+    background: #E9967A;
+}

@@ -22,41 +22,28 @@ public class AnswerController {
     @Autowired
     private IAnswerService answerService;
 
-    @Autowired
-    private AnswerMapper answerMapper;
-
-    @Autowired
-    private AnswerDTOMapper answerDTOMapper;
-
     @GetMapping("/answerById/{answerId}")
     @PreAuthorize("hasAnyAuthority('admin','user')")
     public AnswerDTO getAnswerById(@PathVariable int answerId) {
-        Answer answer = answerService.getAnswerById(answerId);
-        return answerDTOMapper.apply(answer);
+        return answerService.getAnswerById(answerId);
     }
 
     @GetMapping("/getAllAnswers")
     @PreAuthorize("hasAnyAuthority('admin', 'user')")
     public List<AnswerDTO> getAllAnswers() {
-        List<Answer> answers = answerService.getAllAnswers();
-        return answers.stream()
-                .map(answerDTOMapper)
-                .collect(Collectors.toList());
+        return answerService.getAllAnswers();
     }
 
     @PostMapping("/addAnswer")
     @PreAuthorize("hasAnyAuthority('admin','user')")
     public String addAnswer(@RequestBody AnswerDTO answerDTO){
-        Answer answer = answerMapper.apply(answerDTO);
-        return answerService.addAnswer(answer);
+        return answerService.addAnswer(answerDTO);
     }
 
     @PutMapping("/updateAnswer/{answerId}")
     @PreAuthorize("hasAnyAuthority('admin', 'user')")
     public AnswerDTO updateAnswer(@PathVariable int answerId, @RequestBody AnswerDTO answerDTO){
-        Answer answer = answerMapper.apply(answerDTO);
-        Answer updatedAnswer = answerService.updateAnswer(answerId, answer);
-        return answerDTOMapper.apply(updatedAnswer);
+        return answerService.updateAnswer(answerId, answerDTO);
     }
 
     @DeleteMapping(value = "/deleteAnswer/{answerId}")
@@ -68,11 +55,7 @@ public class AnswerController {
     @GetMapping("/getAnswerByQuestionAndUser/{questionId}/{userId}")
     @PreAuthorize("hasAnyAuthority('admin','user')")
     public ResponseEntity<AnswerDTO> getAnswerByQuestionAndUser(@PathVariable int questionId, @PathVariable int userId) {
-        Optional<Answer> answer = answerService.getAnswerByDayAndUser(questionId, userId);
-        if (answer.isPresent()) {
-            return new ResponseEntity<>(answerDTOMapper.apply(answer.get()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Optional<AnswerDTO> answerDTO = answerService.getAnswerByDayAndUser(questionId, userId);
+        return answerDTO.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

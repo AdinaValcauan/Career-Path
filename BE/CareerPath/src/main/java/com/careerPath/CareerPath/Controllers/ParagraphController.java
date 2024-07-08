@@ -1,12 +1,6 @@
 package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.ParagraphDTO;
-import com.careerPath.CareerPath.DTOs.TitleDTO;
-import com.careerPath.CareerPath.Entities.Day;
-import com.careerPath.CareerPath.Entities.Paragraph;
-import com.careerPath.CareerPath.Entities.Title;
-import com.careerPath.CareerPath.Mappers.ParagraphDTOMapper;
-import com.careerPath.CareerPath.Mappers.ParagraphMapper;
 import com.careerPath.CareerPath.Services.DayService;
 import com.careerPath.CareerPath.Services.Interfaces.IParagraphService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,38 +17,21 @@ public class ParagraphController {
     @Autowired
     private IParagraphService paragraphService;
 
-    @Autowired
-    private ParagraphMapper paragraphMapper;
-
-    @Autowired
-    private ParagraphDTOMapper paragraphDTOMapper;
-
-    @Autowired
-    private DayService dayService;
-
     @GetMapping("/getAllParagraphs")
-    @PreAuthorize("hasAnyAuthority('admin', 'user')")
     public List<ParagraphDTO> getAllParagraphs() {
-        List<Paragraph> paragraphs = paragraphService.getAllParagraphs();
-        return paragraphs.stream()
-                .map(paragraphDTOMapper)
-                .collect(Collectors.toList());
+        return paragraphService.getAllParagraphs();
     }
 
     @PostMapping("/addParagraph")
     @PreAuthorize("hasAnyAuthority('admin')")
     public String addParagraph(@RequestBody ParagraphDTO paragraphDTO){
-        Paragraph paragraph = paragraphMapper.apply(paragraphDTO);
-        Day day = dayService.getDayById(paragraphDTO.getDayId());
-        paragraph.setDay(day);
-        return paragraphService.addParagraph(paragraph);
+        return paragraphService.addParagraph(paragraphDTO);
     }
 
     @PutMapping("/updateParagraph/{paragraphId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public ParagraphDTO updateParagraph(@PathVariable int paragraphId, @RequestBody ParagraphDTO paragraphDTO){
-        Paragraph paragraph = paragraphMapper.apply(paragraphDTO);
-        Paragraph updatedParagraph = paragraphService.updateParagraph(paragraphId, paragraph);
-        return paragraphDTOMapper.apply(updatedParagraph);
+        return paragraphService.updateParagraph(paragraphId, paragraphDTO);
     }
 
     @DeleteMapping(value = "/deleteParagraph/{paragraphId}")
@@ -63,19 +40,14 @@ public class ParagraphController {
         paragraphService.deleteParagraph(paragraphId);
     }
 
-    @GetMapping(value = "/getParagraphsByDay/{dayId}")
-    @PreAuthorize("hasAnyAuthority('admin', 'user')")
+    @GetMapping("/getParagraphsByDay/{dayId}")
     public List<ParagraphDTO> getParagraphsByDay(@PathVariable int dayId){
-        List<Paragraph> paragraphs = paragraphService.getParagraphsByDay(dayId);
-        return paragraphs.stream()
-                .map(paragraphDTOMapper)
-                .collect(Collectors.toList());
+        return paragraphService.getParagraphsByDay(dayId);
     }
 
-    @PatchMapping("/updateOrderForm/{paragraphIdId}")
+    @PutMapping("/updateOrderForm/{paragraphId}/{orderForm}")
     @PreAuthorize("hasAnyAuthority('admin')")
-    public ParagraphDTO updateOrderForm(@PathVariable int paragraphId, @RequestBody int orderForm) {
-        Paragraph updatedParagraph = paragraphService.updateOrderForm(paragraphId, orderForm);
-        return paragraphDTOMapper.apply(updatedParagraph);
+    public ParagraphDTO updateOrderForm(@PathVariable int paragraphId, @PathVariable int orderForm){
+        return paragraphService.updateOrderForm(paragraphId, orderForm);
     }
 }

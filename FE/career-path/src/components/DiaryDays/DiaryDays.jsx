@@ -145,7 +145,7 @@ const DiaryDays = () => {
     };
 
     return (
-        <div className="diary-days">
+        <div className="diary-days" id="day-part">
             <div style={{display: "flex"}}>
                 <table>
                     <tbody>

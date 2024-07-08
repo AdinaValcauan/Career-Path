@@ -1,6 +1,12 @@
+import React from "react";
 import "./Hero.css";
+import { scrollToElement} from "../../utils/scrollToElement";
 
-function Hero(props) {
+function Hero({ scrollToSelector, ...props}) {
+    const handleButtonClick = () => {
+        scrollToElement(scrollToSelector);
+    };
+
     return (
         <>
             <div className="hero-container">
@@ -10,9 +16,9 @@ function Hero(props) {
                     <div className="hero-text">
                         <h1 className="hero-title">{props.title}</h1>
                         <p className="hero-subtitle">{props.subtitle}</p>
-                        <a href={props.link} className="buttonDetails">
+                        <button onClick={handleButtonClick} className="buttonDetails">
                             {props.buttonText}
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

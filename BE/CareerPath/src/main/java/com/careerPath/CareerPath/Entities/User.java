@@ -34,7 +34,4 @@ public class User  {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false, foreignKey = @ForeignKey(name = "FK_role_user_roleid"))
     private Role role;
-
-    @OneToMany(mappedBy = "user")
-    private List<DiaryEntry> diaryEntries;
 }

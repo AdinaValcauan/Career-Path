@@ -1,6 +1,9 @@
 package com.careerPath.CareerPath.Services;
 
+import com.careerPath.CareerPath.DTOs.TitleDTO;
 import com.careerPath.CareerPath.Entities.Title;
+import com.careerPath.CareerPath.Mappers.TitleDTOMapper;
+import com.careerPath.CareerPath.Mappers.TitleMapper;
 import com.careerPath.CareerPath.Repositories.TitleRepository;
 import com.careerPath.CareerPath.Services.Interfaces.ITitleService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -17,44 +21,56 @@ public class TitleService implements ITitleService {
     @Autowired
     private TitleRepository titleRepository;
 
-    public List<Title> getAllTitles(){
-        return titleRepository.findAll();
+    @Autowired
+    private TitleMapper titleMapper;
+
+    @Autowired
+    private TitleDTOMapper titleDTOMapper;
+
+    public List<TitleDTO> getAllTitles(){
+        List<Title> titles = titleRepository.findAll();
+        return titles.stream()
+                .map(titleDTOMapper)
+                .collect(Collectors.toList());
     }
 
-    public Title getTitleById(int titleId) {
-        return titleRepository.findById(titleId).get();
+    public TitleDTO getTitleById(int titleId) {
+        Title title = titleRepository.findById(titleId).get();
+        return titleDTOMapper.apply(title);
     }
 
-    public String addTitle(Title title){
+    public String addTitle(TitleDTO titleDTO){
+        Title title = titleMapper.apply(titleDTO);
         titleRepository.save(title);
-        return "Title added successfully \n" + title;
+        return "Title added successfully \n" + titleDTO;
     }
 
-    public Title updateTitle(int titleId, Title title){
+    public TitleDTO updateTitle(int titleId, TitleDTO titleDTO){
+        Title title = titleMapper.apply(titleDTO);
         Title existingTitle = titleRepository.findById(titleId).get();
         existingTitle.setTitleText(title.getTitleText());
-        existingTitle.setOrderForm(title.getOrderForm());
 
-        return titleRepository.save(existingTitle);
+        Title updatedTitle = titleRepository.save(existingTitle);
+        return titleDTOMapper.apply(updatedTitle);
     }
 
     public void deleteTitle(int titleId) {
-        Optional<Title> titleToDelete = titleRepository.findById(titleId);
-        if (titleToDelete.isPresent()){
-            titleRepository.delete(titleToDelete.get());
-        } else {
-            throw new NoSuchElementException("No title found with id: " + titleId);
-        }
+        Title titleToDelete = titleRepository.findById(titleId).get();
+        titleRepository.delete(titleToDelete);
     }
 
-    public List<Title> getTitlesByDay(int dayId){
-        return titleRepository.findByDay_DayIdOrderByOrderForm(dayId);
+    public List<TitleDTO> getTitlesByDay(int dayId){
+        List<Title> titles = titleRepository.findByDay_DayIdOrderByOrderForm(dayId);
+        return titles.stream()
+                .map(titleDTOMapper)
+                .collect(Collectors.toList());
     }
 
-    public Title updateOrderForm(int titleId, int orderForm) {
+    public TitleDTO updateOrderForm(int titleId, int orderForm) {
         Title existingTitle = titleRepository.findById(titleId).get();
         existingTitle.setOrderForm(orderForm);
 
-        return titleRepository.save(existingTitle);
+        Title updatedTitle = titleRepository.save(existingTitle);
+        return titleDTOMapper.apply(updatedTitle);
     }
 }

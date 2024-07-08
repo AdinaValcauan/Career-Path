@@ -1,15 +1,15 @@
 package com.careerPath.CareerPath.Services.Interfaces;
 
-import com.careerPath.CareerPath.Entities.Title;
+import com.careerPath.CareerPath.DTOs.TitleDTO;
 
 import java.util.List;
 
 public interface ITitleService {
-    List<Title> getAllTitles();
-    Title getTitleById(int titleId);
-    String addTitle(Title title);
-    Title updateTitle(int titleId, Title title);
+    List<TitleDTO> getAllTitles();
+    TitleDTO getTitleById(int titleId);
+    String addTitle(TitleDTO titleDTO);
+    TitleDTO updateTitle(int titleId, TitleDTO titleDTO);
     void deleteTitle(int titleId);
-    List<Title> getTitlesByDay(int dayId);
-    Title updateOrderForm(int titleId, int orderForm);
+    List<TitleDTO> getTitlesByDay(int dayId);
+    TitleDTO updateOrderForm(int titleId, int orderForm);
 }

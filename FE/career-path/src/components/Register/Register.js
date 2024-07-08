@@ -4,8 +4,10 @@ import "./Register.css";
 import {registerService} from "../../services/registerService";
 import PasswordChecklist from "react-password-checklist";
 import {useEffectValidation} from "../../hooks/useEffectValidation";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Register() {
+function Register(props) {
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -67,6 +69,8 @@ function Register() {
             setErrMsg(error);
         } else if (success) {
             navigate("/");
+            toast.success("Contul a fost creat cu succes!");
+            props.setIsRegister(false);
         }
     };
 

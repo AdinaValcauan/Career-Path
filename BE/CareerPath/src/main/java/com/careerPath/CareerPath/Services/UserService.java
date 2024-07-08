@@ -1,8 +1,11 @@
 package com.careerPath.CareerPath.Services;
 
+import com.careerPath.CareerPath.DTOs.UserDTO;
 import com.careerPath.CareerPath.Entities.Role;
 import com.careerPath.CareerPath.Entities.User;
 import com.careerPath.CareerPath.Exceptions.UserAlreadyExistsException;
+import com.careerPath.CareerPath.Mappers.UserDTOMapper;
+import com.careerPath.CareerPath.Mappers.UserMapper;
 import com.careerPath.CareerPath.Repositories.RoleRepository;
 import com.careerPath.CareerPath.Security.UserInfoDetails;
 import com.careerPath.CareerPath.Repositories.UserRepository;
@@ -27,16 +30,25 @@ public class UserService implements IUserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserDTOMapper userDTOMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User> users =  userRepository.findAll();
+        return users.stream()
+                .map(userDTOMapper)
+                .collect(Collectors.toList());
     }
 
-    public User getUserById(int id) {
-        return userRepository.findById(id).get();
+    public UserDTO getUserById(int id) {
+        User user = userRepository.findById(id).get();
+        return userDTOMapper.apply(user);
     }
 
-    public String addUser(User user) {
+    public String addUser(UserDTO userDTO) {
+        User user = userMapper.apply(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         if (userRepository.existsByEmail(user.getEmail())) {
@@ -45,18 +57,6 @@ public class UserService implements IUserService {
 
         Role userRole = roleRepository.findByRoleName("user").orElse(null);
         Role adminRole = roleRepository.findByRoleName("admin").orElse(null);
-
-//        if (user.getRoles() == null || user.getRoles().isEmpty() || user.getRoles().contains(userRole)) {
-//            if (userRole != null) {
-//                user.getRoles().clear();
-//                user.getRoles().add(userRole);
-//            }
-//        } else if (user.getRoles().contains(adminRole)) {
-//            if (adminRole != null) {
-//                user.getRoles().clear();
-//                user.getRoles().add(adminRole);
-//            }
-//        }
 
         if (user.getRole() == null || user.getRole().equals(userRole)) {
             if (userRole != null) {
@@ -69,10 +69,11 @@ public class UserService implements IUserService {
         }
 
         userRepository.save(user);
-        return "User added successfully \n"+user;
+        return "User added successfully \n"+userDTO;
     }
 
-    public User updateUser(int id, User user) {
+    public UserDTO updateUser(int id, UserDTO userDTO) {
+        User user = userMapper.apply(userDTO);
         User existingUser = userRepository.findById(id).get();
 
         if (user.getFirstName()!=null && !user.getFirstName().isEmpty()) {
@@ -94,7 +95,8 @@ public class UserService implements IUserService {
             }
         }
 
-        return userRepository.save(existingUser);
+        User updatedUser = userRepository.save(existingUser);
+        return userDTOMapper.apply(updatedUser);
     }
 
     public void deleteUser(int id) {

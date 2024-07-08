@@ -21,10 +21,11 @@ function UserMainPage() {
                 image={coverb}
                 title="Jurnal de Călătorie în carieră"
                 subtitle="visează departe, planifică răbdător, acționează încrezător"
-                buttonText="Find out more"
+                buttonText="Descoperă mai multe"
+                scrollToSelector="#general-info-part"
                 link="/details"
             />
-            <GeneralInfoSection/>
+            <GeneralInfoSection id="general-info-part"/>
             <Footer/>
         </div>
     );

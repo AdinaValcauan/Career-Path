@@ -1,15 +1,15 @@
 package com.careerPath.CareerPath.Services.Interfaces;
 
-import com.careerPath.CareerPath.Entities.Subtitle;
+import com.careerPath.CareerPath.DTOs.SubtitleDTO;
 
 import java.util.List;
 
 public interface ISubtitleService {
-    List<Subtitle> getAllSubtitles();
-    Subtitle getSubtitleById(int subtitleId);
-    String addSubtitle(Subtitle subtitle);
-    Subtitle updateSubtitle(int subtitleId, Subtitle subtitle);
+    List<SubtitleDTO> getAllSubtitles();
+    SubtitleDTO getSubtitleById(int subtitleId);
+    String addSubtitle(SubtitleDTO subtitleDTO);
+    SubtitleDTO updateSubtitle(int subtitleId, SubtitleDTO subtitleDTO);
     void deleteSubtitle(int subtitleId);
-    List<Subtitle> getSubtitlesByDay(int dayId);
-    Subtitle updateOrderForm(int subtitleId, int orderForm);
+    List<SubtitleDTO> getSubtitlesByDay(int dayId);
+    SubtitleDTO updateOrderForm(int subtitleId, int orderForm);
 }

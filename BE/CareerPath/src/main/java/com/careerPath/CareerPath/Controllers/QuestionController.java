@@ -1,18 +1,12 @@
 package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.QuestionDTO;
-import com.careerPath.CareerPath.Entities.Day;
-import com.careerPath.CareerPath.Entities.Question;
-import com.careerPath.CareerPath.Mappers.QuestionDTOMapper;
-import com.careerPath.CareerPath.Mappers.QuestionMapper;
-import com.careerPath.CareerPath.Services.DayService;
 import com.careerPath.CareerPath.Services.Interfaces.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -21,45 +15,27 @@ public class QuestionController {
     @Autowired
     private IQuestionService questionService;
 
-    @Autowired
-    private QuestionMapper questionMapper;
-
-    @Autowired
-    private QuestionDTOMapper questionDTOMapper;
-
-    @Autowired
-    private DayService dayService;
-
     @GetMapping("/questionById/{questionId}")
     @PreAuthorize("hasAnyAuthority('admin','user')")
     public QuestionDTO getQuestionById(@PathVariable int questionId) {
-        Question question = questionService.getQuestionById(questionId);
-        return questionDTOMapper.apply(question);
+        return questionService.getQuestionById(questionId);
     }
 
     @GetMapping("/getAllQuestions")
     @PreAuthorize("hasAnyAuthority('admin', 'user')")
     public List<QuestionDTO> getAllQuestions() {
-        List<Question> questions = questionService.getAllQuestions();
-        return questions.stream()
-                .map(questionDTOMapper)
-                .collect(Collectors.toList());
+        return questionService.getAllQuestions();
     }
 
     @PostMapping("/addQuestion")
     @PreAuthorize("hasAnyAuthority('admin')")
     public String addQuestion(@RequestBody QuestionDTO questionDTO){
-        Question question = questionMapper.apply(questionDTO);
-        Day day = dayService.getDayById(questionDTO.getDayId());
-        question.setDay(day);
-        return questionService.addQuestion(question);
+        return questionService.addQuestion(questionDTO);
     }
 
     @PutMapping("/updateQuestion/{questionId}")
     public QuestionDTO updateQuestion(@PathVariable int questionId, @RequestBody QuestionDTO questionDTO){
-        Question question = questionMapper.apply(questionDTO);
-        Question updatedQuestion = questionService.updateQuestion(questionId, question);
-        return questionDTOMapper.apply(updatedQuestion);
+        return questionService.updateQuestion(questionId, questionDTO);
     }
 
     @DeleteMapping(value = "/deleteQuestion/{questionId}")
@@ -71,16 +47,12 @@ public class QuestionController {
     @GetMapping(value = "/getQuestionsByDay/{dayId}")
     @PreAuthorize("hasAnyAuthority('admin', 'user')")
     public List<QuestionDTO> getQuestionsByDay(@PathVariable int dayId){
-        List<Question> questions = questionService.getQuestionsByDay(dayId);
-        return questions.stream()
-                .map(questionDTOMapper)
-                .collect(Collectors.toList());
+        return questionService.getQuestionsByDay(dayId);
     }
 
     @PatchMapping("/updateOrderForm/{questionId}")
     @PreAuthorize("hasAnyAuthority('admin')")
     public QuestionDTO updateOrderForm(@PathVariable int questionId, @RequestBody int orderForm) {
-        Question updatedQuestion = questionService.updateOrderForm(questionId, orderForm);
-        return questionDTOMapper.apply(updatedQuestion);
+        return questionService.updateOrderForm(questionId, orderForm);
     }
 }

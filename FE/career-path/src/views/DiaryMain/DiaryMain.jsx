@@ -10,7 +10,6 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const DiaryMain = () => {
-    // const user = useContext(UserContext);
     const userRole = sessionStorage.getItem('userRole');
     const isAdmin = userRole === 'admin';
 
@@ -23,14 +22,12 @@ const DiaryMain = () => {
                     hname="user-hero"
                     image={colt_de_scris}
                     title="Colțul tău de scris"
-                    // subtitle="scrie-ți gândurile în fiecare zi"
-                    buttonText="Start"
+                    buttonText="Începe să scrii"
+                    scrollToSelector="#day-part"
                     link="/diary-main"
                 />
             </div>
-            {/*<div className="content-part">*/}
-            <DiaryDays/>
-            {/*</div>*/}
+            <DiaryDays id="day-part"/>
             <Footer/>
         </div>
     );

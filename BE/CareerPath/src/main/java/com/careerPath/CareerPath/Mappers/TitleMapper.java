@@ -1,6 +1,7 @@
 package com.careerPath.CareerPath.Mappers;
 
 import com.careerPath.CareerPath.DTOs.TitleDTO;
+import com.careerPath.CareerPath.Entities.Day;
 import com.careerPath.CareerPath.Entities.Title;
 import com.careerPath.CareerPath.Services.Interfaces.IDayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import java.util.function.Function;
 @Service
 public class TitleMapper implements Function<TitleDTO, Title> {
     private final IDayService dayService;
+    private final DayMapper dayMapper;
 
     @Autowired
-    public TitleMapper(IDayService dayService) {
+    public TitleMapper(IDayService dayService, DayMapper dayMapper) {
         this.dayService = dayService;
+        this.dayMapper = dayMapper;
     }
 
     @Override
@@ -23,7 +26,10 @@ public class TitleMapper implements Function<TitleDTO, Title> {
         title.setTitleId(titleDTO.getTitleId());
         title.setTitleText(titleDTO.getTitleText());
         title.setOrderForm(titleDTO.getOrderForm());
-        title.setDay(dayService.getDayById(titleDTO.getDayId()));
+
+        Day day = dayMapper.apply(dayService.getDayById(titleDTO.getDayId()));
+        title.setDay(day);
+
         return title;
     }
 }

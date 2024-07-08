@@ -129,3 +129,11 @@ header a:hover {
 .edit-button:hover {
     background-color: #E9967A;
 }
+
+.Toastify__toast--success {
+    background-color: #f0f0f0;
+}
+
+.Toastify__toast--error {
+    background-color: #f0f0f0;
+}

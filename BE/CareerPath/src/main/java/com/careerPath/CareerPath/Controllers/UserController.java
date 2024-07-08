@@ -2,9 +2,6 @@ package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.AuthRequest;
 import com.careerPath.CareerPath.DTOs.UserDTO;
-import com.careerPath.CareerPath.Entities.User;
-import com.careerPath.CareerPath.Mappers.UserDTOMapper;
-import com.careerPath.CareerPath.Mappers.UserMapper;
 import com.careerPath.CareerPath.Services.Interfaces.IJwtService;
 import com.careerPath.CareerPath.Services.Interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -31,23 +27,16 @@ public class UserController {
     @Autowired
     private IJwtService jwtService;
 
-    @Autowired
-    private UserDTOMapper userDTOMapper;
-
-    @Autowired
-    private UserMapper userMapper;
-
     @PostMapping("/register")
-    public String register(@RequestBody User user){
+    public String register(@RequestBody UserDTO userDTO){
 
-        return userService.addUser(user);
+        return userService.addUser(userDTO);
     }
 
     @PostMapping("/addUser")
     @PreAuthorize("hasAnyAuthority('admin')")
     public String addUser(@RequestBody UserDTO userDTO){
-        User user = userMapper.apply(userDTO);
-        return userService.addUser(user);
+        return userService.addUser(userDTO);
     }
 
     @PostMapping("/login")
@@ -63,25 +52,18 @@ public class UserController {
     @GetMapping("/getUsers")
     @PreAuthorize("hasAnyAuthority('admin')")
     public List<UserDTO> getAllUsers(){
-
-        List<User> users = userService.getAllUsers();
-        return users.stream()
-                .map(userDTOMapper)
-                .collect(Collectors.toList());
+        return userService.getAllUsers();
     }
 
     @GetMapping("/getUserById/{id}")
     @PreAuthorize("hasAnyAuthority('admin', 'user')")
     public UserDTO getUserById(@PathVariable Integer id){
-        User user = userService.getUserById(id);
-        return userDTOMapper.apply(user);
+        return userService.getUserById(id);
     }
 
     @PutMapping("/updateUser/{id}")
     public UserDTO updateUser(@PathVariable int id, @RequestBody UserDTO userDTO){
-            User user = userMapper.apply(userDTO);
-            User updatedUser = userService.updateUser(id, user);
-            return userDTOMapper.apply(updatedUser);
+            return userService.updateUser(id, userDTO);
     }
 
     @DeleteMapping(value = "/deleteUser/{id}")

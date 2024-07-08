@@ -1,18 +1,19 @@
 package com.careerPath.CareerPath.Services.Interfaces;
 
+import com.careerPath.CareerPath.DTOs.GeneralInfoDTO;
 import com.careerPath.CareerPath.Entities.GeneralInfo;
 import com.careerPath.CareerPath.Entities.Title;
 
 import java.util.List;
 
 public interface IGeneralInfoService {
-    GeneralInfo getGeneralInfo(int id);
+    GeneralInfoDTO getGeneralInfo(int id);
 
-    GeneralInfo updateGeneralInfo(int infoId, GeneralInfo generalInfo);
+    GeneralInfoDTO updateGeneralInfo(int infoId, GeneralInfoDTO generalInfoDTO);
 
-    List<GeneralInfo> getAllGeneralInfo();
+    List<GeneralInfoDTO> getAllGeneralInfo();
 
-    String addGeneralInfo(GeneralInfo generalInfo);
+    String addGeneralInfo(GeneralInfoDTO generalInfoDTO);
 
     void deleteGeneralInfo(int infoId);
 }
