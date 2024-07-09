@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {addQuestionService, deleteQuestionService, updateQuestionService,} from "../../services/questionService";
 import {faArrowDown, faArrowUp, faTrash,} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { ToastContainer, toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const QuestionComponent = ({
@@ -92,6 +92,8 @@ const QuestionComponent = ({
     const handleDeleteQuestion = async (event) => {
         event.preventDefault();
 
+        await fetchForms();
+
         const {success, error} = await deleteQuestionService(field.BeId);
         if (success) {
             let formFields = [...formField];
@@ -109,8 +111,9 @@ const QuestionComponent = ({
     };
 
     return (
-        <div>
+        <div tabIndex="-1">
       <textarea
+          tabIndex="-1"
           ref={textareaRef}
           className={`input-question ${isEditing ? "input-editing" : ""}`}
           placeholder="Întrebare"
@@ -120,6 +123,7 @@ const QuestionComponent = ({
           readOnly={!isEditing}
       />
             <textarea
+                tabIndex="-1"
                 ref={textareaRef}
                 className={`input-answer ${isEditing ? "" : "input-editing"}`}
                 placeholder="..."

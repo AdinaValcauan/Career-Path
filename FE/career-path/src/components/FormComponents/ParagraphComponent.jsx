@@ -37,6 +37,8 @@ const ParagraphComponent = ({
     const handleDeleteParagraph = async (event) => {
         event.preventDefault();
 
+        await fetchForms();
+
         const {success, error} = await deleteParagraphService(field.BeId);
         if (success) {
             let formFields = [...formField];
@@ -79,8 +81,9 @@ const ParagraphComponent = ({
     };
 
     return (
-        <div>
+        <div tabIndex="-1">
       <textarea
+          tabIndex="-1"
           ref={textareaRef}
           className={`input-paragraph ${isEditing ? "input-editing" : ""}`}
           placeholder="Paragraf"

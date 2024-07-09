@@ -62,6 +62,8 @@ const SubtitleComponent = ({
     const handleDeleteSubtitle = async (event) => {
         event.preventDefault();
 
+        await fetchForms();
+
         const {success, error} = await deleteSubtitleService(field.BeId);
         if (success) {
             let formFields = [...formField];
@@ -79,8 +81,9 @@ const SubtitleComponent = ({
     };
 
     return (
-        <div>
+        <div tabIndex="-1">
       <textarea
+          tabIndex="-1"
           ref={textareaRef}
           className={`input-subtitle ${isEditing ? "input-editing" : ""}`}
           placeholder="Subtitlu"

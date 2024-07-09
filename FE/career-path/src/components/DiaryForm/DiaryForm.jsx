@@ -10,6 +10,7 @@ import {getParagraphsByDayService} from "../../services/paragraphService";
 import {getQuestionsByDayService} from "../../services/questionService";
 import {addAnswerService, getAnswersByQuestionAndUserService, updateAnswerService,} from "../../services/answerService";
 import {updateOrderFormService} from "../../services/orderFormService";
+import {useForceUpdate} from "../../hooks/useForceUpdate";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import jsPDF from 'jspdf';
@@ -18,7 +19,8 @@ import 'jspdf-autotable';
 const DiaryForm = ({selectedDay, dayNumber}) => {
     const [formField, setFormField] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
-
+    const forceUpdate = useForceUpdate();
+    const [refreshKey, setRefreshKey] = useState(0);
     const userRole = sessionStorage.getItem("userRole");
     const userId = sessionStorage.getItem("userId");
 
@@ -196,67 +198,66 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
         event.preventDefault();
         let formFields = [...formField];
 
-        const currentField = formFields.find((f) => f.orderForm === orderForm);
-        const previousField = formFields.find(
-            (f) => f.orderForm === currentField.orderForm - 1
-        );
+        const currentFieldIndex = formField.findIndex((f) => f.orderForm === orderForm);
+        if (currentFieldIndex > 0) {
+            const previousFieldIndex = currentFieldIndex - 1;
 
-        if (previousField) {
-            [currentField.orderForm, previousField.orderForm] = [
-                previousField.orderForm,
-                currentField.orderForm,
-            ];
+            [formFields[currentFieldIndex], formFields[previousFieldIndex]] = [formFields[previousFieldIndex], formFields[currentFieldIndex]];
 
-            const {successMU1, errorMU1} = await updateOrderFormService(
-                currentField.type,
-                currentField.BeId,
-                currentField.orderForm
+            const {success, error} = await updateOrderFormService(
+                formFields[currentFieldIndex].type,
+                formFields[currentFieldIndex].BeId,
+                formFields[previousFieldIndex].orderForm
             );
 
-            const {successMU2, errorMU2} = await updateOrderFormService(
-                previousField.type,
-                previousField.BeId,
-                previousField.orderForm
+            const {success1, error1} = await updateOrderFormService(
+                formFields[previousFieldIndex].type,
+                formFields[previousFieldIndex].BeId,
+                formFields[currentFieldIndex].orderForm
             );
-            if (errorMU1 || errorMU2) {
+            if (error1 || error) {
                 toast.error("Eroare la schimbarea ordinii");
             }
-        }
 
-        await fetchForms();
+            setFormField(formFields);
+            forceUpdate();
+            setRefreshKey(prevKey => prevKey + 1);
+            await fetchForms();
+        }
     };
 
     const handleMoveDown = async (event, orderForm) => {
         event.preventDefault();
-        let formFields = [...formField];
+        let formFields1 = [...formField];
 
-        const currentField = formFields.find((f) => f.orderForm === orderForm);
-        const nextField = formFields.find(
-            (f) => f.orderForm === currentField.orderForm + 1
-        );
+        const currentFieldIndex = formField.findIndex((f) => f.orderForm === orderForm);
+        if (currentFieldIndex < formField.length - 1) {
+            const nextFieldIndex = currentFieldIndex + 1;
 
-        if (nextField) {
-            [currentField.orderForm, nextField.orderForm] = [
-                nextField.orderForm,
-                currentField.orderForm,
-            ];
+            console.log("current", formFields1[currentFieldIndex]);
+            console.log("next one", formFields1[nextFieldIndex]);
+
+            [formFields1[nextFieldIndex], formFields1[currentFieldIndex]] = [formFields1[currentFieldIndex], formFields1[nextFieldIndex]];
 
             const {successMD1, errorMD1} = await updateOrderFormService(
-                currentField.type,
-                currentField.BeId,
-                currentField.orderForm
+                formFields1[currentFieldIndex].type,
+                formFields1[currentFieldIndex].BeId,
+                formFields1[nextFieldIndex].orderForm
             );
             const {successMD2, errorMD2} = await updateOrderFormService(
-                nextField.type,
-                nextField.BeId,
-                nextField.orderForm
+                formFields1[nextFieldIndex].type,
+                formFields1[nextFieldIndex].BeId,
+                formFields1[currentFieldIndex].orderForm
             );
             if (errorMD1 || errorMD2) {
                 toast.error("Eroare la schimbarea ordinii");
             }
-        }
 
-        await fetchForms();
+            setFormField(formFields1);
+            forceUpdate();
+            setRefreshKey(prevKey => prevKey + 1);
+            await fetchForms();
+        }
     };
 
     const updateOrderForms = async (formFields, deletedFieldIndex) => {
@@ -328,7 +329,6 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
             const lines = doc.splitTextToSize(`${removeDiacritics(field.content)}`, 180);
 
 
-
             if (currentHeight + lines.length * 10 > pageHeight) {
                 doc.addPage();
                 currentHeight = 20;
@@ -361,7 +361,21 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
     };
 
     return (
-        <form className="form-diary" style={{flex: 1}}>
+        <form className="form-diary" style={{flex: 1}} key={refreshKey}
+              onClick={(e) => {
+                  e.preventDefault();
+                  if (e.target instanceof HTMLElement) {
+                      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'TEXTAREA') {
+                          e.stopPropagation();
+                      }
+                  }
+              }} onMouseDown={(e) => {
+            if (e.target instanceof HTMLElement) {
+                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'TEXTAREA') {
+                    e.stopPropagation();
+                }
+            }
+        }}>
             <label>
                 Ziua {dayNumber}:
                 {formField.map((field, index) => {

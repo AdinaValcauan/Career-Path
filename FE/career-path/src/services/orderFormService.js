@@ -14,5 +14,6 @@ export const updateOrderFormService = async (resourceType, resourceId, orderForm
         }
     } catch (error) {
         toast.error('Eroare la actualizarea formularului de ordine');
+        return {success: false, error: true};
     }
 };

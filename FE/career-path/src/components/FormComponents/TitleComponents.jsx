@@ -79,8 +79,9 @@ const TitleComponent = ({
     };
 
     return (
-        <div>
+        <div tabIndex="-1">
       <textarea
+          tabIndex="-1"
           ref={textareaRef}
           className={`input-title ${isEditing ? "input-editing" : ""}`}
           placeholder="Titlu"

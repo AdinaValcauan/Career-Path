@@ -29,6 +29,8 @@ public class OrderFormController {
     @Autowired
     private IQuestionService questionService;
 
+    @PatchMapping("/updateOrderForm/{resourceType}/{resourceId}")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public ResponseEntity<?> updateOrderForm(@PathVariable String resourceType, @PathVariable int resourceId, @RequestBody int orderForm) {
         if (resourceType.equals("title")) {
             TitleDTO updatedTitle = titleService.updateOrderForm(resourceId, orderForm);
