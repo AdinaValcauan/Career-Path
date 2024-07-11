@@ -41,7 +41,7 @@ const DiaryDays = () => {
         const response = await addDayService(newDay);
         if (response.status === 200) {
             setDays([...days, newDay]);
-        } else {
+        } else if (response.error){
             toast.error("Ziua nu a putut fi adăugată");
         }
 

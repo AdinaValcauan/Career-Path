@@ -234,9 +234,6 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
         if (currentFieldIndex < formField.length - 1) {
             const nextFieldIndex = currentFieldIndex + 1;
 
-            console.log("current", formFields1[currentFieldIndex]);
-            console.log("next one", formFields1[nextFieldIndex]);
-
             [formFields1[nextFieldIndex], formFields1[currentFieldIndex]] = [formFields1[currentFieldIndex], formFields1[nextFieldIndex]];
 
             const {successMD1, errorMD1} = await updateOrderFormService(

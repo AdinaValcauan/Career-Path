@@ -8,7 +8,7 @@ export const getDaysService = async () => {
         const response = await api.get("/getAllDays", {
             headers: {Authorization: `Bearer ${token}`},
         });
-
+        
         return response;
     } catch (error) {
         toast.error("Eroare la aducerea zilelor");
