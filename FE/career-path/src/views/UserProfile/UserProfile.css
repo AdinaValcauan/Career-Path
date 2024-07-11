@@ -21,10 +21,8 @@
     width: 30em;
     height: 35em;
     background-color: white;
-    /*padding: 10px;*/
     border-radius: 1em;
     box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
-    /*background: radial-gradient(circle, rgb(236, 197, 171) 0%, rgb(248, 204, 177) 100%);*/
 }
 
 .h1-profile {
@@ -36,14 +34,12 @@
 .profile-form {
     display: flex;
     flex-direction: column;
-    /*gap: 5px;*/
 }
 
 .profile-form input {
     padding: 10px;
     font-size: 1em;
     border-radius: 5px;
-    /*border: 1px solid #ccc;*/
     border:none;
     border-bottom: 1px solid #D9A768;
     margin-bottom: 20px;

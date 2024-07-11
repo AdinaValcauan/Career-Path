@@ -1,14 +1,12 @@
 package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.ParagraphDTO;
-import com.careerPath.CareerPath.Services.DayService;
 import com.careerPath.CareerPath.Services.Interfaces.IParagraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")

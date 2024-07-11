@@ -62,27 +62,22 @@ function UserProfile() {
                 <h1 className="h1-profile">Profilul meu</h1>
                 <form className="profile-form" onSubmit={() => handleUpdateUser(user.id, updateEmail, validUpdateEmail, updatePassword, validUpdatePassword, updateFirstName, updateLastName, updateRoles)}>
                     <label>
-                        {/*Prenume:*/}
                         <input className="input-profile" type="text" value={updateFirstName}
                                    onChange={e => setUpdateFirstName(e.target.value)}/>
                     </label>
                     <label>
-                        {/*Nume de familie:*/}
                         <input className="input-profile" type="text" value={updateLastName}
                         onChange={e => setUpdateLastName(e.target.value)}/>
                 </label>
                 <label>
-                    {/*Email:*/}
                     <input className="input-profile" type="text" value={updateEmail}
                            onChange={e => setUpdateEmail(e.target.value)}/>
                 </label>
                 <label>
-                    {/*Parola:*/}
                     <input className="input-profile" type="text" placeholder="Password" value={updatePassword}
                                onChange={e => setUpdatePassword(e.target.value)}/>
                     </label>
                     <label>
-                        {/*Rol:*/}
                         <input className="input-profile" type="text" value={updateRoles} readOnly={true}/>
                     </label>
                     <button className="editButton" type="submit">Update</button>

@@ -9,7 +9,7 @@ function LoginRegister() {
     const [isRegister, setIsRegister] = useState(false);
 
     const switchForm = async (register) => {
-        await new Promise(resolve => setTimeout(resolve, 250)); // Wait for 250ms
+        await new Promise(resolve => setTimeout(resolve, 250));
         setIsRegister(register);
     }
 

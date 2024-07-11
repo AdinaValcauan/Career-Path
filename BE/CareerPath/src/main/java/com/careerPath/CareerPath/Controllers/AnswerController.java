@@ -1,9 +1,6 @@
 package com.careerPath.CareerPath.Controllers;
 
 import com.careerPath.CareerPath.DTOs.AnswerDTO;
-import com.careerPath.CareerPath.Entities.Answer;
-import com.careerPath.CareerPath.Mappers.AnswerDTOMapper;
-import com.careerPath.CareerPath.Mappers.AnswerMapper;
 import com.careerPath.CareerPath.Services.Interfaces.IAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")

@@ -10,8 +10,6 @@ import Footer from "../../components/Footer/Footer";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Modal.setAppElement('#root');
-
 const ManageUsersAdmin = ({user}) => {
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -115,7 +113,6 @@ const ManageUsersAdmin = ({user}) => {
         e.preventDefault();
         setIsLoading(true);
         setErrMsgLine("");
-        // setSuccessMsg(null)
 
         if (!newEmail || !newPassword || !newFirstName || !newLastName || !newRole) {
             setErrMsgLine("Exista câmpuri incomplete!");
@@ -196,7 +193,6 @@ const ManageUsersAdmin = ({user}) => {
                         successMsg={successMsg}
                     />
                 </div>
-                {/*<Footer></Footer>*/}
             </div>
             <Footer/>
         </div>

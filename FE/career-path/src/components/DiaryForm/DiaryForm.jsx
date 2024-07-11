@@ -292,7 +292,7 @@ const DiaryForm = ({selectedDay, dayNumber}) => {
         const dayWidth = doc.getStringUnitWidth(dayText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
         const dayPosition = (pageWidth - dayWidth) / 2;
         doc.text(dayText, dayPosition, currentHeight);
-        currentHeight += 20; // Ajustează înălțimea curentă pentru a face loc pentru textul zilei
+        currentHeight += 20;
 
 
         formField.forEach((field, index) => {

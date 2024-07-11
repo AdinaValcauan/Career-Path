@@ -93,14 +93,11 @@ const AllUsersTable = ({
                                    value={updatePassword}
                                    onChange={e => setUpdatePassword(e.target.value)}/>
                         </td>
-                        {/*<td><input className="edit-input" type="text" value={updateRole}*/}
-                        {/*           onChange={e => setUpdateRole(e.target.value)}/>*/}
-                        {/*</td>*/}
                         <td>
                             <select className="edit-input" value={updateRole}
                                     onChange={e => setUpdateRole(e.target.value)}>
                                 {roles.map(role => (
-                                    <option key={role.roleId} value={role.roleName}>{role.roleName}</option>
+                                    <option key={role.roleId} value={role.name}>{role.name}</option>
                                 ))}
                             </select>
                         </td>
@@ -135,11 +132,6 @@ const AllUsersTable = ({
                         <td>
                             <button className="edit-button" onClick={() => handleDelete(user.id)}>Șterge</button>
                         </td>
-                        {/*<td>*/}
-                        {/*    <p className={errMsgLine[user.id] ? "errMsgLine" : "offscreen"} aria-live="assertive">*/}
-                        {/*        {errMsgLine[user.id]}*/}
-                        {/*    </p>*/}
-                        {/*</td>*/}
                     </tr>
             ))}
             </tbody>

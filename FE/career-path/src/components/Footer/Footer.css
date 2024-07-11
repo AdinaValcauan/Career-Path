@@ -1,5 +1,4 @@
 .footer {
-    /*position: fixed;*/
     left: 0;
     bottom: 0;
     width: 100%;
@@ -16,7 +15,6 @@
     text-align: start;
     flex-wrap: wrap;
     font-size: medium;
-    /*padding-right: px;*/
     padding-left: 50px;
 }
 

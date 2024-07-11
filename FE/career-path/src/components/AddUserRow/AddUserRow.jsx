@@ -24,7 +24,7 @@ const AddUserRow = ({
             setRoles(response.data);
 
             if (response.data.length > 0) {
-                setNewRole(response.data[0].roleName);
+                setNewRole(response.data[0].name);
             }
         });
     }, []);
@@ -45,7 +45,7 @@ const AddUserRow = ({
             <td>
                 <select className="edit-input" value={newRole} onChange={e => setNewRole(e.target.value)}>
                     {roles.map(role => (
-                        <option key={role.roleId} value={role.roleName}>{role.roleName}</option>
+                        <option key={role.roleId} value={role.name}>{role.name}</option>
                     ))}
                 </select></td>
             <td>

@@ -48,7 +48,7 @@
     background: white;
     padding: 1rem 2rem;
     border-radius: 6px;
-    font-size: calc(1rem + 0.3vw); /* Scalabil */
+    font-size: calc(1rem + 0.3vw);
     font-weight: bold;
     letter-spacing: 2px;
     border: 1px solid gray;
@@ -61,14 +61,14 @@
     }
 
     .hero-text h1 {
-        font-size: calc(1.5rem + 1vw); /* Ajustat pentru ecrane mici */
+        font-size: calc(1.5rem + 1vw);
     }
 
     .hero-text p {
-        font-size: calc(0.9rem + 0.3vw); /* Ajustat pentru ecrane mici */
+        font-size: calc(0.9rem + 0.3vw);
     }
 
     .hero-text .buttonDetails {
-        font-size: calc(0.9rem + 0.3vw); /* Ajustat pentru ecrane mici */
+        font-size: calc(0.9rem + 0.3vw);
     }
 }
